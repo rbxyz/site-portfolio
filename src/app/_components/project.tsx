@@ -8,7 +8,7 @@ interface Project {
   description: string;
   imageUrl: string;
   technologies: string[];
-  link: string
+  link: string;
 }
 
 const projects: Project[] = [
@@ -18,7 +18,7 @@ const projects: Project[] = [
     description: "Um sistema de segurança digital para proteger usuários contra estelionato online.",
     imageUrl: "/allprotect.png",
     technologies: ["Java", "Firebase", "Javascript"],
-    link: "https://www.exemplo.com/allprotect",
+    link: "https://www.exemplo.com/allprotect", 
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const projects: Project[] = [
     description: "Plataforma de automação de vendas e cobranças pelo WhatsApp.",
     imageUrl: "/azap.png",
     technologies: ["ReactJS", "TailwindCSS", "Typescript"],
-    link: "https://www.exemplo.com/azap",
+    link: "https://www.exemplo.com/azap", 
   },
   {
     id: 3,
@@ -34,20 +34,20 @@ const projects: Project[] = [
     description: "Web site para a empresa AllPines, contendo projetos e serviços.", 
     imageUrl: "/allpines.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
-    link: "https://www.exemplo.com/allpines",
+    link: "https://www.exemplo.com/allpines", 
   },
 ];
 
 export function ProjetosSection() {
   return (
-    <section className="py-20 bg-gray-800 dark:bg-gray-900 text-gray-100">
+    <section className="py-20 bg-gray-800 text-gray-100"> {/* Removido dark:bg-gray-900 */}
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="text-3xl font-bold text-center mb-8">Projetos em Destaque</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="bg-gray-700 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
+              className="bg-gray-700 rounded-lg shadow-lg overflow-hidden"
             >
               <Image
                 src={project.imageUrl}
