@@ -5,9 +5,14 @@ import { ThemeProvider } from "@/app/_components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "Portfolio",
-  description: "My professional portfolio",
+  title: "< Portfolio | Ruan Bueno />", 
+  description: "Essa descrição com certeza não deve aparecer na tela do navegador, mas se aparecer, dá um visu aqui",
+  icons: {
+    icon: "/logo-dark.png",
+  },
+
 }
+
 
 export default function RootLayout({
   children,

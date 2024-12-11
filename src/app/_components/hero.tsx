@@ -19,7 +19,7 @@ export function HeroSection() {
             <div className="relative w-40 h-40 md:w-60 md:h-60">
               <div className="w-full h-full rounded-full overflow-hidden border-4 border-primary">
                 <Image
-                  src="/path/to/image.jpg"
+                  src="/Ruan-Foto.jpeg"
                   alt="Descrição da imagem"
                   width={500}
                   height={300}
@@ -34,12 +34,13 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-                Olá, me chamo Dev
+                Hello, bem vindo ao meu portifólio!
               </h1>
               <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400 mt-4">
-                Trabalho com Gestão de Tráfego e Conversão e desenvolvimento
-                front-end, mas possuo conhecimento básico para fullstack.
-                Confira meu currículo abaixo ou acesse meus projetos.
+                Meu nome é Ruan Bueno. Sou um entusiasta de tecnologia e de negócios.
+                Trabalho com Gestão de Tráfego e Conversão Paga, e desenvolvimento
+                web, mas possuo conhecimento básico para fullstack.
+                Confira meu currículo abaixo ou visualize meus projetos.
               </p>
             </motion.div>
             <motion.div
@@ -55,7 +56,7 @@ export function HeroSection() {
                 onClick={() => console.log("GitHub Button Clicked")}
               >
                 <a
-                  href="https://github.com"
+                  href="https://github.com/rbxyz"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
@@ -70,7 +71,7 @@ export function HeroSection() {
                 onClick={() => console.log("Instagram Button Clicked")}
               >
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/rb_rs_/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
@@ -85,7 +86,7 @@ export function HeroSection() {
                 onClick={() => console.log("LinkedIn Button Clicked")}
               >
                 <a
-                  href="https://linkedin.com"
+                  href="linkedin.com/in/ruan-bueno-68929923a/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
@@ -105,22 +106,6 @@ export function HeroSection() {
                   aria-label="Download CV"
                 >
                   <Download className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button
-                variant="default"
-                size="default"
-                ariaLabel="Download projeto completo"
-                onClick={() => console.log("Download Project Button Clicked")}
-              >
-                <a
-                  href="/portfolio.zip"
-                  download
-                  aria-label="Download projeto completo"
-                  className="flex items-center"
-                >
-                  <Archive className="h-5 w-5 mr-2" />
-                  Baixar Projeto Completo
                 </a>
               </Button>
             </motion.div>
