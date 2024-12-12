@@ -8,7 +8,7 @@ interface Project {
   description: string;
   imageUrl: string;
   technologies: string[];
-  link: string;
+  link?: string;
 }
 
 const projects: Project[] = [
@@ -18,7 +18,7 @@ const projects: Project[] = [
     description: "Um sistema de segurança digital para proteger usuários contra estelionato online.",
     imageUrl: "/allprotect.png",
     technologies: ["Java", "Firebase", "Javascript"],
-    link: "https://www.exemplo.com/allprotect", 
+    link: "",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const projects: Project[] = [
     description: "Plataforma de automação de vendas e cobranças pelo WhatsApp.",
     imageUrl: "/azap.png",
     technologies: ["ReactJS", "TailwindCSS", "Typescript"],
-    link: "https://www.exemplo.com/azap", 
+    link: "",
   },
   {
     id: 3,
@@ -34,13 +34,13 @@ const projects: Project[] = [
     description: "Web site para a empresa AllPines, contendo projetos e serviços.", 
     imageUrl: "/allpines.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
-    link: "https://www.exemplo.com/allpines", 
+    link: "allpines.com.br", 
   },
 ];
 
 export function ProjetosSection() {
   return (
-    <section className="py-20 bg-gray-800 text-gray-100"> {/* Removido dark:bg-gray-900 */}
+    <section className="py-20 bg-gray-800 text-gray-100">
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="text-3xl font-bold text-center mb-8">Projetos em Destaque</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -72,14 +72,19 @@ export function ProjetosSection() {
                   ))}
                 </div>
                 <div className="mt-4 text-center">
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:text-blue-700 transition duration-300"
-                  >
-                    Ver o Projeto
-                  </a>
+                  {/* Condicional para verificar se há link */}
+                  {project.link ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:text-blue-700 transition duration-300"
+                    >
+                      Ver o Projeto
+                    </a>
+                  ) : (
+                    <span className="text-gray-500">Em breve</span>
+                  )}
                 </div>
               </div>
             </div>
