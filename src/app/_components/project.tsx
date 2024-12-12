@@ -34,7 +34,7 @@ const projects: Project[] = [
     description: "Web site para a empresa AllPines, contendo projetos e serviços.", 
     imageUrl: "/allpines.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
-    link: "https://github.com/rbxyz", 
+    link: "https://www.allpines.com.br/", 
   },
 ];
 
