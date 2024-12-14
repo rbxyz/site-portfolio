@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Download, Github, Instagram, Linkedin, Archive } from "lucide-react";
+import { Download, Github, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import Image from "next/image";
 

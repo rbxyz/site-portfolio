@@ -31,23 +31,23 @@ const projects: Project[] = [
   {
     id: 3,
     title: "AllPines | Web site",
-    description: "Web site para a empresa AllPines, contendo projetos e serviços.", 
+    description: "Web site para a empresa AllPines, contendo projetos e serviços.",
     imageUrl: "/allpines.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
-    link: "https://www.allpines.com.br/", 
+    link: "https://www.allpines.com.br/",
   },
 ];
 
 export function ProjetosSection() {
   return (
-    <section className="py-20  text-gray-100">
+    <section className="py-20 bg-background text-foreground">
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="text-3xl font-bold text-center mb-8">Projetos em Destaque</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="bg-gray-700 rounded-lg shadow-lg overflow-hidden"
+              className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition"
             >
               <Image
                 src={project.imageUrl}
@@ -57,33 +57,36 @@ export function ProjetosSection() {
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-gray-100">
+                <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
                   {project.title}
                 </h3>
-                <p className="text-gray-300 mb-4">{project.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  {project.description}
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, index) => (
                     <span
                       key={index}
-                      className="inline-block bg-gray-600 text-gray-200 rounded px-2 py-1 text-sm"
+                      className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded px-2 py-1 text-sm"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
                 <div className="mt-4 text-center">
-                  {/* Condicional para verificar se há link */}
                   {project.link ? (
                     <a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 hover:text-blue-700 transition duration-300"
+                      className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition duration-300"
                     >
                       Ver o Projeto
                     </a>
                   ) : (
-                    <span className="text-gray-500">Em breve</span>
+                    <span className="text-gray-500 dark:text-gray-400">
+                      Em breve
+                    </span>
                   )}
                 </div>
               </div>
