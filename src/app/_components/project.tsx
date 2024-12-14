@@ -23,7 +23,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    title: "AZap | Web application",
+    title: "AZap | Web site",
     description: "Plataforma de automação de vendas e cobranças pelo WhatsApp.",
     imageUrl: "/azap.png",
     technologies: ["ReactJS", "TailwindCSS", "Typescript"],
@@ -44,9 +44,9 @@ export function ProjetosSection() {
     <section className="py-20 bg-background text-foreground">
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="text-3xl font-bold text-center mb-8">Projetos em Destaque</h2>
-        
+
         {/* Grid Centralizado */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {projects.map((project) => (
             <div
               key={project.id}
@@ -96,10 +96,10 @@ export function ProjetosSection() {
             </div>
           ))}
         </div>
-        
+
         {/* Botão para ver todos os projetos */}
         <div className="mt-8 text-center">
-          <Link href="/pages/projects" className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">
+          <Link href="/projects" className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">
             Ver Todos os Projetos
           </Link>
         </div>

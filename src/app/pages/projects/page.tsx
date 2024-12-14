@@ -12,7 +12,7 @@ interface Project {
   imageUrl: string;
   technologies: string[];
   link?: string;
-  type: string
+  type: string;
 }
 
 // Array de projetos
@@ -28,7 +28,7 @@ const allProjects: Project[] = [
   },
   {
     id: 2,
-    title: "AZap | Web application",
+    title: "AZap | Website",
     description: "Plataforma de automação de vendas e cobranças pelo WhatsApp.",
     imageUrl: "/azap.png",
     technologies: ["ReactJS", "TailwindCSS", "Typescript"],
@@ -37,14 +37,22 @@ const allProjects: Project[] = [
   },
   {
     id: 3,
-    title: "AllPines | Web site",
+    title: "AllPines | Website",
     description: "Web site para a empresa AllPines, contendo projetos e serviços.",
     imageUrl: "/allpines.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
     link: "https://www.allpines.com.br/",
     type: "Web",
   },
-  // Projetos aqui
+  {
+    id: 4,
+    title: "LuxWatch | Website",
+    description: "Web site para a empresa LuxWatch, contendo projetos e serviços.",
+    imageUrl: "/luxwatch.png",
+    technologies: ["NextJS", "TailwindCSS", "Typescript"],
+    link: "",
+    type: "Web",
+  },
 ];
 
 export default function ProjectsPage() {
@@ -56,9 +64,20 @@ export default function ProjectsPage() {
       ? allProjects
       : allProjects.filter((project) => project.type === selectedType);
 
+  // Ordenando os projetos: primeiro os disponíveis, depois os não disponíveis
+  const sortedProjects = filteredProjects.sort((a, b) => {
+    if (a.link && !b.link) {
+      return -1; // Coloca 'a' antes de 'b' se 'a' tiver link e 'b' não tiver
+    }
+    if (!a.link && b.link) {
+      return 1; // Coloca 'b' antes de 'a' se 'b' tiver link e 'a' não tiver
+    }
+    return 0; // Se ambos tiverem ou não link, não altera a ordem
+  });
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-            <NavBar />
+      <NavBar />
       <div className="container mx-auto px-4 md:px-6 py-20">
         <h1 className="text-4xl font-bold text-center mb-8">Todos os Projetos</h1>
 
@@ -84,9 +103,9 @@ export default function ProjectsPage() {
           </button>
         </div>
 
-        {/* Lista de projetos filtrados */}
+        {/* Lista de projetos filtrados e ordenados */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
+          {sortedProjects.map((project) => (
             <div key={project.id} className="bg-gray-700 rounded-lg shadow-lg overflow-hidden">
               <Image
                 src={project.imageUrl}
