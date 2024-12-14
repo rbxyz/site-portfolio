@@ -44,16 +44,7 @@ const allProjects: Project[] = [
     link: "https://www.allpines.com.br/",
     type: "Web",
   },
-  {
-    id: 4,
-    title: "Another Software | Software",
-    description: "Um sistema inovador para otimizar a gestão de dados.",
-    imageUrl: "/another-software.png",
-    technologies: ["Python", "Django", "PostgreSQL"],
-    link: "",
-    type: "Software",
-  },
-  // Adicione mais projetos aqui
+  // Projetos aqui
 ];
 
 export default function ProjectsPage() {
