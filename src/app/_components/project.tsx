@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 interface Project {
   id: number;
@@ -43,11 +44,13 @@ export function ProjetosSection() {
     <section className="py-20 bg-background text-foreground">
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="text-3xl font-bold text-center mb-8">Projetos em Destaque</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        {/* Grid Centralizado */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 justify-center">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition"
+              className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition transform hover:scale-105"
             >
               <Image
                 src={project.imageUrl}
@@ -92,6 +95,13 @@ export function ProjetosSection() {
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* Botão para ver todos os projetos */}
+        <div className="mt-8 text-center">
+          <Link href="/pages/projects" className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">
+            Ver Todos os Projetos
+          </Link>
         </div>
       </div>
     </section>
