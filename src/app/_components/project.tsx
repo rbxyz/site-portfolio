@@ -99,7 +99,7 @@ export function ProjetosSection() {
 
         {/* Botão para ver todos os projetos */}
         <div className="mt-8 text-center">
-          <Link href="/projects" className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">
+          <Link href="/pages/projects" className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">
             Ver Todos os Projetos
           </Link>
         </div>
