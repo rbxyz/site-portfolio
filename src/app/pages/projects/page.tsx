@@ -20,7 +20,8 @@ const allProjects: Project[] = [
   {
     id: 1,
     title: "AllProtect | Software",
-    description: "Um sistema de segurança digital para proteger usuários contra estelionato online.",
+    description:
+      "Um sistema de segurança digital para proteger usuários contra estelionato online.",
     imageUrl: "/allprotect.png",
     technologies: ["Java", "Firebase", "Javascript"],
     link: "",
@@ -38,7 +39,8 @@ const allProjects: Project[] = [
   {
     id: 3,
     title: "AllPines | Website",
-    description: "Web site para a empresa AllPines, contendo projetos e serviços.",
+    description:
+      "Web site para a empresa AllPines, contendo projetos e serviços.",
     imageUrl: "/allpines.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
     link: "https://www.allpines.com.br/",
@@ -47,10 +49,11 @@ const allProjects: Project[] = [
   {
     id: 4,
     title: "LuxWatch | Website",
-    description: "Web site para a empresa LuxWatch, contendo projetos e serviços.",
+    description:
+      "Web site para a empresa LuxWatch, contendo projetos e serviços.",
     imageUrl: "/luxwatch.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
-    link: "",
+    link: "https://watchwebpage.netlify.app/",
     type: "Web",
   },
 ];
@@ -76,50 +79,60 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="bg-background text-foreground min-h-screen">
       <NavBar />
-      <div className="container mx-auto px-4 md:px-6 py-20">
-        <h1 className="text-4xl font-bold text-center mb-8">Todos os Projetos</h1>
+      <div className="container mx-auto px-4 py-20 md:px-6">
+        <h1 className="mb-8 text-center text-4xl font-bold">
+          Todos os Projetos
+        </h1>
 
         {/* Filtro por tipo de projeto */}
         <div className="mb-6 text-center">
           <button
             onClick={() => setSelectedType("All")}
-            className={`px-4 py-2 rounded-lg mr-4 ${selectedType === "All" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"} transition`}
+            className={`mr-4 rounded-lg px-4 py-2 ${selectedType === "All" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"} transition`}
           >
             Todos
           </button>
           <button
             onClick={() => setSelectedType("Web")}
-            className={`px-4 py-2 rounded-lg mr-4 ${selectedType === "Web" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"} transition`}
+            className={`mr-4 rounded-lg px-4 py-2 ${selectedType === "Web" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"} transition`}
           >
             Web
           </button>
           <button
             onClick={() => setSelectedType("Software")}
-            className={`px-4 py-2 rounded-lg ${selectedType === "Software" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"} transition`}
+            className={`rounded-lg px-4 py-2 ${selectedType === "Software" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"} transition`}
           >
             Software
           </button>
         </div>
 
         {/* Lista de projetos filtrados e ordenados */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sortedProjects.map((project) => (
-            <div key={project.id} className="bg-gray-700 rounded-lg shadow-lg overflow-hidden">
+            <div
+              key={project.id}
+              className="overflow-hidden rounded-lg bg-gray-700 shadow-lg"
+            >
               <Image
                 src={project.imageUrl}
                 alt={project.title}
                 width={600}
                 height={400}
-                className="w-full h-48 object-cover"
+                className="h-48 w-full object-cover"
               />
               <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-gray-100">{project.title}</h3>
-                <p className="text-gray-300 mb-4">{project.description}</p>
+                <h3 className="mb-2 text-xl font-semibold text-gray-100">
+                  {project.title}
+                </h3>
+                <p className="mb-4 text-gray-300">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, index) => (
-                    <span key={index} className="inline-block bg-gray-600 text-gray-200 rounded px-2 py-1 text-sm">
+                    <span
+                      key={index}
+                      className="inline-block rounded bg-gray-600 px-2 py-1 text-sm text-gray-200"
+                    >
                       {tech}
                     </span>
                   ))}
@@ -130,7 +143,7 @@ export default function ProjectsPage() {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 hover:text-blue-700 transition duration-300"
+                      className="text-blue-500 transition duration-300 hover:text-blue-700"
                     >
                       Ver o Projeto
                     </a>
