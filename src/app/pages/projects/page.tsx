@@ -61,7 +61,7 @@ const allProjects: Project[] = [
     title: "Law and Order | Website",
     description:
       "Website para empresas de advocacia ou advogados, contendo um formulário de contato e descrições.",
-    imageUrl: "/luxwatch.png",
+    imageUrl: "/lawandorder.png",
     technologies: ["ReactJs", "TailwindCSS", "Typescript"],
     link: "",
     type: "Web",
