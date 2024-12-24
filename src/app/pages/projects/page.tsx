@@ -40,7 +40,7 @@ const allProjects: Project[] = [
     id: 3,
     title: "AllPines | Website",
     description:
-      "Web site para a empresa AllPines, contendo projetos e serviços.",
+      "Website para a empresa AllPines, contendo projetos e serviços.",
     imageUrl: "/allpines.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
     link: "https://www.allpines.com.br/",
@@ -50,10 +50,20 @@ const allProjects: Project[] = [
     id: 4,
     title: "LuxWatch | Website",
     description:
-      "Web site para a empresa LuxWatch, contendo projetos e serviços.",
+      "Website para empresas de Relojoarias, contendo itens e coleções.",
     imageUrl: "/luxwatch.png",
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
     link: "https://watchwebpage.netlify.app/",
+    type: "Web",
+  },
+  {
+    id: 5,
+    title: "Law and Order | Website",
+    description:
+      "Website para empresas de advocacia ou advogados, contendo um formulário de contato e descrições.",
+    imageUrl: "/luxwatch.png",
+    technologies: ["ReactJs", "TailwindCSS", "Typescript"],
+    link: "",
     type: "Web",
   },
 ];
