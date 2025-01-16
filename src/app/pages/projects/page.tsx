@@ -66,6 +66,16 @@ const allProjects: Project[] = [
     link: "",
     type: "Web",
   },
+  {
+    id: 6,
+    title: "Rubik | Blog",
+    description:
+      "Website para inscrição de editais, contendo um formulário de inscrição e descrições.",
+    imageUrl: "/RubikD3v.png",
+    technologies: ["ReactNative", "TailwindCSS", "Typescript"],
+    link: "",
+    type: "Web",
+  },
 ];
 
 export default function ProjectsPage() {
