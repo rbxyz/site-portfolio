@@ -66,6 +66,7 @@ const allProjects: Project[] = [
     link: "",
     type: "Web",
   },
+  /*
   {
     id: 6,
     title: "Rubik | Blog",
@@ -76,6 +77,7 @@ const allProjects: Project[] = [
     link: "",
     type: "Web",
   },
+  */
 ];
 
 export default function ProjectsPage() {
