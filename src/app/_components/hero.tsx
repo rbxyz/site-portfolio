@@ -7,17 +7,17 @@ import Image from "next/image";
 
 export function HeroSection() {
   return (
-    <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-20">
+    <section className="flex min-h-[calc(100vh-4rem)] items-center justify-center py-20">
       <div className="container px-4 md:px-6">
-        <div className="grid gap-6 items-center">
+        <div className="grid items-center gap-6">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
             className="flex justify-center"
           >
-            <div className="relative w-40 h-40 md:w-60 md:h-60">
-              <div className="w-full h-full rounded-full overflow-hidden border-4 border-primary">
+            <div className="relative h-40 w-40 md:h-60 md:w-60">
+              <div className="border-primary h-full w-full overflow-hidden rounded-full border-4">
                 <Image
                   src="/Ruan-Foto.jpeg"
                   alt="Descrição da imagem"
@@ -36,11 +36,12 @@ export function HeroSection() {
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
                 Hello, bem vindo ao meu portifólio!
               </h1>
-              <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400 mt-4">
-                Meu nome é Ruan Bueno. Sou um entusiasta de tecnologia e de negócios.
-                Trabalho com Gestão de Tráfego e Conversão Paga, e desenvolvimento
-                web, mas possuo conhecimento básico para fullstack.
-                Confira meu currículo abaixo ou visualize meus projetos.
+              <p className="mx-auto mt-4 max-w-[700px] text-gray-500 dark:text-gray-400 md:text-xl">
+                Meu nome é Ruan Bueno. Sou um entusiasta de tecnologia e de
+                negócios. Trabalho com Gestão de Tráfego e Conversão Paga, e
+                desenvolvimento web, mas possuo conhecimento básico para
+                fullstack. Confira meu currículo abaixo ou visualize meus
+                projetos.
               </p>
             </motion.div>
             <motion.div
@@ -101,7 +102,7 @@ export function HeroSection() {
                 onClick={() => console.log("Download CV Button Clicked")}
               >
                 <a
-                  href="/cv.pdf"
+                  href="public/Currículo.pdf"
                   download
                   aria-label="Download CV"
                 >
