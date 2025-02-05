@@ -63,12 +63,12 @@ const allProjects: Project[] = [
       "Website para empresas de advocacia ou advogados, contendo um formulário de contato e descrições.",
     imageUrl: "/lawandorder.png",
     technologies: ["ReactJs", "TailwindCSS", "Typescript"],
-    link: "",
+    link: "https://lawandorder-page.netlify.app/",
     type: "Web",
   },
   /*
   {
-    id: 6,
+    id: x,
     title: "Rubik | Blog",
     description:
       "Website para inscrição de editais, contendo um formulário de inscrição e descrições.",
