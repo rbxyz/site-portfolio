@@ -101,11 +101,7 @@ export function HeroSection() {
                 ariaLabel="Download CV"
                 onClick={() => console.log("Download CV Button Clicked")}
               >
-                <a
-                  href="public/Currículo.pdf"
-                  download
-                  aria-label="Download CV"
-                >
+                <a href="cv.pdf" download aria-label="Download CV">
                   <Download className="h-5 w-5" />
                 </a>
               </Button>
