@@ -19,13 +19,13 @@ export function ThemeSwitcher() {
   return (
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+      className="rounded-md border border-gray-300 bg-gray-100 p-2 transition hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600"
       aria-label="Alternar modo claro/escuro"
     >
       {resolvedTheme === "dark" ? (
-        <SunIcon className="w-5 h-5 text-yellow-400" />
+        <SunIcon className="h-5 w-5 text-yellow-400" />
       ) : (
-        <MoonIcon className="w-5 h-5 text-gray-800" />
+        <MoonIcon className="h-5 w-5 text-gray-800" />
       )}
     </button>
   );
@@ -33,24 +33,33 @@ export function ThemeSwitcher() {
 
 export function NavBar() {
   return (
-    <header className="border-b bg-background text-foreground">
-      <div className="flex items-center justify-between h-16 px-4 md:px-6 max-w-7xl mx-auto">
+    <header className="bg-background text-foreground border-b">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <div className="text-2xl font-bold">
-        <Link href="/" className="hover:opacity-80 transition">
-          {"< Ruan Bueno />"}
-        </Link>
+          <Link href="/" className="transition hover:opacity-80">
+            {"< Ruan Bueno />"}
+          </Link>
         </div>
 
         {/* Links de Navegação */}
-        <nav className="hidden md:flex items-center space-x-6">
-        <Link href="/pages/projects" className="hover:text-blue-500 transition">
-          Projetos
-        </Link>
-          <a href="#about" className="hover:text-blue-500 transition">
+        <nav className="hidden items-center space-x-6 md:flex">
+          <Link
+            href="https://blog.ruanbueno.cloud/"
+            className="transition hover:text-blue-500"
+          >
+            Blog
+          </Link>
+          <Link
+            href="/pages/projects"
+            className="transition hover:text-blue-500"
+          >
+            Projetos
+          </Link>
+          <a href="#about" className="transition hover:text-blue-500">
             Sobre
           </a>
-          <a href="#contact" className="hover:text-blue-500 transition">
+          <a href="#contact" className="transition hover:text-blue-500">
             Contato
           </a>
         </nav>
