@@ -66,6 +66,16 @@ const allProjects: Project[] = [
     link: "https://lawandorder-page.netlify.app/",
     type: "Web",
   },
+  {
+    id: 6,
+    title: "Blog Pessoal | Blog",
+    description:
+      "Blog para contar histórias e apresentar meus conhecimentos, contendo um formulário de contato e descrições.",
+    imageUrl: "/blog.png",
+    technologies: ["ReactJs T3", "TailwindCSS", "Typescript"],
+    link: "https://blog.ruanbueno.cloud/",
+    type: "Web",
+  },
   /*
   {
     id: x,
