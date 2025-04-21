@@ -76,6 +76,15 @@ const allProjects: Project[] = [
     link: "https://blog.ruanbueno.cloud/",
     type: "Web",
   },
+  {
+    id: 7,
+    title: "Fantoni Softwares | Website",
+    description: "Site de revenda para uma empresa de softwares.",
+    imageUrl: "/fantoni-software.png",
+    technologies: ["NextJS", "TailwindCSS", "Typescript"],
+    link: "https://fantoni-softwares.vercel.app/",
+    type: "Web",
+  },
   /*
   {
     id: x,

@@ -19,7 +19,7 @@ export function HeroSection() {
             <div className="relative h-40 w-40 md:h-60 md:w-60">
               <div className="border-primary h-full w-full overflow-hidden rounded-full border-4">
                 <Image
-                  src="/Ruan-Foto.jpeg"
+                  src="/Foto_Perfil.jpg"
                   alt="Descrição da imagem"
                   width={500}
                   height={300}
