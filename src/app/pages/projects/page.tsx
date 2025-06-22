@@ -58,7 +58,7 @@ const allProjects: Project[] = [
     link: "https://www.allpines.com.br/",
     type: "Web",
     featured: false,
-    year: "2023",
+    year: "2025",
   },
   {
     id: 4,
@@ -70,7 +70,7 @@ const allProjects: Project[] = [
     link: "https://watchwebpage.netlify.app/",
     type: "Web",
     featured: false,
-    year: "2022",
+    year: "2023",
   },
   {
     id: 5,
@@ -82,7 +82,7 @@ const allProjects: Project[] = [
     link: "https://lawandorder-page.netlify.app/",
     type: "Web",
     featured: false,
-    year: "2022",
+    year: "2023",
   },
   {
     id: 6,
@@ -94,7 +94,7 @@ const allProjects: Project[] = [
     link: "https://blog.ruanbueno.cloud/",
     type: "Web",
     featured: false,
-    year: "2022",
+    year: "2025",
   },
   {
     id: 7,
@@ -106,7 +106,7 @@ const allProjects: Project[] = [
     link: "https://fantoni-softwares.vercel.app/",
     type: "Web",
     featured: false,
-    year: "2022",
+    year: "2025",
   },
 ];
 
