@@ -8,7 +8,7 @@ export const metadata = {
   title: "< Portfolio | Ruan Bueno />",
   description: "Essa descrição com certeza não deve aparecer na tela do navegador, mas se aparecer, dá um visu aqui",
   icons: {
-    icon: "/logo-dark.png",
+    icon: "/logo.png",
   },
 };
 
