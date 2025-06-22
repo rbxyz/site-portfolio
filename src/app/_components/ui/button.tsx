@@ -32,7 +32,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     if (asChild) {
       return (
-        <span className={combinedClassName} {...(props as any)}>
+        <span className={combinedClassName} {...(props as React.HTMLAttributes<HTMLSpanElement>)}>
           {children}
         </span>
       );

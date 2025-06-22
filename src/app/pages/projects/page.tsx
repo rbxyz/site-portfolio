@@ -261,8 +261,8 @@ export default function ProjectsPage() {
                   Projetos em Destaque
                 </h2>
                 <div className="grid md:grid-cols-2 gap-8">
-                  {featuredProjects.map((project, index) => (
-                    <ProjectCard key={project.id} project={project} index={index} featured />
+                  {featuredProjects.map((project, _index) => (
+                    <ProjectCard key={project.id} project={project} index={_index} featured />
                   ))}
                 </div>
               </motion.div>
@@ -282,8 +282,8 @@ export default function ProjectsPage() {
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {sortedProjects.map((project, index) => (
-                  <ProjectCard key={project.id} project={project} index={index} />
+                {sortedProjects.map((project, _index) => (
+                  <ProjectCard key={project.id} project={project} index={_index} />
                 ))}
               </div>
             </motion.div>
@@ -316,7 +316,7 @@ export default function ProjectsPage() {
 }
 
 // Componente ProjectCard
-function ProjectCard({ project, index, featured = false }: { project: Project; index: number; featured?: boolean }) {
+function ProjectCard({ project, index: _index, featured = false }: { project: Project; index: number; featured?: boolean }) {
   return (
     <motion.div
       variants={itemVariants}

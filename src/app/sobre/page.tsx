@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
-import { Code, Laptop, TrendingUp, Users, Award, Coffee } from "lucide-react";
+import { Code, Laptop, TrendingUp, Award, Coffee } from "lucide-react";
 
 const skills = [
   { name: "Frontend", technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"], icon: Code },

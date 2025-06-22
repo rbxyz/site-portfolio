@@ -1,7 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-const { fontFamily } = require("tailwindcss/defaultTheme");
+import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
-module.exports = {
+const config: Config = {
   darkMode: "class", // Habilita o modo escuro via classe "dark"
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
@@ -18,3 +18,5 @@ module.exports = {
   },
   plugins: [],
 };
+
+export default config;

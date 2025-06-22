@@ -73,7 +73,7 @@ export function NavBar() {
             Contato
           </Link>
           <Link
-            href="https://blog.ruanbueno.cloud/"
+            href="https://blog.allpines.com.br/"
             target="_blank"
             rel="noopener noreferrer"
             className="relative transition hover:text-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full"
