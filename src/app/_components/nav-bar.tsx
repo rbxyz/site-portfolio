@@ -80,6 +80,14 @@ export function NavBar() {
           >
             Blog
           </Link>
+          <Link
+            href="https://ethos-hoxiuvxzf-rbxyzs-projects.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative transition hover:text-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full"
+          >
+            Ethos | Gestão de Horas
+          </Link>
         </nav>
 
         {/* Desktop Theme Switcher */}
@@ -144,6 +152,15 @@ export function NavBar() {
               className="block py-2 text-lg transition hover:text-blue-500"
             >
               Blog
+            </Link>
+            <Link
+              href="https://ethos.allpines.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsMenuOpen(false)}
+              className="block py-2 text-lg transition hover:text-blue-500"
+            >
+              Ethos
             </Link>
           </nav>
         </div>
