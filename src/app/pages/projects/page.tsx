@@ -91,7 +91,7 @@ const allProjects: Project[] = [
     longDescription: "Blog pessoal desenvolvido com T3 Stack, incluindo sistema de autenticação, painel administrativo, editor de posts com markdown, comentários e sistema de tags para organização de conteúdo.",
     imageUrl: "/blog.png",
     technologies: ["T3 Stack", "NextJS", "Prisma", "tRPC", "TailwindCSS"],
-    link: "https://blog.ruanbueno.cloud/",
+    link: "https://blog.ruan.allpines.com.br/",
     type: "Web",
     featured: false,
     year: "2025",
