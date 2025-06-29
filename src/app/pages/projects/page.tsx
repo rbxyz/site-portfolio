@@ -153,7 +153,8 @@ export default function ProjectsPage() {
   const sortedProjects = [...featuredProjects, ...otherProjects].sort((a, b) => {
     if (a.link && !b.link) return -1;
     if (!a.link && b.link) return 1;
-    return 0;
+    // Adicionando ordenação por ano (mais recente primeiro)
+    return parseInt(b.year) - parseInt(a.year);
   });
 
   const filterButtons = [
