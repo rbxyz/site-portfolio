@@ -318,6 +318,11 @@ export default function ProjectsPage() {
 
 // Componente ProjectCard
 function ProjectCard({ project, index: _index, featured = false }: { project: Project; index: number; featured?: boolean }) {
+  const apiKey = process.env.NEXT_PUBLIC_SCREENSHOT_API_KEY;
+  const screenshotUrl = (project.link && apiKey)
+    ? `https://api.screenshotone.com/take?access_key=${apiKey}&url=${encodeURIComponent(project.link)}&viewport_width=1280&viewport_height=720&device_scale_factor=1&format=jpeg&quality=80&block_ads=true&block_cookie_banners=true&full_page=false&delay=2`
+    : project.imageUrl;
+
   return (
     <motion.div
       variants={itemVariants}
@@ -337,7 +342,7 @@ function ProjectCard({ project, index: _index, featured = false }: { project: Pr
       {/* Project Image */}
       <div className={`relative overflow-hidden ${featured ? "h-64" : "h-48"}`}>
         <Image
-          src={project.imageUrl}
+          src={screenshotUrl}
           alt={project.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
