@@ -320,7 +320,7 @@ export default function ProjectsPage() {
 function ProjectCard({ project, index: _index, featured = false }: { project: Project; index: number; featured?: boolean }) {
   const apiKey = process.env.NEXT_PUBLIC_SCREENSHOT_API_KEY;
   const screenshotUrl = (project.link && apiKey)
-    ? `https://api.screenshotone.com/take?access_key=${apiKey}&url=${encodeURIComponent(project.link)}&viewport_width=1280&viewport_height=720&device_scale_factor=1&format=jpeg&image_quality=80&block_ads=true&block_cookie_banners=true&block_trackers=true&full_page=false&delay=2&timeout=60`
+    ? `https://api.screenshotone.com/take?access_key=${apiKey}&url=${encodeURIComponent(project.link)}&viewport_width=1280&viewport_height=720&format=jpeg&image_quality=80&block_ads=true&block_cookie_banners=true&full_page=false&delay=5&timeout=60&response_type=by_format`
     : project.imageUrl;
 
   return (
