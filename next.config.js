@@ -4,7 +4,18 @@
  */
 import "./src/env.js";
 
-/** @type {import("next").NextConfig} */
-const config = {};
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'api.screenshotone.com',
+                port: '',
+                pathname: '/take/**',
+            },
+        ],
+    },
+};
 
-export default config;
+module.exports = nextConfig;
