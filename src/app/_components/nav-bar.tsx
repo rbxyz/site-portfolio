@@ -145,7 +145,7 @@ export function NavBar() {
               Contato
             </Link>
             <Link
-              href="https://blog.ruanbueno.cloud/"
+              href="https://blog.ruan.allpines.com.br/"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsMenuOpen(false)}
