@@ -32,7 +32,7 @@ const allProjects: Project[] = [
     imageUrl: "/allprotect.png",
     technologies: ["Java", "Firebase", "Javascript", "Spring Boot"],
     link: "",
-    type: "Software",
+    type: "Saas",
     featured: true,
     year: "2023",
   },
@@ -172,7 +172,7 @@ export default function ProjectsPage() {
   const filterButtons = [
     { key: "All", label: "Todos", count: allProjects.length },
     { key: "Web", label: "Web", count: allProjects.filter(p => p.type === "Web").length },
-    { key: "Software", label: "Software", count: allProjects.filter(p => p.type === "Software").length },
+    { key: "Saas", label: "Sistemas", count: allProjects.filter(p => p.type === "Saas").length },
   ];
 
   return (
