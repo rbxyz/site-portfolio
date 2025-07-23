@@ -108,6 +108,18 @@ const allProjects: Project[] = [
     featured: false,
     year: "2025",
   },
+  {
+    id: 8,
+    title: "MarcaAi | Agendamentos Inteligentes",
+    description: "Plataforma Saas para prestadores de serviços.",
+    longDescription: "Plataforma Saas para prestadores de serviços que dependem de agendamentos, que integra Google Agenda + Whatsapp + IA Models para fazer o atendimento automático.",
+    imageUrl: "/",
+    technologies: ["NextJS", "TailwindCSS", "TypeScript", "Drizzle"],
+    link: "https://marcaaii.vercel.app/",
+    type: "Web",
+    featured: true,
+    year: "2025",
+  }
 ];
 
 const containerVariants = {
