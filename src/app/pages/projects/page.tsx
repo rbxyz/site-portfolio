@@ -120,6 +120,18 @@ const allProjects: Project[] = [
     featured: true,
     year: "2025",
   }
+    {
+    id: 9,
+    title: "Laura & Ponto | Eccomerce",
+    description: "Eccomerce avançado para artesão.",
+    longDescription: "Este projeto é um Eccomerce para uma artesão que havia a necessidade de vender pela internet que pudesse emitir vários relatórios personalizados, soluções e integrações específicas, superando plataformas de template.",
+    imageUrl: "https://laura-e-ponto.vercel.app/",
+    technologies: ["NextJS", "TailwindCSS", "TypeScript", "Drizzle"],
+    link: "https://marcaaii.vercel.app/",
+    type: "Web",
+    featured: true,
+    year: "2025",
+  }
 ];
 
 const containerVariants = {
