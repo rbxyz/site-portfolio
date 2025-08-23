@@ -6,6 +6,12 @@ import "./src/env.js";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    // Otimizações de performance
+    experimental: {
+        optimizeCss: true,
+    },
+
+    // Configurações de imagem
     images: {
         remotePatterns: [
             {
@@ -15,6 +21,60 @@ const nextConfig = {
                 pathname: '/take/**',
             },
         ],
+        formats: ['image/webp', 'image/avif'],
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    },
+
+    // Headers para otimização
+    async headers() {
+        return [
+            {
+                source: '/sw.js',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=0, must-revalidate',
+                    },
+                    {
+                        key: 'Service-Worker-Allowed',
+                        value: '/',
+                    },
+                ],
+            },
+            {
+                source: '/(.*)',
+                headers: [
+                    {
+                        key: 'X-DNS-Prefetch-Control',
+                        value: 'on',
+                    },
+                    {
+                        key: 'X-Frame-Options',
+                        value: 'DENY',
+                    },
+                ],
+            },
+        ];
+    },
+
+    // Webpack otimizações
+    webpack: (config, { dev, isServer }) => {
+        // Otimizações de produção
+        if (!dev && !isServer) {
+            config.optimization.splitChunks = {
+                chunks: 'all',
+                cacheGroups: {
+                    vendor: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all',
+                    },
+                },
+            };
+        }
+
+        return config;
     },
 };
 

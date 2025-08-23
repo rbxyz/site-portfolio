@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { NavBar } from "@/app/_components/nav-bar";
 import { motion } from "framer-motion";
 import { ExternalLink, Github, Filter, Search, ArrowRight, Star } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
+import { usePreloadProjectImages } from "@/lib/hooks/usePreloadImages";
+import { useProgressiveLazyLoading, useLazyLoading } from "@/lib/hooks/useLazyLoading";
+import { PrefetchLink, usePrefetch } from "@/lib/components/PrefetchLink";
+import { useImageCache } from "@/lib/hooks/useServiceWorker";
 
 // Definindo o tipo do projeto
 interface Project {
@@ -143,6 +147,18 @@ const allProjects: Project[] = [
     type: "Saas",
     featured: true,
     year: "2025",
+  },
+  {
+    id: 11,
+    title: "Lumos | Finanças Pessoais",
+    description: "Aplicação completa de gestão de finanças pessoais.",
+    longDescription: "Este projeto é uma aplicação que compõe módulos de consulta de dados financeiros, contém um sistema de calculadora de renda fixa.",
+    imageUrl: "",
+    technologies: ["NextJS", "TailwindCSS", "TypeScript", "Prisma"],
+    link: "https://lumos-app.vercel.app/",
+    type: "Saas",
+    featured: true,
+    year: "2025",
   }
 ];
 
@@ -171,6 +187,51 @@ const itemVariants = {
 export default function ProjectsPage() {
   const [selectedType, setSelectedType] = useState<string>("All");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  
+  // Pré-carregamento de imagens dos projetos
+  const { allLoaded: imagesPreloaded, progress: imageProgress } = usePreloadProjectImages(allProjects);
+  
+  // Lazy loading progressivo para os projetos
+  const { visibleCount, sentinelRef, hasMore } = useProgressiveLazyLoading(allProjects.length, {
+    immediate: 6, // Carregar 6 projetos imediatamente
+    batchSize: 4, // Carregar 4 por vez quando scroll
+    rootMargin: '200px' // Começar a carregar 200px antes
+  });
+
+  // Hook de prefetch para links
+  const { prefetchUrl, prefetchImage } = usePrefetch();
+  
+  // Hook para cache de imagens via Service Worker
+  const { cacheImages, isReady: swReady } = useImageCache();
+
+  // Prefetch automático dos links dos projetos visíveis
+  useEffect(() => {
+    const visibleProjects = allProjects.slice(0, visibleCount);
+    const imageUrls: string[] = [];
+    const apiKey = process.env.NEXT_PUBLIC_SCREENSHOT_API_KEY;
+    
+    visibleProjects.forEach(project => {
+      if (project.link) {
+        prefetchUrl(project.link);
+      }
+      // Para projetos com imagens locais
+      if (project.imageUrl && project.imageUrl.startsWith('/')) {
+        prefetchImage(project.imageUrl);
+        imageUrls.push(project.imageUrl);
+      }
+      // Para projetos sem imagem mas com link (usar screenshot)
+      else if (!project.imageUrl && project.link && apiKey) {
+        const screenshotUrl = `https://api.screenshotone.com/take?access_key=${apiKey}&url=${encodeURIComponent(project.link)}&viewport_width=1280&viewport_height=720&format=jpeg&image_quality=80&block_ads=true&block_cookie_banners=true&full_page=false&delay=5&timeout=60&response_type=by_format`;
+        imageUrls.push(screenshotUrl);
+      }
+
+    });
+    
+    // Cachear imagens via Service Worker se estiver pronto
+    if (swReady && imageUrls.length > 0) {
+      cacheImages(imageUrls);
+    }
+  }, [visibleCount, prefetchUrl, prefetchImage, cacheImages, swReady]);
 
   // Filtrando os projetos com base no tipo selecionado e termo de busca
   const filteredProjects = allProjects
@@ -192,6 +253,9 @@ export default function ProjectsPage() {
     // Adicionando ordenação por ano (mais recente primeiro)
     return parseInt(b.year) - parseInt(a.year);
   });
+
+  // Aplicar lazy loading aos projetos filtrados
+  const visibleFilteredProjects = sortedProjects.slice(0, visibleCount);
 
   const filterButtons = [
     { key: "All", label: "Todos", count: allProjects.length },
@@ -282,8 +346,34 @@ export default function ProjectsPage() {
           </div>
         </motion.div>
 
+        {/* Loading Progress Indicator */}
+        {!imagesPreloaded && imageProgress < 100 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-8"
+          >
+            <div className="max-w-md mx-auto">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  Carregando projetos...
+                </span>
+                <span className="text-sm text-blue-600 dark:text-blue-400">
+                  {Math.round(imageProgress)}%
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${imageProgress}%` }}
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* Projects Grid */}
-        {sortedProjects.length > 0 ? (
+        {visibleFilteredProjects.length > 0 ? (
           <>
             {/* Featured Projects */}
             {featuredProjects.length > 0 && searchTerm === "" && selectedType === "All" && (
@@ -298,7 +388,7 @@ export default function ProjectsPage() {
                   Projetos em Destaque
                 </h2>
                 <div className="grid md:grid-cols-2 gap-8">
-                  {featuredProjects.map((project, _index) => (
+                  {featuredProjects.slice(0, visibleCount).map((project, _index) => (
                     <ProjectCard key={project.id} project={project} index={_index} featured />
                   ))}
                 </div>
@@ -319,10 +409,20 @@ export default function ProjectsPage() {
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {sortedProjects.map((project, _index) => (
+                {visibleFilteredProjects.map((project, _index) => (
                   <ProjectCard key={project.id} project={project} index={_index} />
                 ))}
               </div>
+
+              {/* Loading Sentinel para lazy loading progressivo */}
+              {hasMore && sortedProjects.length > visibleCount && (
+                <div ref={sentinelRef} className="text-center py-8">
+                  <div className="inline-flex items-center text-gray-500 dark:text-gray-400">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mr-2"></div>
+                    Carregando mais projetos...
+                  </div>
+                </div>
+              )}
             </motion.div>
           </>
         ) : (
@@ -359,8 +459,16 @@ function ProjectCard({ project, index: _index, featured = false }: { project: Pr
     ? `https://api.screenshotone.com/take?access_key=${apiKey}&url=${encodeURIComponent(project.link)}&viewport_width=1280&viewport_height=720&format=jpeg&image_quality=80&block_ads=true&block_cookie_banners=true&full_page=false&delay=5&timeout=60&response_type=by_format`
     : project.imageUrl;
 
+  // Lazy loading para o card
+  const { elementRef: cardRef, shouldLoad } = useLazyLoading<HTMLDivElement>({
+    threshold: 0.1,
+    rootMargin: '100px',
+    triggerOnce: true
+  });
+
   return (
     <motion.div
+      ref={cardRef}
       variants={itemVariants}
       whileHover={{ y: -10 }}
       className={`group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-200/50 dark:border-gray-700/50 ${
@@ -377,12 +485,25 @@ function ProjectCard({ project, index: _index, featured = false }: { project: Pr
 
       {/* Project Image */}
       <div className={`relative overflow-hidden ${featured ? "h-64" : "h-48"}`}>
-        <Image
-          src={screenshotUrl}
-          alt={project.title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-        />
+        {shouldLoad ? (
+          <Image
+            src={screenshotUrl}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyejFhCGjqiHPFBILdVBk+SKTNI2h9A7RbScfaSXVGaHzDT5FaRmjoyEjqiNPA=="
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 animate-pulse flex items-center justify-center">
+            <div className="text-gray-400 dark:text-gray-500">
+              <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         
         {/* Year Badge */}
@@ -398,9 +519,13 @@ function ProjectCard({ project, index: _index, featured = false }: { project: Pr
               className="bg-white/90 hover:bg-white text-gray-900 rounded-full p-2 shadow-lg"
               asChild
             >
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
+              <PrefetchLink 
+                href={project.link} 
+                prefetchOnHover={true}
+                className="flex items-center justify-center"
+              >
                 <ExternalLink className="h-4 w-4" />
-              </a>
+              </PrefetchLink>
             </Button>
           )}
           {project.github && (
@@ -409,9 +534,13 @@ function ProjectCard({ project, index: _index, featured = false }: { project: Pr
               className="bg-white/90 hover:bg-white text-gray-900 rounded-full p-2 shadow-lg"
               asChild
             >
-              <a href={project.github} target="_blank" rel="noopener noreferrer">
+              <PrefetchLink 
+                href={project.github} 
+                prefetchOnHover={true}
+                className="flex items-center justify-center"
+              >
                 <Github className="h-4 w-4" />
-              </a>
+              </PrefetchLink>
             </Button>
           )}
         </div>
@@ -461,12 +590,15 @@ function ProjectCard({ project, index: _index, featured = false }: { project: Pr
               className="w-full group/btn hover:bg-blue-50 dark:hover:bg-blue-900/20"
               asChild
             >
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
-                <span className="flex items-center justify-center gap-2 text-blue-600 dark:text-blue-400">
-                  Visualizar Projeto
-                  <ExternalLink className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                </span>
-              </a>
+              <PrefetchLink 
+                href={project.link} 
+                prefetchOnHover={true}
+                prefetchOnVisible={true}
+                className="flex items-center justify-center gap-2 text-blue-600 dark:text-blue-400 w-full h-full"
+              >
+                Visualizar Projeto
+                <ExternalLink className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+              </PrefetchLink>
             </Button>
           ) : (
             <div className="text-center py-2">
