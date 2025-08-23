@@ -110,7 +110,7 @@ export function useProgressiveLazyLoading<T extends HTMLElement = HTMLDivElement
 }
 
 export function useImageLazyLoading(src: string, placeholder?: string) {
-    const [imageSrc, setImageSrc] = useState(placeholder || '');
+    const [imageSrc, setImageSrc] = useState(placeholder ?? '');
     const [isLoaded, setIsLoaded] = useState(false);
     const [isError, setIsError] = useState(false);
     const { elementRef, shouldLoad } = useLazyLoading<HTMLImageElement>();

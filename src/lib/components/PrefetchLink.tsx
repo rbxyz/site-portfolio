@@ -88,8 +88,8 @@ export function PrefetchLink({
       ref={linkRef}
       href={href}
       className={className}
-      target={target || '_blank'}
-      rel={rel || 'noopener noreferrer'}
+      target={target ?? '_blank'}
+      rel={rel ?? 'noopener noreferrer'}
       onMouseEnter={handleMouseEnter}
     >
       {children}

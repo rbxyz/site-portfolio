@@ -211,7 +211,7 @@ export default function ProjectsPage() {
         prefetchUrl(project.link);
       }
       // Para projetos com imagens locais
-      if (project.imageUrl && project.imageUrl.startsWith('/')) {
+      if (project.imageUrl?.startsWith('/')) {
         prefetchImage(project.imageUrl);
         imageUrls.push(project.imageUrl);
       }
