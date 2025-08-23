@@ -41,6 +41,14 @@ const projects: Project[] = [
     technologies: ["NextJS", "TailwindCSS", "Typescript"],
     link: "https://www.allpines.com.br/",
   },
+  {
+    id: 4,
+    title: "MarcaAi | Agendamentos Inteligentes",
+    description: "Plataforma Saas para prestadores de serviços.",
+    imageUrl: "/",
+    technologies: ["NextJS", "TailwindCSS", "TypeScript", "Drizzle"],
+    link: "https://marcaaii.vercel.app/",
+  },
 ];
 
 const containerVariants = {

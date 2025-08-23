@@ -155,7 +155,7 @@ const allProjects: Project[] = [
     imageUrl: "",
     technologies: ["NextJS", "TailwindCSS", "TypeScript", "Prisma"],
     link: "https://lumos-app.vercel.app/",
-    type: "Saas",
+    type: "Web",
     featured: true,
     year: "2025",
   }
