@@ -6,11 +6,6 @@ import "./src/env.js";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Otimizações de performance
-    experimental: {
-        optimizeCss: true,
-    },
-
     // Configurações de imagem
     images: {
         remotePatterns: [
