@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/app/_components/theme-provider";
-import { ServiceWorkerProvider } from "@/lib/components/ServiceWorkerProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,16 +34,14 @@ export default function RootLayout({
         <link rel="preload" href="/Foto_Perfil.jpg" as="image" type="image/jpeg" />
       </head>
       <body className={inter.className}>
-        <ServiceWorkerProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </ServiceWorkerProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -9,7 +9,6 @@ import { Button } from "@/app/_components/ui/button";
 import { usePreloadProjectImages } from "@/lib/hooks/usePreloadImages";
 import { useProgressiveLazyLoading, useLazyLoading } from "@/lib/hooks/useLazyLoading";
 import { PrefetchLink, usePrefetch } from "@/lib/components/PrefetchLink";
-import { useImageCache } from "@/lib/hooks/useServiceWorker";
 
 // Definindo o tipo do projeto
 interface Project {
@@ -201,9 +200,6 @@ export default function ProjectsPage() {
   // Hook de prefetch para links
   const { prefetchUrl, prefetchImage } = usePrefetch();
   
-  // Hook para cache de imagens via Service Worker
-  const { cacheImages, isReady: swReady } = useImageCache();
-
   // Prefetch automático dos links dos projetos visíveis
   useEffect(() => {
     const visibleProjects = allProjects.slice(0, visibleCount);
@@ -227,11 +223,7 @@ export default function ProjectsPage() {
 
     });
     
-    // Cachear imagens via Service Worker se estiver pronto
-    if (swReady && imageUrls.length > 0) {
-      cacheImages(imageUrls);
-    }
-  }, [visibleCount, prefetchUrl, prefetchImage, cacheImages, swReady]);
+  }, [visibleCount, prefetchUrl, prefetchImage]);
 
   // Filtrando os projetos com base no tipo selecionado e termo de busca
   const filteredProjects = allProjects
