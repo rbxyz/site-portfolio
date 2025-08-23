@@ -37,7 +37,6 @@ export function usePreloadImages(urls: string[], options: PreloadImageOptions = 
                     img.crossOrigin = options.crossOrigin;
                 }
 
-                // Event listeners para progresso de carregamento
                 img.onload = () => {
                     loadedCount++;
                     setStatus(prev => ({
@@ -59,17 +58,6 @@ export function usePreloadImages(urls: string[], options: PreloadImageOptions = 
                     reject(new Error(`Failed to load image: ${url}`));
                 };
 
-                // Simular progresso para melhor UX
-                img.onprogress = (event) => {
-                    if (event.lengthComputable) {
-                        const progress = (event.loaded / event.total) * 100;
-                        setStatus(prev => ({
-                            ...prev,
-                            [url]: { ...prev[url], progress }
-                        }));
-                    }
-                };
-
                 // Iniciar carregamento
                 img.src = url;
             });
@@ -84,15 +72,18 @@ export function usePreloadImages(urls: string[], options: PreloadImageOptions = 
             .then(() => {
                 // Depois carregar o restante em paralelo (mas limitado)
                 const batchSize = 3;
-                const batches = [];
+                const batches: string[][] = [];
 
                 for (let i = 0; i < remainingUrls.length; i += batchSize) {
                     batches.push(remainingUrls.slice(i, i + batchSize));
                 }
 
-                return batches.reduce((promise, batch) => {
-                    return promise.then(() => Promise.all(batch.map(preloadImage)));
-                }, Promise.resolve());
+                // Executa lotes sequencialmente com async/await
+                return (async () => {
+                    for (const batch of batches) {
+                        await Promise.all(batch.map(preloadImage));
+                    }
+                })();
             })
             .catch(error => {
                 console.warn('Some images failed to preload:', error);
