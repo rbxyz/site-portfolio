@@ -188,7 +188,7 @@ export default function ProjectsPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   
   // Pré-carregamento de imagens dos projetos
-  const { allLoaded: imagesPreloaded, progress: imageProgress } = usePreloadProjectImages(allProjects);
+  const { allLoaded: imagesPreloaded } = usePreloadProjectImages(allProjects);
   
   // Lazy loading progressivo para os projetos
   const { visibleCount, sentinelRef, hasMore } = useProgressiveLazyLoading(allProjects.length, {
@@ -338,31 +338,7 @@ export default function ProjectsPage() {
           </div>
         </motion.div>
 
-        {/* Loading Progress Indicator */}
-        {!imagesPreloaded && imageProgress < 100 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mb-8"
-          >
-            <div className="max-w-md mx-auto">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
-                  Carregando projetos...
-                </span>
-                <span className="text-sm text-blue-600 dark:text-blue-400">
-                  {Math.round(imageProgress)}%
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div 
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
-                  style={{ width: `${imageProgress}%` }}
-                />
-              </div>
-            </div>
-          </motion.div>
-        )}
+
 
         {/* Projects Grid */}
         {visibleFilteredProjects.length > 0 ? (
