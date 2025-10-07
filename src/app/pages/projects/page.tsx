@@ -158,6 +158,18 @@ const allProjects: Project[] = [
     type: "Web",
     featured: true,
     year: "2025",
+  },
+   {
+    id: 12,
+    title: "Visualizer OCR",
+    description: "Visualizador do processo de .",
+    longDescription: "Esta ferramenta visualiza o processo de OCR em etapas, com bounding boxes e logs de tempo para aprendizado e depuração.",
+    imageUrl: "",
+    technologies: ["Python", "EasyOCR"],
+    link: "https://visualizer-oc.streamlit.app",
+    type: "Web",
+    featured: true,
+    year: "2025",
   }
 ];
 
