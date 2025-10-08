@@ -166,7 +166,7 @@ const allProjects: Project[] = [
     longDescription: "Esta ferramenta visualiza o processo de OCR em etapas, com bounding boxes e logs de tempo para aprendizado e depuração.",
     imageUrl: "",
     technologies: ["Python", "EasyOCR"],
-    link: "https://visualizer-oc.streamlit.app",
+    link: "https://visualizer-ocr.streamlit.app",
     type: "Web",
     featured: true,
     year: "2025",
