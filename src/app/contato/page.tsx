@@ -42,19 +42,16 @@ const socialLinks = [
     icon: Github,
     name: "GitHub",
     href: "https://github.com/rbxyz",
-    color: "hover:text-gray-900 dark:hover:text-white"
   },
   {
     icon: Linkedin,
     name: "LinkedIn",
     href: "https://linkedin.com/in/rbxyz/",
-    color: "hover:text-blue-600"
   },
   {
     icon: Instagram,
     name: "Instagram", 
     href: "https://www.instagram.com/rb_rs_/",
-    color: "hover:text-pink-600"
   }
 ];
 
@@ -94,12 +91,12 @@ export default function ContatoPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-dark-bg text-white">
       <NavBar />
       
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900">
+        <section className="relative py-20 bg-dark-bg">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -107,12 +104,14 @@ export default function ContatoPage() {
               transition={{ duration: 0.8 }}
               className="text-center max-w-3xl mx-auto"
             >
+              <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+                CONTACT
+              </div>
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Vamos Conversar
-                </span>
+                <span className="text-white">Vamos</span>{" "}
+                <span className="text-primary-500">Conversar</span>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              <p className="text-xl text-accent-gray mb-8">
                 Tem uma ideia? Precisa de ajuda com um projeto? Ou apenas quer trocar uma ideia sobre tecnologia? 
                 Estou sempre disponível para uma boa conversa!
               </p>
@@ -125,7 +124,7 @@ export default function ContatoPage() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`p-3 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 ${social.color}`}
+                    className="p-3 rounded-full bg-dark-card border border-dark-border backdrop-blur-sm shadow-lg hover:border-primary-500/50 hover:text-primary-500 transition-all duration-300 text-accent-gray"
                   >
                     <social.icon className="h-6 w-6" />
                     <span className="sr-only">{social.name}</span>
@@ -137,7 +136,7 @@ export default function ContatoPage() {
         </section>
 
         {/* Contact Section */}
-        <section className="py-20">
+        <section className="py-20 bg-dark-bg">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Contact Info */}
@@ -147,10 +146,11 @@ export default function ContatoPage() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-8">
-                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    Informações de Contato
-                  </span>
+                <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+                  INFO
+                </div>
+                <h2 className="text-3xl font-bold mb-8 text-white">
+                  Informações de <span className="text-primary-500">Contato</span>
                 </h2>
                 
                 <div className="space-y-6">
@@ -161,24 +161,24 @@ export default function ContatoPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      className="flex items-start space-x-4 p-4 rounded-lg bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                      className="flex items-start space-x-4 p-4 rounded-lg bg-dark-card border border-dark-border hover:border-primary-500/50 transition-all duration-300"
                     >
                       <div className="flex-shrink-0">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                          <info.icon className="h-6 w-6 text-white" />
+                        <div className="w-12 h-12 bg-primary-500/20 border border-primary-500/50 rounded-lg flex items-center justify-center">
+                          <info.icon className="h-6 w-6 text-primary-500" />
                         </div>
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold mb-1">{info.title}</h3>
+                        <h3 className="text-lg font-semibold mb-1 text-white">{info.title}</h3>
                         <a
                           href={info.href}
                           target={info.href.startsWith('http') ? '_blank' : '_self'}
                           rel={info.href.startsWith('http') ? 'noopener noreferrer' : ''}
-                          className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                          className="text-primary-500 hover:text-primary-400 underline font-medium"
                         >
                           {info.value}
                         </a>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{info.description}</p>
+                        <p className="text-sm text-accent-gray mt-1">{info.description}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -189,15 +189,15 @@ export default function ContatoPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
                   viewport={{ once: true }}
-                  className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl"
+                  className="mt-8 p-6 bg-dark-card border border-primary-500/20 rounded-xl"
                 >
-                  <h3 className="text-lg font-semibold mb-3 flex items-center">
-                    <MessageCircle className="h-5 w-5 mr-2 text-blue-600" />
+                  <h3 className="text-lg font-semibold mb-3 flex items-center text-white">
+                    <MessageCircle className="h-5 w-5 mr-2 text-primary-500" />
                     Disponibilidade
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Atualmente <span className="text-green-600 font-semibold">disponível</span> para novos projetos 
-                    e consultorias. Tempo de resposta médio: <span className="font-semibold">2-4 horas</span> em dias úteis.
+                  <p className="text-accent-gray">
+                    Atualmente <span className="text-primary-500 font-semibold">disponível</span> para novos projetos 
+                    e consultorias. Tempo de resposta médio: <span className="font-semibold text-white">2-4 horas</span> em dias úteis.
                   </p>
                 </motion.div>
               </motion.div>
@@ -209,11 +209,12 @@ export default function ContatoPage() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                  <h2 className="text-3xl font-bold mb-8">
-                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                      Envie uma Mensagem
-                    </span>
+                <div className="bg-dark-card border border-dark-border rounded-2xl shadow-xl p-8">
+                  <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+                    MESSAGE
+                  </div>
+                  <h2 className="text-3xl font-bold mb-8 text-white">
+                    Envie uma <span className="text-primary-500">Mensagem</span>
                   </h2>
 
                   {isSubmitted ? (
@@ -222,9 +223,9 @@ export default function ContatoPage() {
                       animate={{ opacity: 1, scale: 1 }}
                       className="text-center py-12"
                     >
-                      <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-                      <h3 className="text-2xl font-bold text-green-600 mb-2">Mensagem Enviada!</h3>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <CheckCircle className="h-16 w-16 text-primary-500 mx-auto mb-4" />
+                      <h3 className="text-2xl font-bold text-primary-500 mb-2">Mensagem Enviada!</h3>
+                      <p className="text-accent-gray">
                         Obrigado pelo contato. Retornarei em breve!
                       </p>
                     </motion.div>
@@ -232,7 +233,7 @@ export default function ContatoPage() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="grid md:grid-cols-2 gap-6">
                         <div>
-                          <label htmlFor="name" className="block text-sm font-medium mb-2">
+                          <label htmlFor="name" className="block text-sm font-medium mb-2 text-white">
                             Nome *
                           </label>
                           <input
@@ -242,12 +243,12 @@ export default function ContatoPage() {
                             required
                             value={formData.name}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                            className="w-full px-4 py-3 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 placeholder:text-accent-gray/50"
                             placeholder="Seu nome completo"
                           />
                         </div>
                         <div>
-                          <label htmlFor="email" className="block text-sm font-medium mb-2">
+                          <label htmlFor="email" className="block text-sm font-medium mb-2 text-white">
                             Email *
                           </label>
                           <input
@@ -257,14 +258,14 @@ export default function ContatoPage() {
                             required
                             value={formData.email}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                            className="w-full px-4 py-3 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 placeholder:text-accent-gray/50"
                             placeholder="seu@email.com"
                           />
                         </div>
                       </div>
                       
                       <div>
-                        <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                        <label htmlFor="subject" className="block text-sm font-medium mb-2 text-white">
                           Assunto *
                         </label>
                         <select
@@ -273,7 +274,7 @@ export default function ContatoPage() {
                           required
                           value={formData.subject}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                          className="w-full px-4 py-3 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200"
                         >
                           <option value="">Selecione um assunto</option>
                           <option value="projeto">Novo Projeto</option>
@@ -285,7 +286,7 @@ export default function ContatoPage() {
                       </div>
 
                       <div>
-                        <label htmlFor="message" className="block text-sm font-medium mb-2">
+                        <label htmlFor="message" className="block text-sm font-medium mb-2 text-white">
                           Mensagem *
                         </label>
                         <textarea
@@ -295,7 +296,7 @@ export default function ContatoPage() {
                           rows={6}
                           value={formData.message}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-vertical"
+                          className="w-full px-4 py-3 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 resize-vertical placeholder:text-accent-gray/50"
                           placeholder="Conte-me sobre seu projeto ou como posso ajudá-lo..."
                         />
                       </div>
@@ -304,7 +305,7 @@ export default function ContatoPage() {
                         type="submit"
                         disabled={isSubmitting}
                         size="lg"
-                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-transparent border-2 border-primary-500 text-white hover:bg-primary-500 hover:text-dark-bg font-semibold py-4 px-8 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isSubmitting ? (
                           <div className="flex items-center justify-center">
@@ -327,7 +328,7 @@ export default function ContatoPage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-gray-50 dark:bg-gray-800">
+        <section className="py-20 bg-dark-bg">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -336,12 +337,14 @@ export default function ContatoPage() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
+              <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+                FAQ
+              </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Perguntas Frequentes
-                </span>
+                <span className="text-white">Perguntas</span>{" "}
+                <span className="text-primary-500">Frequentes</span>
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
+              <p className="text-lg text-accent-gray">
                 Respostas para as dúvidas mais comuns
               </p>
             </motion.div>
@@ -355,10 +358,10 @@ export default function ContatoPage() {
                 {
                   question: "Você constói sistemas pequenos com IA?",
                   answer: "Sim! Faço sistemas pequenos com IA para empresas que precisam de um sistema simples e eficiente."
-                  },
+                },
                 {
                   question: "Qual é o prazo médio de entrega?",
-                  answer: "Sites simples: 2 - 7 dias. \n Sistemas complexos: 1-3 meses. Sempre alinhamos prazos realistas no início do projeto."
+                  answer: "Sites simples: 2 - 7 dias. Sistemas complexos: 1-3 meses. Sempre alinhamos prazos realistas no início do projeto."
                 },
                 {
                   question: "Ofereço suporte pós-entrega?",
@@ -368,7 +371,6 @@ export default function ContatoPage() {
                   question: "Trabalho com projetos de marketing digital?",
                   answer: "Otimizo totalmente seu website para performar da melhor forma possível! Sou especialista em tráfego pago, criação de campanhas e otimização de conversões para diversos nichos."
                 },
-               
               ].map((faq, index) => (
                 <motion.div
                   key={index}
@@ -376,10 +378,10 @@ export default function ContatoPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-lg"
+                  className="bg-dark-card border border-dark-border rounded-lg p-6 hover:border-primary-500/50 transition-all duration-300"
                 >
-                  <h3 className="text-lg font-semibold mb-3">{faq.question}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">{faq.answer}</p>
+                  <h3 className="text-lg font-semibold mb-3 text-white">{faq.question}</h3>
+                  <p className="text-accent-gray">{faq.answer}</p>
                 </motion.div>
               ))}
             </div>
@@ -388,4 +390,4 @@ export default function ContatoPage() {
       </main>
     </div>
   );
-} 
+}

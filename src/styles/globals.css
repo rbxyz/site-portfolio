@@ -13,15 +13,19 @@
     }
 
     ::-webkit-scrollbar-track {
-        @apply bg-gray-100 dark:bg-gray-800;
+        @apply bg-dark-surface;
     }
 
     ::-webkit-scrollbar-thumb {
-        @apply bg-gradient-to-b from-blue-500 to-purple-600 rounded-full;
+        @apply bg-primary-500 rounded-full;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        @apply from-blue-600 to-purple-700;
+        @apply bg-primary-600;
+    }
+
+    body {
+        @apply bg-dark-bg text-white;
     }
 }
 

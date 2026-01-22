@@ -7,7 +7,7 @@ import { ProjetosSection } from "@/app/_components/project";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-dark-bg text-white">
       <NavBar />
       <main>
         <HeroSection />

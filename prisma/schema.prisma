@@ -6,12 +6,8 @@ generator client {
 }
 
 datasource db {
-    provider = "mysql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url = env("DATABASE_URL")
 }
 
 model Post {
@@ -71,4 +67,27 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Project {
+    id              Int      @id @default(autoincrement())
+    title           String
+    description     String   @db.Text
+    longDescription String?  @db.Text
+    imageUrl        String?
+    technologies    String   @db.Text // JSON array como string
+    link            String?
+    github          String?
+    type            String   // "shipped", "in-progress", "archived"
+    featured        Boolean  @default(false)
+    year            String
+    status          String   @default("in-progress") // "shipped", "in-progress", "archived"
+    stars           Int      @default(0)
+    forks           Int      @default(0)
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+
+    @@index([type])
+    @@index([status])
+    @@index([featured])
 }

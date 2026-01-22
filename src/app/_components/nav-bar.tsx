@@ -19,13 +19,13 @@ export function ThemeSwitcher() {
   return (
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="rounded-md border border-gray-300 bg-gray-100 p-2 transition hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600"
+      className="rounded-md border border-dark-border bg-dark-card p-2 transition hover:bg-dark-hover text-accent-gray hover:text-primary-500"
       aria-label="Alternar modo claro/escuro"
     >
       {resolvedTheme === "dark" ? (
-        <SunIcon className="h-5 w-5 text-yellow-400" />
+        <SunIcon className="h-5 w-5" />
       ) : (
-        <MoonIcon className="h-5 w-5 text-gray-800" />
+        <MoonIcon className="h-5 w-5" />
       )}
     </button>
   );
@@ -35,13 +35,13 @@ export function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-700/50">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-dark-bg/80 backdrop-blur-sm border-b border-dark-border">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
         {/* Logo */}
-        <div className="text-2xl font-bold">
+        <div className="text-xl font-bold font-mono">
           <Link href="/" className="transition hover:opacity-80">
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              {"< Ruan Bueno />"}
+            <span className="text-primary-500">
+              {"< RBXYZ />"}
             </span>
           </Link>
         </div>
@@ -50,43 +50,43 @@ export function NavBar() {
         <nav className="hidden items-center space-x-8 md:flex">
           <Link
             href="/"
-            className="relative transition hover:text-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full"
+            className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
-            Início
+            Home
           </Link>
           <Link
             href="/sobre"
-            className="relative transition hover:text-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full"
+            className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
-            Sobre
+            Bio
           </Link>
           <Link
             href="/pages/projects"
-            className="relative transition hover:text-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full"
+            className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
-            Projetos
+            Portfolio
           </Link>
           <Link
             href="/contato"
-            className="relative transition hover:text-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full"
+            className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
-            Contato
+            Contact
           </Link>
           <Link
             href="https://blog.ruan.allpines.com.br/"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative transition hover:text-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full"
+            className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
             Blog
           </Link>
           <Link
-            href="https://ethos-theta.vercel.app/login"
+            href="https://ethos-theta.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative transition hover:text-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full"
+            className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
-            Ethos | Gestão de Horas
+            Ethos | Gestão de tempo
           </Link>
         </nav>
 
@@ -100,7 +100,7 @@ export function NavBar() {
           <ThemeSwitcher />
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="rounded-md p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="rounded-md p-2 text-accent-gray hover:bg-dark-card transition-colors"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
@@ -114,53 +114,53 @@ export function NavBar() {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-t border-gray-200/50 dark:border-gray-700/50">
+        <div className="md:hidden bg-dark-bg/95 backdrop-blur-sm border-t border-dark-border">
           <nav className="flex flex-col space-y-4 p-4">
             <Link
               href="/"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-lg transition hover:text-blue-500"
+              className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >
-              Início
+              Home
             </Link>
             <Link
               href="/sobre"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-lg transition hover:text-blue-500"
+              className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >
-              Sobre
+              Bio
             </Link>
             <Link
               href="/pages/projects"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-lg transition hover:text-blue-500"
+              className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >
-              Projetos
+              Portfolio
             </Link>
             <Link
               href="/contato"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-lg transition hover:text-blue-500"
+              className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >
-              Contato
+              Contact
             </Link>
             <Link
               href="https://blog.ruan.allpines.com.br/"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-lg transition hover:text-blue-500"
+              className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >
               Blog
             </Link>
             <Link
-              href="https://ethos.allpines.com.br"
+              href="https://ethos-theta.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-lg transition hover:text-blue-500"
+              className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >
-              Ethos
+              Ethos | Gestão de tempo
             </Link>
           </nav>
         </div>
