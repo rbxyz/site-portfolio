@@ -6,6 +6,45 @@ import { Button } from "@/app/_components/ui/button";
 import { CanvasMouseEffect } from "./canvas-mouse-effect";
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+
+function TypingText({ text, className }: { text: string; className?: string }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [charIndex, setCharIndex] = useState(0);
+
+  useEffect(() => {
+    const typingSpeed = isDeleting ? 50 : 100; // Mais rápido ao deletar
+    const pauseTime = isDeleting ? 500 : 2000; // Pausa após completar
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting && charIndex < text.length) {
+        // Digitando
+        setDisplayedText(text.slice(0, charIndex + 1));
+        setCharIndex(charIndex + 1);
+      } else if (!isDeleting && charIndex === text.length) {
+        // Texto completo, aguardar antes de deletar
+        setTimeout(() => setIsDeleting(true), pauseTime);
+      } else if (isDeleting && charIndex > 0) {
+        // Deletando
+        setDisplayedText(text.slice(0, charIndex - 1));
+        setCharIndex(charIndex - 1);
+      } else if (isDeleting && charIndex === 0) {
+        // Texto deletado, começar novamente
+        setIsDeleting(false);
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, text]);
+
+  return (
+    <span className={className}>
+      {displayedText}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
+}
 
 export function HeroSection() {
   return (
@@ -44,7 +83,9 @@ export function HeroSection() {
             >
               <span className="text-white">Dev. &</span>
               <br />
-              <span className="text-primary-500">Criador de soluções digitais</span>
+              <span className="text-primary-500">
+                <TypingText text="Criador de soluções digitais" />
+              </span>
             </motion.h1>
 
             {/* Description */}
