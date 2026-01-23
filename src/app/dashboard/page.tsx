@@ -66,7 +66,7 @@ export default function DashboardPage() {
     try {
       const response = await fetch("/api/projects");
       if (response.ok) {
-        const data = await response.json();
+        const data = (await response.json()) as Project[];
         setProjects(data);
       }
     } catch (error) {
