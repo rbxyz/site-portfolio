@@ -49,7 +49,7 @@ export function ProjetosSection() {
         if (!response.ok) {
           throw new Error("Failed to fetch projects");
         }
-        const data = await response.json();
+        const data = (await response.json()) as Project[];
         // Pegar apenas os 3 primeiros projetos em destaque
         setProjects(data.slice(0, 3));
       } catch (err) {
@@ -59,7 +59,7 @@ export function ProjetosSection() {
       }
     };
 
-    fetchProjects();
+    void fetchProjects();
   }, []);
 
   if (loading) {

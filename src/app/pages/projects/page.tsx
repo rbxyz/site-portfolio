@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { NavBar } from "@/app/_components/nav-bar";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, ArrowRight, Star } from "lucide-react";
-import { Button } from "@/app/_components/ui/button";
+import { ExternalLink, Github, Star } from "lucide-react";
 import { CanvasMouseEffect } from "@/app/_components/canvas-mouse-effect";
 
 // Definindo o tipo do projeto
@@ -51,7 +50,7 @@ export default function ProjectsPage() {
         if (!response.ok) {
           throw new Error("Failed to fetch projects");
         }
-        const data = await response.json();
+        const data = (await response.json()) as Project[];
         setProjects(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
@@ -61,7 +60,7 @@ export default function ProjectsPage() {
       }
     };
 
-    fetchProjects();
+    void fetchProjects();
   }, []);
 
   // Filtrando os projetos com base no status selecionado
@@ -84,19 +83,6 @@ export default function ProjectsPage() {
     { key: "in-progress", label: "IN-PROGRESS" },
     { key: "archived", label: "ARCHIVED" },
   ];
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "shipped":
-        return "bg-green-500";
-      case "in-progress":
-        return "bg-yellow-500";
-      case "archived":
-        return "bg-gray-500";
-      default:
-        return "bg-gray-500";
-    }
-  };
 
   if (loading) {
     return (
@@ -196,7 +182,7 @@ function ProjectCard({
   index: number;
   featured?: boolean;
 }) {
-  const imageUrl = project.imageUrl || "/placeholder.png";
+  const imageUrl = project.imageUrl ?? "/placeholder.png";
 
   const getStatusColor = (status: string) => {
     switch (status) {

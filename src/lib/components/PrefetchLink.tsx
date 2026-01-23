@@ -120,7 +120,7 @@ export function usePrefetch() {
         if (!document.head.querySelector(`link[rel="dns-prefetch"][href="${origin}"]`)) {
           document.head.appendChild(link);
         }
-      } catch (error) {
+      } catch {
         console.warn('Invalid URL for prefetch:', url);
       }
     }
