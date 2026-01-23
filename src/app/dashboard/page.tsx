@@ -343,9 +343,9 @@ export default function DashboardPage() {
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   >
-                    <option value="shipped">Shipped</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="archived">Archived</option>
+                    <option value="in-progress">Em Desenvolvimento</option>
+                    <option value="shipped">Finalizado</option>
+                    <option value="archived">Arquivado</option>
                   </select>
                 </div>
 
