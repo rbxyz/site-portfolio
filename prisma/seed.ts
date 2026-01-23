@@ -15,11 +15,11 @@ async function main() {
   // NOTA: Este usuário será vinculado automaticamente quando você fizer login
   // via Discord com o mesmo email. O NextAuth criará a Account automaticamente.
   const testUser = await prisma.user.upsert({
-    where: { email: "admin@example.com" },
+    where: { email: "rbcr4z1@gmail.com" },
     update: {},
     create: {
-      email: "admin@example.com",
-      name: "Admin User",
+      email: "rbcr4z1@gmail.com",
+      name: "Ruan Bueno",
       emailVerified: new Date(),
       image: null,
     },
