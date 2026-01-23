@@ -40,6 +40,7 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<string>("All");
+  const [selectedType, setSelectedType] = useState<string>("All");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -63,10 +64,15 @@ export default function ProjectsPage() {
     void fetchProjects();
   }, []);
 
-  // Filtrando os projetos com base no status selecionado
-  const filteredProjects = projects.filter(
-    (project) => selectedStatus === "All" || project.status === selectedStatus
-  );
+  // Filtrando os projetos com base no status e tipo selecionados
+  const filteredProjects = projects.filter((project) => {
+    const statusMatch = selectedStatus === "All" || project.status === selectedStatus;
+    const typeMatch = selectedType === "All" || project.type === selectedType;
+    return statusMatch && typeMatch;
+  });
+
+  // Obter tipos únicos dos projetos para filtros dinâmicos
+  const uniqueTypes = Array.from(new Set(projects.map((p) => p.type))).filter(Boolean);
 
   // Separando projetos em destaque e outros
   const featuredProjects = filteredProjects.filter((project) => project.featured);
@@ -77,11 +83,16 @@ export default function ProjectsPage() {
     return parseInt(b.year) - parseInt(a.year);
   });
 
-  const filterButtons = [
+  const statusFilterButtons = [
     { key: "All", label: "ALL" },
     { key: "shipped", label: "SHIPPED" },
     { key: "in-progress", label: "IN-PROGRESS" },
     { key: "archived", label: "ARCHIVED" },
+  ];
+
+  const typeFilterButtons = [
+    { key: "All", label: "ALL" },
+    ...uniqueTypes.map((type) => ({ key: type, label: type.toUpperCase() })),
   ];
 
   if (loading) {
@@ -129,21 +140,47 @@ export default function ProjectsPage() {
       {/* Filters */}
       <section className="pb-8 sm:pb-10 md:pb-12">
         <div className="container mx-auto px-4 sm:px-6 md:px-8">
-          <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
-            {filterButtons.map((button) => (
-              <button
-                key={button.key}
-                onClick={() => setSelectedStatus(button.key)}
-                className={`px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm md:text-base font-semibold transition-all duration-300 ${
-                  selectedStatus === button.key
-                    ? "bg-primary-500 text-dark-bg"
-                    : "bg-dark-card border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500"
-                }`}
-              >
-                {button.label}
-              </button>
-            ))}
+          {/* Filtros por Status */}
+          <div className="mb-4">
+            <h3 className="text-sm font-medium text-accent-gray mb-3">Status</h3>
+            <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
+              {statusFilterButtons.map((button) => (
+                <button
+                  key={button.key}
+                  onClick={() => setSelectedStatus(button.key)}
+                  className={`px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm md:text-base font-semibold transition-all duration-300 ${
+                    selectedStatus === button.key
+                      ? "bg-primary-500 text-dark-bg"
+                      : "bg-dark-card border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500"
+                  }`}
+                >
+                  {button.label}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {/* Filtros por Tipo (dinâmicos) */}
+          {uniqueTypes.length > 0 && (
+            <div>
+              <h3 className="text-sm font-medium text-accent-gray mb-3">Tipo</h3>
+              <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
+                {typeFilterButtons.map((button) => (
+                  <button
+                    key={button.key}
+                    onClick={() => setSelectedType(button.key)}
+                    className={`px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm md:text-base font-semibold transition-all duration-300 ${
+                      selectedType === button.key
+                        ? "bg-primary-500 text-dark-bg"
+                        : "bg-dark-card border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500"
+                    }`}
+                  >
+                    {button.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
