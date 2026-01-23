@@ -1,16 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
-import { LogIn } from "lucide-react";
+import { LogIn, Mail, Lock, AlertCircle } from "lucide-react";
 
 export default function LoginPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated" && session) {
@@ -18,8 +22,28 @@ export default function LoginPage() {
     }
   }, [status, session, router]);
 
-  const handleSignIn = async () => {
-    await signIn("discord", { callbackUrl: "/dashboard" });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Email ou senha incorretos");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      setError("Erro ao fazer login. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (status === "loading") {
@@ -61,29 +85,71 @@ export default function LoginPage() {
                 Acesso ao Dashboard
               </h1>
               <p className="text-gray-400">
-                Faça login com sua conta Discord para gerenciar seus projetos
+                Faça login para gerenciar seus projetos
               </p>
             </div>
 
-            <motion.div
+            <motion.form
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
+              onSubmit={handleSubmit}
+              className="space-y-4"
             >
-              <Button
-                onClick={handleSignIn}
-                className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-6 text-lg font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-3"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
                 >
-                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027A19.9 19.9 0 0 0 .058 18.38a.082.082 0 0 0 .031.057a19.849 19.849 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054a19.9 19.9 0 0 0-3.6-13.956a.061.061 0 0 0-.031-.03zM8.02 15.33a1.73 1.73 0 0 1-1.573-1.926a1.729 1.729 0 0 1 1.573-1.927a1.73 1.73 0 0 1 1.573 1.927a1.73 1.73 0 0 1-1.573 1.926zm7.975 0a1.73 1.73 0 0 1-1.573-1.926a1.729 1.729 0 0 1 1.573-1.927a1.73 1.73 0 0 1 1.573 1.927a1.73 1.73 0 0 1-1.573 1.926z" />
-                </svg>
-                Entrar com Discord
+                  <AlertCircle className="w-4 h-4" />
+                  <span>{error}</span>
+                </motion.div>
+              )}
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-dark-border bg-dark-surface text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
+                    placeholder="seu@email.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Senha
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-dark-border bg-dark-surface text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
+                    placeholder="••••••••"
+                  />
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-primary-500 hover:bg-primary-600 text-white py-6 text-lg font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <LogIn className="w-5 h-5" />
+                {loading ? "Entrando..." : "Entrar"}
               </Button>
-            </motion.div>
+            </motion.form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-500">

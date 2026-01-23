@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -11,23 +12,29 @@ async function main() {
   await prisma.session.deleteMany();
   await prisma.user.deleteMany();
 
-  // Criar usuário de teste
-  // NOTA: Este usuário será vinculado automaticamente quando você fizer login
-  // via Discord com o mesmo email. O NextAuth criará a Account automaticamente.
+  // Criar usuário de teste com senha hasheada
+  const defaultPassword = "admin123"; // Senha padrão - altere em produção!
+  const hashedPassword = await bcrypt.hash(defaultPassword, 10);
+
   const testUser = await prisma.user.upsert({
-    where: { email: "rbcr4z1@gmail.com" },
-    update: {},
+    where: { email: "admin@example.com" },
+    update: {
+      password: hashedPassword,
+    },
     create: {
-      email: "rbcr4z1@gmail.com",
-      name: "Ruan Bueno",
+      email: "admin@example.com",
+      name: "Admin User",
       emailVerified: new Date(),
       image: null,
+      password: hashedPassword,
     },
   });
 
   console.log(`✅ Created/Updated test user: ${testUser.email}`);
   console.log(`   User ID: ${testUser.id}`);
-  console.log(`   ⚠️  IMPORTANTE: Faça login via Discord com este email para vincular a conta!`);
+  console.log(`   📧 Email: admin@example.com`);
+  console.log(`   🔑 Senha: ${defaultPassword}`);
+  console.log(`   ⚠️  IMPORTANTE: Altere a senha padrão em produção!`);
 
   // Criar projetos
   const projects = [
