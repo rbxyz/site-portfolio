@@ -2,6 +2,22 @@ import { NextResponse } from "next/server";
 import { db } from "@/server/db";
 import { auth } from "@/server/auth";
 
+interface ProjectUpdateData {
+  title: string;
+  description: string;
+  longDescription?: string | null;
+  imageUrl?: string | null;
+  technologies: string;
+  link?: string | null;
+  github?: string | null;
+  type: string;
+  featured?: boolean;
+  year: string;
+  status: string;
+  stars?: number;
+  forks?: number;
+}
+
 // PUT - Atualizar projeto
 export async function PUT(
   request: Request,
@@ -14,24 +30,24 @@ export async function PUT(
     }
 
     const { id } = await params;
-    const body = await request.json();
+    const body = (await request.json()) as ProjectUpdateData;
 
     const project = await db.project.update({
       where: { id: parseInt(id) },
       data: {
         title: body.title,
         description: body.description,
-        longDescription: body.longDescription || null,
-        imageUrl: body.imageUrl || null,
+        longDescription: body.longDescription ?? null,
+        imageUrl: body.imageUrl ?? null,
         technologies: body.technologies,
-        link: body.link || null,
-        github: body.github || null,
+        link: body.link ?? null,
+        github: body.github ?? null,
         type: body.type,
-        featured: body.featured || false,
+        featured: body.featured ?? false,
         year: body.year,
         status: body.status,
-        stars: body.stars || 0,
-        forks: body.forks || 0,
+        stars: body.stars ?? 0,
+        forks: body.forks ?? 0,
       },
     });
 

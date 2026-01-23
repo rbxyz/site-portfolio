@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
-import { Plus, Edit, Trash2, Save, X, Image as ImageIcon, Link as LinkIcon, Github, Star } from "lucide-react";
+import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star } from "lucide-react";
 import Image from "next/image";
 
 interface Project {
@@ -27,7 +27,7 @@ interface Project {
 }
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +58,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      fetchProjects();
+      void fetchProjects();
     }
   }, [status]);
 
@@ -116,7 +116,7 @@ export default function DashboardPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          technologies: JSON.stringify(formData.technologies || []),
+          technologies: JSON.stringify(formData.technologies ?? []),
         }),
       });
 
@@ -124,8 +124,8 @@ export default function DashboardPage() {
         await fetchProjects();
         handleCancel();
       } else {
-        const error = await response.json();
-        alert(`Erro: ${error.error || "Falha ao salvar projeto"}`);
+        const error = (await response.json()) as { error?: string };
+        alert(`Erro: ${error.error ?? "Falha ao salvar projeto"}`);
       }
     } catch (error) {
       console.error("Error saving project:", error);
@@ -156,14 +156,14 @@ export default function DashboardPage() {
     if (techInput.trim()) {
       setFormData({
         ...formData,
-        technologies: [...(formData.technologies || []), techInput.trim()],
+        technologies: [...(formData.technologies ?? []), techInput.trim()],
       });
       setTechInput("");
     }
   };
 
   const removeTechnology = (index: number) => {
-    const newTechs = [...(formData.technologies || [])];
+    const newTechs = [...(formData.technologies ?? [])];
     newTechs.splice(index, 1);
     setFormData({ ...formData, technologies: newTechs });
   };
@@ -242,7 +242,7 @@ export default function DashboardPage() {
                   </label>
                   <input
                     type="text"
-                    value={formData.title || ""}
+                    value={formData.title ?? ""}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     required
@@ -255,7 +255,7 @@ export default function DashboardPage() {
                   </label>
                   <input
                     type="text"
-                    value={formData.year || ""}
+                    value={formData.year ?? ""}
                     onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     required
@@ -267,7 +267,7 @@ export default function DashboardPage() {
                     Descrição *
                   </label>
                   <textarea
-                    value={formData.description || ""}
+                    value={formData.description ?? ""}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     rows={3}
@@ -280,7 +280,7 @@ export default function DashboardPage() {
                     Descrição Longa
                   </label>
                   <textarea
-                    value={formData.longDescription || ""}
+                    value={formData.longDescription ?? ""}
                     onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     rows={3}
@@ -293,7 +293,7 @@ export default function DashboardPage() {
                   </label>
                   <input
                     type="text"
-                    value={formData.imageUrl || ""}
+                    value={formData.imageUrl ?? ""}
                     onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
@@ -305,7 +305,7 @@ export default function DashboardPage() {
                   </label>
                   <input
                     type="text"
-                    value={formData.link || ""}
+                    value={formData.link ?? ""}
                     onChange={(e) => setFormData({ ...formData, link: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
@@ -317,7 +317,7 @@ export default function DashboardPage() {
                   </label>
                   <input
                     type="text"
-                    value={formData.github || ""}
+                    value={formData.github ?? ""}
                     onChange={(e) => setFormData({ ...formData, github: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
@@ -328,7 +328,7 @@ export default function DashboardPage() {
                     Tipo
                   </label>
                   <select
-                    value={formData.type || "shipped"}
+                    value={formData.type ?? "shipped"}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   >
@@ -343,7 +343,7 @@ export default function DashboardPage() {
                     Status
                   </label>
                   <select
-                    value={formData.status || "in-progress"}
+                    value={formData.status ?? "in-progress"}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   >
@@ -357,7 +357,7 @@ export default function DashboardPage() {
                   <label className="flex items-center gap-2 text-white cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={formData.featured || false}
+                      checked={formData.featured ?? false}
                       onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
                       className="w-4 h-4 rounded border-dark-border bg-dark-surface text-primary-500 focus:ring-primary-500"
                     />
@@ -371,7 +371,7 @@ export default function DashboardPage() {
                   </label>
                   <input
                     type="number"
-                    value={formData.stars || 0}
+                    value={formData.stars ?? 0}
                     onChange={(e) => setFormData({ ...formData, stars: parseInt(e.target.value) || 0 })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
@@ -383,7 +383,7 @@ export default function DashboardPage() {
                   </label>
                   <input
                     type="number"
-                    value={formData.forks || 0}
+                    value={formData.forks ?? 0}
                     onChange={(e) => setFormData({ ...formData, forks: parseInt(e.target.value) || 0 })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
@@ -411,7 +411,7 @@ export default function DashboardPage() {
                     </Button>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {(formData.technologies || []).map((tech, index) => (
+                    {(formData.technologies ?? []).map((tech, index) => (
                       <span
                         key={index}
                         className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-dark-surface border border-dark-border text-sm text-white"

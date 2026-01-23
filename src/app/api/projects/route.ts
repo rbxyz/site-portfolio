@@ -134,6 +134,22 @@ export async function GET(request: Request) {
   }
 }
 
+interface ProjectCreateData {
+  title: string;
+  description: string;
+  longDescription?: string | null;
+  imageUrl?: string | null;
+  technologies: string;
+  link?: string | null;
+  github?: string | null;
+  type?: string;
+  featured?: boolean;
+  year: string;
+  status?: string;
+  stars?: number;
+  forks?: number;
+}
+
 // POST - Criar novo projeto
 export async function POST(request: Request) {
   try {
@@ -142,23 +158,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json();
+    const body = (await request.json()) as ProjectCreateData;
 
     const project = await db.project.create({
       data: {
         title: body.title,
         description: body.description,
-        longDescription: body.longDescription || null,
-        imageUrl: body.imageUrl || null,
+        longDescription: body.longDescription ?? null,
+        imageUrl: body.imageUrl ?? null,
         technologies: body.technologies,
-        link: body.link || null,
-        github: body.github || null,
-        type: body.type || "shipped",
-        featured: body.featured || false,
+        link: body.link ?? null,
+        github: body.github ?? null,
+        type: body.type ?? "shipped",
+        featured: body.featured ?? false,
         year: body.year,
-        status: body.status || "in-progress",
-        stars: body.stars || 0,
-        forks: body.forks || 0,
+        status: body.status ?? "in-progress",
+        stars: body.stars ?? 0,
+        forks: body.forks ?? 0,
       },
     });
 
