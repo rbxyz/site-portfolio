@@ -86,15 +86,20 @@ export function CanvasMouseEffect() {
       // Draw connection lines between nearby particles
       for (let i = 0; i < particlesRef.current.length; i++) {
         for (let j = i + 1; j < particlesRef.current.length; j++) {
-          const dx = particlesRef.current[i].x - particlesRef.current[j].x;
-          const dy = particlesRef.current[i].y - particlesRef.current[j].y;
+          const particle1 = particlesRef.current[i];
+          const particle2 = particlesRef.current[j];
+          
+          if (!particle1 || !particle2) continue;
+          
+          const dx = particle1.x - particle2.x;
+          const dy = particle1.y - particle2.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 100) {
             const alpha = (1 - distance / 100) * 0.2;
             ctx.beginPath();
-            ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);
-            ctx.lineTo(particlesRef.current[j].x, particlesRef.current[j].y);
+            ctx.moveTo(particle1.x, particle1.y);
+            ctx.lineTo(particle2.x, particle2.y);
             ctx.strokeStyle = `rgba(0, 200, 150, ${alpha})`;
             ctx.lineWidth = 1;
             ctx.stroke();
