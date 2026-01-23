@@ -122,7 +122,7 @@ function WordTypingText({
   const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
-    const currentWord = words[currentWordIndex] || "";
+    const currentWord = words[currentWordIndex] ?? "";
     const typingSpeed = isDeleting ? 30 : 80; // Mais rápido ao deletar
     const pauseTime = isDeleting ? 300 : 1500; // Pausa após completar palavra
 

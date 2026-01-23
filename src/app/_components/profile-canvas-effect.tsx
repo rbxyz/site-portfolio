@@ -13,7 +13,6 @@ interface OrbitingParticle {
 
 const MAX_PARTICLES = 40;
 const ORBIT_RADIUS = 180;
-const PARTICLE_SIZE = 2;
 
 export function ProfileCanvasEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -76,8 +75,7 @@ export function ProfileCanvasEffect() {
       const particles = particlesRef.current;
 
       // Atualizar e desenhar partículas orbitando
-      for (let i = 0; i < particles.length; i++) {
-        const particle = particles[i];
+      for (const particle of particles) {
         if (!particle) continue;
 
         // Atualizar ângulo (órbita)
