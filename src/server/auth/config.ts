@@ -32,7 +32,10 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
-    DiscordProvider,
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+    }),
     /**
      * ...add more providers here.
      *
@@ -44,6 +47,9 @@ export const authConfig = {
      */
   ],
   adapter: PrismaAdapter(db),
+  pages: {
+    signIn: "/login",
+  },
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -52,5 +58,13 @@ export const authConfig = {
         id: user.id,
       },
     }),
+    redirect: ({ url, baseUrl }) => {
+      // Se a URL for relativa, usar baseUrl
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Se a URL for do mesmo domínio, permitir
+      if (new URL(url).origin === baseUrl) return url;
+      // Caso contrário, redirecionar para dashboard
+      return `${baseUrl}/dashboard`;
+    },
   },
 } satisfies NextAuthConfig;

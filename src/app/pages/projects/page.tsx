@@ -115,12 +115,12 @@ export default function ProjectsPage() {
             className="max-w-4xl"
           >
             <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-3 sm:mb-4">
-              ARTIFACTS
+              PORTFOLIO
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
-              <span className="text-white">Open Source</span>
+              <span className="text-white">Projetos</span>
               <br />
-              <span className="text-primary-500">Projects</span>
+              <span className="text-primary-500">realizados</span>
             </h1>
           </motion.div>
         </div>

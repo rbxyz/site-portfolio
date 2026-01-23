@@ -5,8 +5,29 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Seeding database...");
 
-  // Limpar projetos existentes
+  // Limpar dados existentes
   await prisma.project.deleteMany();
+  await prisma.account.deleteMany();
+  await prisma.session.deleteMany();
+  await prisma.user.deleteMany();
+
+  // Criar usuário de teste
+  // NOTA: Este usuário será vinculado automaticamente quando você fizer login
+  // via Discord com o mesmo email. O NextAuth criará a Account automaticamente.
+  const testUser = await prisma.user.upsert({
+    where: { email: "admin@example.com" },
+    update: {},
+    create: {
+      email: "admin@example.com",
+      name: "Admin User",
+      emailVerified: new Date(),
+      image: null,
+    },
+  });
+
+  console.log(`✅ Created/Updated test user: ${testUser.email}`);
+  console.log(`   User ID: ${testUser.id}`);
+  console.log(`   ⚠️  IMPORTANTE: Faça login via Discord com este email para vincular a conta!`);
 
   // Criar projetos
   const projects = [
