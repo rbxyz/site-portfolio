@@ -13,28 +13,22 @@ async function main() {
   await prisma.user.deleteMany();
 
   // Criar usuário de teste com senha hasheada
-  const defaultPassword = "admin123"; // Senha padrão - altere em produção!
+  const defaultPassword = "J1AllRbxyz"; // Senha padrão - altere em produção!
   const hashedPassword = await bcrypt.hash(defaultPassword, 10);
 
   const testUser = await prisma.user.upsert({
-    where: { email: "admin@example.com" },
+    where: { email: "rbcr4z1@gmail.com" },
     update: {
       password: hashedPassword,
     },
     create: {
-      email: "admin@example.com",
-      name: "Admin User",
+      email: "rbcr4z1@gmail.com",
+      name: "Ruan Bueno",
       emailVerified: new Date(),
       image: null,
       password: hashedPassword,
     },
   });
-
-  console.log(`✅ Created/Updated test user: ${testUser.email}`);
-  console.log(`   User ID: ${testUser.id}`);
-  console.log(`   📧 Email: admin@example.com`);
-  console.log(`   🔑 Senha: ${defaultPassword}`);
-  console.log(`   ⚠️  IMPORTANTE: Altere a senha padrão em produção!`);
 
   // Criar projetos
   const projects = [
