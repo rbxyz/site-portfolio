@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/server/db";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { auth } from "@/server/auth";
 
 export async function GET(request: Request) {
   try {
@@ -30,6 +31,9 @@ export async function GET(request: Request) {
     // Verificar conexão com banco de dados
     let projects;
     try {
+      // Log para debug
+      console.log("Fetching projects with where clause:", where);
+      
       projects = await db.project.findMany({
         where,
         orderBy: [
@@ -38,14 +42,35 @@ export async function GET(request: Request) {
           { createdAt: "desc" },
         ],
       });
+      
+      console.log(`Found ${projects.length} projects`);
+      
+      // Se não encontrou projetos, tentar sem filtros para debug
+      if (projects.length === 0 && Object.keys(where).length > 0) {
+        console.log("No projects found with filters, trying without filters...");
+        const allProjects = await db.project.findMany({
+          orderBy: [
+            { featured: "desc" },
+            { year: "desc" },
+            { createdAt: "desc" },
+          ],
+        });
+        console.log(`Found ${allProjects.length} total projects without filters`);
+      }
     } catch (dbError) {
+      // Log detalhado do erro
+      console.error("Database error details:", {
+        error: dbError,
+        message: dbError instanceof Error ? dbError.message : String(dbError),
+        stack: dbError instanceof Error ? dbError.stack : undefined,
+        name: dbError instanceof Error ? dbError.name : undefined,
+      });
+      
       // Se for erro de conexão, retornar array vazio em vez de erro 500
       if (
         dbError instanceof PrismaClientKnownRequestError ||
         dbError instanceof Error
       ) {
-        console.error("Database connection error:", dbError);
-        
         // Em produção, retornar array vazio para não quebrar a UI
         if (process.env.NODE_ENV === "production") {
           return NextResponse.json([]);
@@ -83,9 +108,11 @@ export async function GET(request: Request) {
       };
     });
 
+    console.log(`Returning ${projectsWithParsedTech.length} projects`);
     return NextResponse.json(projectsWithParsedTech);
   } catch (error) {
     console.error("Error fetching projects:", error);
+    console.error("Error stack:", error instanceof Error ? error.stack : undefined);
     
     // Retornar mensagem de erro mais detalhada em desenvolvimento
     const errorMessage = error instanceof Error ? error.message : "Failed to fetch projects";
@@ -99,8 +126,62 @@ export async function GET(request: Request) {
     return NextResponse.json(
       { 
         error: errorMessage,
-        details: String(error)
+        details: String(error),
+        stack: error instanceof Error ? error.stack : undefined
       },
+      { status: 500 }
+    );
+  }
+}
+
+// POST - Criar novo projeto
+export async function POST(request: Request) {
+  try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+
+    const project = await db.project.create({
+      data: {
+        title: body.title,
+        description: body.description,
+        longDescription: body.longDescription || null,
+        imageUrl: body.imageUrl || null,
+        technologies: body.technologies,
+        link: body.link || null,
+        github: body.github || null,
+        type: body.type || "shipped",
+        featured: body.featured || false,
+        year: body.year,
+        status: body.status || "in-progress",
+        stars: body.stars || 0,
+        forks: body.forks || 0,
+      },
+    });
+
+    // Parse technologies para retornar
+    let technologies: string[] = [];
+    try {
+      if (typeof project.technologies === "string") {
+        technologies = JSON.parse(project.technologies) as string[];
+      } else if (Array.isArray(project.technologies)) {
+        technologies = project.technologies;
+      }
+    } catch {
+      technologies = [];
+    }
+
+    return NextResponse.json({
+      ...project,
+      technologies,
+    });
+  } catch (error) {
+    console.error("Error creating project:", error);
+    return NextResponse.json(
+      { error: "Failed to create project" },
       { status: 500 }
     );
   }

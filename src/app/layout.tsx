@@ -1,6 +1,8 @@
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/app/_components/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
+import { Providers } from "@/app/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,14 +36,17 @@ export default function RootLayout({
         <link rel="preload" href="/Foto_Perfil.jpg" as="image" type="image/jpeg" />
       </head>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </Providers>
+        <Analytics />
       </body>
     </html>
   );

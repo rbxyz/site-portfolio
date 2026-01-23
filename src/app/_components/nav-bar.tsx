@@ -1,38 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
-import { SunIcon, MoonIcon, Menu, X } from "lucide-react";
+import { useState } from "react";
+import { Menu, X, LogIn, LogOut, User } from "lucide-react";
 import Link from "next/link";
-
-export function ThemeSwitcher() {
-  const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Garante que o componente só renderize no lado do cliente
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  return (
-    <button
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="rounded-md border border-dark-border bg-dark-card p-2 transition hover:bg-dark-hover text-accent-gray hover:text-primary-500"
-      aria-label="Alternar modo claro/escuro"
-    >
-      {resolvedTheme === "dark" ? (
-        <SunIcon className="h-5 w-5" />
-      ) : (
-        <MoonIcon className="h-5 w-5" />
-      )}
-    </button>
-  );
-}
+import { useSession, signOut } from "next-auth/react";
 
 export function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { status } = useSession();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-dark-bg/80 backdrop-blur-sm border-b border-dark-border">
@@ -90,14 +65,53 @@ export function NavBar() {
           </Link>
         </nav>
 
-        {/* Desktop Theme Switcher */}
+        {/* Desktop Auth */}
         <div className="hidden md:flex items-center space-x-4">
-          <ThemeSwitcher />
+          {status === "authenticated" ? (
+            <>
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-500/10 border border-primary-500/50 text-primary-500 hover:bg-primary-500/20 transition-all duration-300"
+              >
+                <User className="h-4 w-4" />
+                <span className="text-sm font-medium">Dashboard</span>
+              </Link>
+              <button
+                onClick={() => void signOut({ callbackUrl: "/" })}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500 transition-all duration-300"
+              >
+                <LogOut className="h-4 w-4" />
+                <span className="text-sm">Sair</span>
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-500 text-white hover:bg-primary-600 transition-all duration-300"
+            >
+              <LogIn className="h-4 w-4" />
+              <span className="text-sm font-medium">Login</span>
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center space-x-4 md:hidden">
-          <ThemeSwitcher />
+        <div className="flex items-center space-x-2 md:hidden">
+          {status === "authenticated" ? (
+            <Link
+              href="/dashboard"
+              className="p-2 rounded-lg bg-primary-500/10 border border-primary-500/50 text-primary-500"
+            >
+              <User className="h-5 w-5" />
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="p-2 rounded-lg bg-primary-500 text-white"
+            >
+              <LogIn className="h-5 w-5" />
+            </Link>
+          )}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="rounded-md p-2 text-accent-gray hover:bg-dark-card transition-colors"
@@ -162,6 +176,34 @@ export function NavBar() {
             >
               Ethos | Gestão de tempo
             </Link>
+            {status === "authenticated" ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block py-2 text-lg text-primary-500 font-semibold transition hover:text-primary-400"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    void signOut({ callbackUrl: "/" });
+                  }}
+                  className="block w-full text-left py-2 text-lg text-accent-gray transition hover:text-primary-500"
+                >
+                  Sair
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="block py-2 text-lg text-primary-500 font-semibold transition hover:text-primary-400"
+              >
+                Login
+              </Link>
+            )}
           </nav>
         </div>
       )}

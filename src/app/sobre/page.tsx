@@ -355,7 +355,7 @@ export default function SobrePage() {
             </motion.div>
 
             <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
-              {experiences.map((experience, expIndex) => (
+              {[...experiences].reverse().map((experience, expIndex) => (
                 <motion.div
                   key={expIndex}
                   initial={{ opacity: 0, x: -50 }}
