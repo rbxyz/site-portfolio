@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
-import { Mail, MapPin, Phone, Send, Github, Linkedin, Instagram, MessageCircle, Calendar, CheckCircle } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Github, Linkedin, Instagram, MessageCircle, CheckCircle } from "lucide-react";
 
 const contactInfo = [
   {
@@ -17,8 +17,8 @@ const contactInfo = [
   {
     icon: Phone,
     title: "WhatsApp",
-    value: "+55 (51) 9 9876-1413",
-    href: "https://wa.me/5551998761413",
+    value: "+55 (51) 9 9736-5697",
+    href: "https://wa.me/5551997365697",
     description: "Disponível das 8h às 22h"
   },
   {
@@ -27,13 +27,6 @@ const contactInfo = [
     value: "Rio Grande do Sul, Brasil",
     href: "#",
     description: "Trabalho remotamente"
-  },
-  {
-    icon: Calendar,
-    title: "Calendário",
-    value: "Agendar Reunião",
-    href: "#",
-    description: "Vamos conversar!"
   }
 ];
 
@@ -96,26 +89,26 @@ export default function ContatoPage() {
       
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="relative py-20 bg-dark-bg">
-          <div className="container mx-auto px-4 md:px-6">
+        <section className="relative py-12 sm:py-16 md:py-20 bg-dark-bg">
+          <div className="container mx-auto px-4 sm:px-6 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center max-w-3xl mx-auto"
             >
-              <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+              <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-4">
                 CONTACT
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
                 <span className="text-white">Vamos</span>{" "}
                 <span className="text-primary-500">Conversar</span>
               </h1>
-              <p className="text-xl text-accent-gray mb-8">
+              <p className="text-base sm:text-lg md:text-xl text-accent-gray mb-6 sm:mb-8 px-2">
                 Tem uma ideia? Precisa de ajuda com um projeto? Ou apenas quer trocar uma ideia sobre tecnologia? 
                 Estou sempre disponível para uma boa conversa!
               </p>
-              <div className="flex justify-center gap-4">
+              <div className="flex justify-center gap-3 sm:gap-4">
                 {socialLinks.map((social, index) => (
                   <motion.a
                     key={index}
@@ -124,9 +117,9 @@ export default function ContatoPage() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-3 rounded-full bg-dark-card border border-dark-border backdrop-blur-sm shadow-lg hover:border-primary-500/50 hover:text-primary-500 transition-all duration-300 text-accent-gray"
+                    className="p-2.5 sm:p-3 rounded-full bg-dark-card border border-dark-border backdrop-blur-sm shadow-lg hover:border-primary-500/50 hover:text-primary-500 transition-all duration-300 text-accent-gray"
                   >
-                    <social.icon className="h-6 w-6" />
+                    <social.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                     <span className="sr-only">{social.name}</span>
                   </motion.a>
                 ))}
@@ -136,9 +129,9 @@ export default function ContatoPage() {
         </section>
 
         {/* Contact Section */}
-        <section className="py-20 bg-dark-bg">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid lg:grid-cols-2 gap-12">
+        <section className="py-12 sm:py-16 md:py-20 bg-dark-bg">
+          <div className="container mx-auto px-4 sm:px-6 md:px-8">
+            <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
               {/* Contact Info */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -209,11 +202,11 @@ export default function ContatoPage() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <div className="bg-dark-card border border-dark-border rounded-2xl shadow-xl p-8">
-                  <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+                <div className="bg-dark-card border border-dark-border rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8">
+                  <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-3 sm:mb-4">
                     MESSAGE
                   </div>
-                  <h2 className="text-3xl font-bold mb-8 text-white">
+                  <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-white">
                     Envie uma <span className="text-primary-500">Mensagem</span>
                   </h2>
 
@@ -230,8 +223,8 @@ export default function ContatoPage() {
                       </p>
                     </motion.div>
                   ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid md:grid-cols-2 gap-6">
+                    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                      <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                         <div>
                           <label htmlFor="name" className="block text-sm font-medium mb-2 text-white">
                             Nome *
@@ -328,28 +321,28 @@ export default function ContatoPage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-dark-bg">
-          <div className="container mx-auto px-4 md:px-6">
+        <section className="py-12 sm:py-16 md:py-20 bg-dark-bg">
+          <div className="container mx-auto px-4 sm:px-6 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-8 sm:mb-12"
             >
-              <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+              <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-3 sm:mb-4">
                 FAQ
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
                 <span className="text-white">Perguntas</span>{" "}
                 <span className="text-primary-500">Frequentes</span>
               </h2>
-              <p className="text-lg text-accent-gray">
+              <p className="text-base sm:text-lg text-accent-gray px-2">
                 Respostas para as dúvidas mais comuns
               </p>
             </motion.div>
 
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
               {[
                 {
                   question: "Quanto custa um projeto de desenvolvimento web?",
@@ -378,10 +371,10 @@ export default function ContatoPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-dark-card border border-dark-border rounded-lg p-6 hover:border-primary-500/50 transition-all duration-300"
+                  className="bg-dark-card border border-dark-border rounded-lg p-4 sm:p-6 hover:border-primary-500/50 transition-all duration-300"
                 >
-                  <h3 className="text-lg font-semibold mb-3 text-white">{faq.question}</h3>
-                  <p className="text-accent-gray">{faq.answer}</p>
+                  <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-white">{faq.question}</h3>
+                  <p className="text-sm sm:text-base text-accent-gray">{faq.answer}</p>
                 </motion.div>
               ))}
             </div>

@@ -106,18 +106,18 @@ export default function ProjectsPage() {
       <NavBar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 relative">
-        <div className="container mx-auto px-4 md:px-6">
+      <section className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 relative">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="max-w-4xl"
           >
-            <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+            <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-3 sm:mb-4">
               ARTIFACTS
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
               <span className="text-white">Open Source</span>
               <br />
               <span className="text-primary-500">Projects</span>
@@ -127,14 +127,14 @@ export default function ProjectsPage() {
       </section>
 
       {/* Filters */}
-      <section className="pb-12">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-wrap gap-4">
+      <section className="pb-8 sm:pb-10 md:pb-12">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
             {filterButtons.map((button) => (
               <button
                 key={button.key}
                 onClick={() => setSelectedStatus(button.key)}
-                className={`px-6 py-2 rounded-lg font-semibold transition-all duration-300 ${
+                className={`px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm md:text-base font-semibold transition-all duration-300 ${
                   selectedStatus === button.key
                     ? "bg-primary-500 text-dark-bg"
                     : "bg-dark-card border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500"
@@ -148,14 +148,14 @@ export default function ProjectsPage() {
       </section>
 
       {/* Projects Grid */}
-      <section className="pb-20">
-        <div className="container mx-auto px-4 md:px-6">
+      <section className="pb-12 sm:pb-16 md:pb-20">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           {sortedProjects.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-accent-gray text-lg">No projects found.</p>
+            <div className="text-center py-12 sm:py-16 md:py-20">
+              <p className="text-accent-gray text-base sm:text-lg">No projects found.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               {sortedProjects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
@@ -203,30 +203,30 @@ function ProjectCard({
       whileHover={{ y: -5 }}
       className={`group relative bg-dark-card border rounded-lg overflow-hidden transition-all duration-300 ${
         featured
-          ? "border-primary-500/50 md:col-span-2 lg:col-span-1"
+          ? "border-primary-500/50 sm:col-span-2 lg:col-span-1"
           : "border-dark-border hover:border-primary-500/50"
       }`}
     >
       {/* Featured Badge */}
       {project.featured && (
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-1 bg-primary-500 text-dark-bg px-3 py-1 rounded-full text-xs font-semibold">
-          <Star className="h-3 w-3 fill-current" />
-          FEATURED
+        <div className="absolute top-2 sm:top-3 md:top-4 left-2 sm:left-3 md:left-4 z-10 flex items-center gap-1 bg-primary-500 text-dark-bg px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold">
+          <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-current" />
+          <span className="hidden sm:inline">FEATURED</span>
         </div>
       )}
 
       {/* Status Badge */}
-      <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+      <div className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 z-10 flex items-center gap-1 sm:gap-2">
         <div
-          className={`h-2 w-2 rounded-full ${getStatusColor(project.status)}`}
+          className={`h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full ${getStatusColor(project.status)}`}
         />
-        <span className="text-xs text-accent-gray uppercase font-mono">
+        <span className="text-[10px] sm:text-xs text-accent-gray uppercase font-mono hidden sm:inline">
           {project.status}
         </span>
       </div>
 
       {/* Project Image */}
-      <div className={`relative overflow-hidden ${featured ? "h-64" : "h-48"} bg-dark-surface`}>
+      <div className={`relative overflow-hidden ${featured ? "h-48 sm:h-56 md:h-64" : "h-40 sm:h-44 md:h-48"} bg-dark-surface`}>
         {imageUrl && imageUrl !== "/placeholder.png" ? (
           <Image
             src={imageUrl}
@@ -256,18 +256,18 @@ function ProjectCard({
       </div>
 
       {/* Content */}
-      <div className="p-6">
-        <div className="flex items-start justify-between mb-3">
-          <div className="text-xs text-accent-gray font-mono mb-2">
+      <div className="p-4 sm:p-5 md:p-6">
+        <div className="flex items-start justify-between mb-2 sm:mb-3">
+          <div className="text-[10px] sm:text-xs text-accent-gray font-mono mb-1 sm:mb-2">
             {project.year}
           </div>
         </div>
 
-        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-500 transition-colors">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-primary-500 transition-colors">
           {project.title}
         </h3>
 
-        <p className="text-accent-gray mb-4 text-sm leading-relaxed">
+        <p className="text-accent-gray mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed line-clamp-3">
           {featured && project.longDescription
             ? project.longDescription
             : project.description}
@@ -275,7 +275,7 @@ function ProjectCard({
 
         {/* Stats */}
         {(project.stars > 0 || project.forks > 0) && (
-          <div className="flex items-center gap-4 mb-4 text-sm text-accent-gray">
+          <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 text-xs sm:text-sm text-accent-gray">
             {project.stars > 0 && (
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4" />
@@ -298,32 +298,32 @@ function ProjectCard({
         )}
 
         {/* Technologies */}
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
           {project.technologies.slice(0, featured ? 5 : 3).map((tech, techIndex) => (
             <span
               key={techIndex}
-              className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-dark-surface border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500 transition-colors cursor-pointer"
+              className="inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-dark-surface border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500 transition-colors cursor-pointer"
             >
               {tech}
             </span>
           ))}
           {project.technologies.length > (featured ? 5 : 3) && (
-            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-dark-surface border border-dark-border text-accent-gray">
+            <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-dark-surface border border-dark-border text-accent-gray">
               +{project.technologies.length - (featured ? 5 : 3)}
             </span>
           )}
         </div>
 
         {/* Links */}
-        <div className="flex items-center gap-4 pt-4 border-t border-dark-border">
+        <div className="flex items-center gap-3 sm:gap-4 pt-3 sm:pt-4 border-t border-dark-border">
           {project.github && (
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-accent-gray hover:text-primary-500 transition-colors text-sm"
+              className="flex items-center gap-1.5 sm:gap-2 text-accent-gray hover:text-primary-500 transition-colors text-xs sm:text-sm"
             >
-              <Github className="h-4 w-4" />
+              <Github className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <span>source</span>
             </a>
           )}
@@ -332,9 +332,9 @@ function ProjectCard({
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-primary-500 hover:text-primary-400 transition-colors text-sm font-semibold"
+              className="flex items-center gap-1.5 sm:gap-2 text-primary-500 hover:text-primary-400 transition-colors text-xs sm:text-sm font-semibold"
             >
-              <ExternalLink className="h-4 w-4" />
+              <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <span>live</span>
             </a>
           )}

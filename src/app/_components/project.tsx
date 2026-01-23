@@ -73,27 +73,27 @@ export function ProjetosSection() {
   }
 
   return (
-    <section id="projects" className="py-24 bg-dark-bg relative overflow-hidden">
+    <section id="projects" className="py-16 sm:py-20 md:py-24 bg-dark-bg relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-grid-white/[0.02]" />
       
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <div className="text-primary-500 font-mono text-sm md:text-base uppercase tracking-wider mb-4">
+          <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-3 sm:mb-4">
             PORTFOLIO
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
             <span className="text-white">Projetos em</span>{" "}
             <span className="text-primary-500">Destaque</span>
           </h2>
-          <p className="text-lg text-accent-gray max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-accent-gray max-w-2xl mx-auto px-2">
             Uma seleção dos meus projetos mais impactantes, desenvolvidos com as mais modernas tecnologias e melhores práticas do mercado.
           </p>
         </motion.div>
@@ -104,17 +104,17 @@ export function ProjetosSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12"
         >
           {projects.map((project) => (
             <motion.div
               key={project.id}
               variants={itemVariants}
               whileHover={{ y: -10 }}
-              className="group relative bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:border-primary-500/50 transition-all duration-500"
+              className="group relative bg-dark-card border border-dark-border rounded-xl sm:rounded-2xl overflow-hidden hover:border-primary-500/50 transition-all duration-500"
             >
               {/* Project Image */}
-              <div className="relative h-48 overflow-hidden bg-dark-surface">
+              <div className="relative h-40 sm:h-44 md:h-48 overflow-hidden bg-dark-surface">
                 {project.imageUrl && project.imageUrl !== "/" ? (
                   <Image
                     src={project.imageUrl}
@@ -161,36 +161,36 @@ export function ProjetosSection() {
               </div>
 
               {/* Project Content */}
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-xl font-bold text-white group-hover:text-primary-500 transition-colors">
+              <div className="p-4 sm:p-5 md:p-6">
+                <div className="flex items-start justify-between mb-2 sm:mb-3">
+                  <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-primary-500 transition-colors pr-2">
                     {project.title}
                   </h3>
                   <div className="flex-shrink-0">
                     {project.link ? (
-                      <div className="h-2 w-2 bg-primary-500 rounded-full animate-pulse" title="Disponível" />
+                      <div className="h-1.5 w-1.5 sm:h-2 sm:w-2 bg-primary-500 rounded-full animate-pulse" title="Disponível" />
                     ) : (
-                      <div className="h-2 w-2 bg-yellow-500 rounded-full" title="Em desenvolvimento" />
+                      <div className="h-1.5 w-1.5 sm:h-2 sm:w-2 bg-yellow-500 rounded-full" title="Em desenvolvimento" />
                     )}
                   </div>
                 </div>
 
-                <p className="text-accent-gray mb-4 text-sm leading-relaxed">
+                <p className="text-accent-gray mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed line-clamp-3">
                   {project.description}
                 </p>
 
                 {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                   {project.technologies.slice(0, 3).map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="inline-flex items-center px-3 py-1 rounded text-xs font-medium bg-dark-surface border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500 transition-colors cursor-pointer"
+                      className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-dark-surface border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500 transition-colors cursor-pointer"
                     >
                       {tech}
                     </span>
                   ))}
                   {project.technologies.length > 3 && (
-                    <span className="inline-flex items-center px-3 py-1 rounded text-xs font-medium bg-dark-surface border border-dark-border text-accent-gray">
+                    <span className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs font-medium bg-dark-surface border border-dark-border text-accent-gray">
                       +{project.technologies.length - 3}
                     </span>
                   )}
@@ -237,15 +237,15 @@ export function ProjetosSection() {
         >
           <Button
             size="lg"
-            className="bg-transparent border-2 border-primary-500 text-white hover:bg-primary-500 hover:text-dark-bg px-8 py-4 rounded-lg font-semibold transition-all duration-300 group"
+            className="w-full sm:w-auto bg-transparent border-2 border-primary-500 text-white hover:bg-primary-500 hover:text-dark-bg px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-all duration-300 group"
             asChild
           >
-            <Link href="/pages/projects">
+            <Link href="/pages/projects" className="flex items-center justify-center gap-2">
               Ver Todos os Projetos
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
-          <p className="mt-4 text-sm text-accent-gray">
+          <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-accent-gray px-2">
             Mais de 10 projetos desenvolvidos com tecnologias modernas
           </p>
         </motion.div>

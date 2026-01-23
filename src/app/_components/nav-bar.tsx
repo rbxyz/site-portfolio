@@ -81,7 +81,7 @@ export function NavBar() {
             Blog
           </Link>
           <Link
-            href="https://ethos-theta.vercel.app/"
+            href="https://ethos-iv.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
