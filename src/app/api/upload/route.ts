@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { auth } from "@/server/auth";
+import { env } from "@/env";
 
 export async function POST(request: Request) {
   try {
@@ -43,16 +44,22 @@ export async function POST(request: Request) {
     const fileName = `projects/${timestamp}-${sanitizedName}`;
 
     // Upload para Vercel Blob Storage
+    // O token é automaticamente detectado da variável BLOB_READ_WRITE_TOKEN
+    // ou pode ser passado explicitamente
     const blob = await put(fileName, file, {
       access: "public",
       contentType: file.type,
+      token: env.BLOB_READ_WRITE_TOKEN,
     });
 
     return NextResponse.json({ imageUrl: blob.url });
   } catch (error) {
     console.error("Error uploading file:", error);
     return NextResponse.json(
-      { error: "Failed to upload file" },
+      { 
+        error: "Failed to upload file",
+        details: error instanceof Error ? error.message : String(error)
+      },
       { status: 500 }
     );
   }
