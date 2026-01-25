@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/app/_components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/app/providers";
 import { Toaster } from "sonner";
+import { ConsoleMessage } from "@/app/_components/console-message";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,6 +50,7 @@ export default function RootLayout({
         </Providers>
         <Analytics />
         <Toaster position="top-right" richColors />
+        <ConsoleMessage />
       </body>
     </html>
   );
