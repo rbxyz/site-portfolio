@@ -79,10 +79,10 @@ model Project {
     technologies    String   @db.Text // JSON array como string
     link            String?
     github          String?
-    type            String   // "shipped", "in-progress", "archived"
+    type            String   // Referência ao ProjectType
     featured        Boolean  @default(false)
     year            String
-    status          String   @default("in-progress") // "shipped", "in-progress", "archived"
+    status          String   @default("in-progress") // Referência ao ProjectStatus
     stars           Int      @default(0)
     forks           Int      @default(0)
     createdAt       DateTime @default(now())
@@ -91,4 +91,24 @@ model Project {
     @@index([type])
     @@index([status])
     @@index([featured])
+}
+
+model ProjectStatus {
+    id        Int      @id @default(autoincrement())
+    key       String   @unique // "in-progress", "shipped", "archived"
+    label     String   // "IN-PROGRESS", "SHIPPED", "ARCHIVED"
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([key])
+}
+
+model ProjectType {
+    id        Int      @id @default(autoincrement())
+    key       String   @unique // "Web", "Saas", etc
+    label     String   // "WEB", "SAAS", etc
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([key])
 }

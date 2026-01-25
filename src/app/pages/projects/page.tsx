@@ -36,12 +36,26 @@ const itemVariants = {
   },
 };
 
+interface ProjectStatus {
+  id: number;
+  key: string;
+  label: string;
+}
+
+interface ProjectType {
+  id: number;
+  key: string;
+  label: string;
+}
+
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<string>("All");
   const [selectedType, setSelectedType] = useState<string>("All");
   const [error, setError] = useState<string | null>(null);
+  const [statuses, setStatuses] = useState<ProjectStatus[]>([]);
+  const [types, setTypes] = useState<ProjectType[]>([]);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -61,7 +75,33 @@ export default function ProjectsPage() {
       }
     };
 
+    const fetchStatuses = async () => {
+      try {
+        const response = await fetch("/api/status");
+        if (response.ok) {
+          const data = (await response.json()) as ProjectStatus[];
+          setStatuses(data);
+        }
+      } catch (err) {
+        console.error("Error fetching statuses:", err);
+      }
+    };
+
+    const fetchTypes = async () => {
+      try {
+        const response = await fetch("/api/types");
+        if (response.ok) {
+          const data = (await response.json()) as ProjectType[];
+          setTypes(data);
+        }
+      } catch (err) {
+        console.error("Error fetching types:", err);
+      }
+    };
+
     void fetchProjects();
+    void fetchStatuses();
+    void fetchTypes();
   }, []);
 
   // Filtrando os projetos com base no status e tipo selecionados
@@ -70,9 +110,6 @@ export default function ProjectsPage() {
     const typeMatch = selectedType === "All" || project.type === selectedType;
     return statusMatch && typeMatch;
   });
-
-  // Obter tipos únicos dos projetos para filtros dinâmicos
-  const uniqueTypes = Array.from(new Set(projects.map((p) => p.type))).filter(Boolean);
 
   // Separando projetos em destaque e outros
   const featuredProjects = filteredProjects.filter((project) => project.featured);
@@ -85,14 +122,12 @@ export default function ProjectsPage() {
 
   const statusFilterButtons = [
     { key: "All", label: "ALL" },
-    { key: "shipped", label: "SHIPPED" },
-    { key: "in-progress", label: "IN-PROGRESS" },
-    { key: "archived", label: "ARCHIVED" },
+    ...statuses.map((status) => ({ key: status.key, label: status.label })),
   ];
 
   const typeFilterButtons = [
     { key: "All", label: "ALL" },
-    ...uniqueTypes.map((type) => ({ key: type, label: type.toUpperCase() })),
+    ...types.map((type) => ({ key: type.key, label: type.label })),
   ];
 
   if (loading) {
@@ -161,7 +196,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Filtros por Tipo (dinâmicos) */}
-          {uniqueTypes.length > 0 && (
+          {types.length > 0 && (
             <div>
               <h3 className="text-sm font-medium text-accent-gray mb-3">Tipo</h3>
               <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">

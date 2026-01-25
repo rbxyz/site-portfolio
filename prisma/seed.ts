@@ -8,6 +8,8 @@ async function main() {
 
   // Limpar dados existentes
   await prisma.project.deleteMany();
+  await prisma.projectStatus.deleteMany();
+  await prisma.projectType.deleteMany();
   await prisma.account.deleteMany();
   await prisma.session.deleteMany();
   await prisma.user.deleteMany();
@@ -219,6 +221,39 @@ async function main() {
       data: project,
     });
   }
+
+  // Criar status iniciais
+  const statuses = [
+    { key: "in-progress", label: "IN-PROGRESS" },
+    { key: "shipped", label: "SHIPPED" },
+    { key: "archived", label: "ARCHIVED" },
+  ];
+
+  for (const status of statuses) {
+    await prisma.projectStatus.upsert({
+      where: { key: status.key },
+      update: {},
+      create: status,
+    });
+  }
+
+  console.log(`✅ Created ${statuses.length} statuses`);
+
+  // Criar tipos iniciais
+  const types = [
+    { key: "Web", label: "WEB" },
+    { key: "Saas", label: "SAAS" },
+  ];
+
+  for (const type of types) {
+    await prisma.projectType.upsert({
+      where: { key: type.key },
+      update: {},
+      create: type,
+    });
+  }
+
+  console.log(`✅ Created ${types.length} types`);
 
   console.log(`✅ Created ${projects.length} projects`);
 }

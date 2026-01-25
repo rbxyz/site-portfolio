@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
 import { Modal } from "@/app/_components/modal";
-import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star } from "lucide-react";
+import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star, Settings, Upload, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 
 interface Project {
@@ -27,6 +27,18 @@ interface Project {
   forks: number;
 }
 
+interface ProjectStatus {
+  id: number;
+  key: string;
+  label: string;
+}
+
+interface ProjectType {
+  id: number;
+  key: string;
+  label: string;
+}
+
 export default function DashboardPage() {
   const { status } = useSession();
   const router = useRouter();
@@ -42,14 +54,27 @@ export default function DashboardPage() {
     technologies: [],
     link: "",
     github: "",
-    type: "Web",
+    type: "",
     featured: false,
     year: new Date().getFullYear().toString(),
-    status: "in-progress",
+    status: "",
     stars: 0,
     forks: 0,
   });
   const [techInput, setTechInput] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  
+  // Estados para gestão de status e tipos
+  const [statuses, setStatuses] = useState<ProjectStatus[]>([]);
+  const [types, setTypes] = useState<ProjectType[]>([]);
+  const [showStatusManagement, setShowStatusManagement] = useState(false);
+  const [showTypeManagement, setShowTypeManagement] = useState(false);
+  const [editingStatusId, setEditingStatusId] = useState<number | null>(null);
+  const [editingTypeId, setEditingTypeId] = useState<number | null>(null);
+  const [statusForm, setStatusForm] = useState({ key: "", label: "" });
+  const [typeForm, setTypeForm] = useState({ key: "", label: "" });
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -60,6 +85,8 @@ export default function DashboardPage() {
   useEffect(() => {
     if (status === "authenticated") {
       void fetchProjects();
+      void fetchStatuses();
+      void fetchTypes();
     }
   }, [status]);
 
@@ -77,6 +104,38 @@ export default function DashboardPage() {
     }
   };
 
+  const fetchStatuses = async () => {
+    try {
+      const response = await fetch("/api/status");
+      if (response.ok) {
+        const data = (await response.json()) as ProjectStatus[];
+        setStatuses(data);
+        // Se não houver status selecionado e houver status disponíveis, usar o primeiro
+        if (!formData.status && data.length > 0) {
+          setFormData((prev) => ({ ...prev, status: data[0]!.key }));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching statuses:", error);
+    }
+  };
+
+  const fetchTypes = async () => {
+    try {
+      const response = await fetch("/api/types");
+      if (response.ok) {
+        const data = (await response.json()) as ProjectType[];
+        setTypes(data);
+        // Se não houver tipo selecionado e houver tipos disponíveis, usar o primeiro
+        if (!formData.type && data.length > 0) {
+          setFormData((prev) => ({ ...prev, type: data[0]!.key }));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching types:", error);
+    }
+  };
+
   const handleEdit = (project: Project) => {
     setEditingId(project.id);
     setFormData({
@@ -84,6 +143,9 @@ export default function DashboardPage() {
       technologies: [...project.technologies],
     });
     setTechInput("");
+    // Resetar estados de imagem
+    setImagePreview(project.imageUrl ?? null);
+    setSelectedImageFile(null);
   };
 
   const handleCancel = () => {
@@ -97,14 +159,16 @@ export default function DashboardPage() {
       technologies: [],
       link: "",
       github: "",
-      type: "Web",
+      type: types[0]?.key ?? "",
       featured: false,
       year: new Date().getFullYear().toString(),
-      status: "in-progress",
+      status: statuses[0]?.key ?? "",
       stars: 0,
       forks: 0,
     });
     setTechInput("");
+    setImagePreview(null);
+    setSelectedImageFile(null);
   };
 
   const handleSave = async () => {
@@ -169,6 +233,173 @@ export default function DashboardPage() {
     setFormData({ ...formData, technologies: newTechs });
   };
 
+  // Funções para gestão de status
+  const handleSaveStatus = async () => {
+    try {
+      const url = editingStatusId ? `/api/status/${editingStatusId}` : "/api/status";
+      const method = editingStatusId ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(statusForm),
+      });
+
+      if (response.ok) {
+        await fetchStatuses();
+        setStatusForm({ key: "", label: "" });
+        setEditingStatusId(null);
+      } else {
+        const error = (await response.json()) as { error?: string };
+        alert(`Erro: ${error.error ?? "Falha ao salvar status"}`);
+      }
+    } catch (error) {
+      console.error("Error saving status:", error);
+      alert("Erro ao salvar status");
+    }
+  };
+
+  const handleDeleteStatus = async (id: number) => {
+    if (!confirm("Tem certeza que deseja excluir este status?")) return;
+
+    try {
+      const response = await fetch(`/api/status/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        await fetchStatuses();
+      } else {
+        const error = (await response.json()) as { error?: string };
+        alert(`Erro: ${error.error ?? "Falha ao excluir status"}`);
+      }
+    } catch (error) {
+      console.error("Error deleting status:", error);
+      alert("Erro ao excluir status");
+    }
+  };
+
+  const handleEditStatus = (status: ProjectStatus) => {
+    setEditingStatusId(status.id);
+    setStatusForm({ key: status.key, label: status.label });
+  };
+
+  // Funções para gestão de tipos
+  const handleSaveType = async () => {
+    try {
+      const url = editingTypeId ? `/api/types/${editingTypeId}` : "/api/types";
+      const method = editingTypeId ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(typeForm),
+      });
+
+      if (response.ok) {
+        await fetchTypes();
+        setTypeForm({ key: "", label: "" });
+        setEditingTypeId(null);
+      } else {
+        const error = (await response.json()) as { error?: string };
+        alert(`Erro: ${error.error ?? "Falha ao salvar tipo"}`);
+      }
+    } catch (error) {
+      console.error("Error saving type:", error);
+      alert("Erro ao salvar tipo");
+    }
+  };
+
+  const handleDeleteType = async (id: number) => {
+    if (!confirm("Tem certeza que deseja excluir este tipo?")) return;
+
+    try {
+      const response = await fetch(`/api/types/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        await fetchTypes();
+      } else {
+        const error = (await response.json()) as { error?: string };
+        alert(`Erro: ${error.error ?? "Falha ao excluir tipo"}`);
+      }
+    } catch (error) {
+      console.error("Error deleting type:", error);
+      alert("Erro ao excluir tipo");
+    }
+  };
+
+  const handleEditType = (type: ProjectType) => {
+    setEditingTypeId(type.id);
+    setTypeForm({ key: type.key, label: type.label });
+  };
+
+  // Funções para upload de imagem
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validar tipo de arquivo
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      alert("Tipo de arquivo inválido. Apenas JPEG, PNG e WebP são permitidos.");
+      return;
+    }
+
+    // Validar tamanho (máximo 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      alert("O tamanho do arquivo excede o limite de 5MB.");
+      return;
+    }
+
+    setSelectedImageFile(file);
+
+    // Criar preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageUpload = async () => {
+    if (!selectedImageFile) return;
+
+    try {
+      setUploadingImage(true);
+      const formData = new FormData();
+      formData.append("file", selectedImageFile);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = (await response.json()) as { imageUrl: string };
+        setFormData({ ...formData, imageUrl: data.imageUrl });
+        setSelectedImageFile(null);
+        alert("Imagem enviada com sucesso!");
+      } else {
+        const error = (await response.json()) as { error?: string };
+        alert(`Erro ao enviar imagem: ${error.error ?? "Falha no upload"}`);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Erro ao enviar imagem");
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFormData({ ...formData, imageUrl: "" });
+    setImagePreview(null);
+    setSelectedImageFile(null);
+  };
+
   if (status === "loading" || loading) {
     return (
       <div className="min-h-screen bg-dark-bg text-white flex items-center justify-center">
@@ -197,7 +428,7 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 flex flex-wrap gap-3">
             <Button
               onClick={() => {
                 setIsCreating(true);
@@ -210,21 +441,221 @@ export default function DashboardPage() {
                   technologies: [],
                   link: "",
                   github: "",
-                  type: "Web",
+                  type: types[0]?.key ?? "",
                   featured: false,
                   year: new Date().getFullYear().toString(),
-                  status: "in-progress",
+                  status: statuses[0]?.key ?? "",
                   stars: 0,
                   forks: 0,
                 });
                 setTechInput("");
+                setImagePreview(null);
+                setSelectedImageFile(null);
               }}
               className="bg-primary-500 hover:bg-primary-600 text-white"
             >
               <Plus className="h-4 w-4 mr-2" />
               Novo Projeto
             </Button>
+            <Button
+              onClick={() => {
+                setShowStatusManagement(!showStatusManagement);
+                setShowTypeManagement(false);
+              }}
+              variant="outline"
+              className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              Gerenciar Status
+            </Button>
+            <Button
+              onClick={() => {
+                setShowTypeManagement(!showTypeManagement);
+                setShowStatusManagement(false);
+              }}
+              variant="outline"
+              className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              Gerenciar Tipos
+            </Button>
           </div>
+
+          {/* Gestão de Status */}
+          {showStatusManagement && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-dark-card border border-dark-border rounded-xl p-6 mb-6"
+            >
+              <h2 className="text-2xl font-bold mb-4 text-white">Gerenciar Status</h2>
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-white">
+                    Key (ex: in-progress)
+                  </label>
+                  <input
+                    type="text"
+                    value={statusForm.key}
+                    onChange={(e) => setStatusForm({ ...statusForm, key: e.target.value })}
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="in-progress"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-white">
+                    Label (ex: IN-PROGRESS)
+                  </label>
+                  <input
+                    type="text"
+                    value={statusForm.label}
+                    onChange={(e) => setStatusForm({ ...statusForm, label: e.target.value })}
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="IN-PROGRESS"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2 mb-4">
+                <Button
+                  onClick={handleSaveStatus}
+                  className="bg-primary-500 hover:bg-primary-600 text-white"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  {editingStatusId ? "Atualizar" : "Adicionar"} Status
+                </Button>
+                {editingStatusId && (
+                  <Button
+                    onClick={() => {
+                      setEditingStatusId(null);
+                      setStatusForm({ key: "", label: "" });
+                    }}
+                    variant="outline"
+                    className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    Cancelar
+                  </Button>
+                )}
+              </div>
+              <div className="grid gap-2">
+                {statuses.map((status) => (
+                  <div
+                    key={status.id}
+                    className="flex items-center justify-between p-3 bg-dark-surface border border-dark-border rounded-lg"
+                  >
+                    <div>
+                      <span className="text-white font-medium">{status.label}</span>
+                      <span className="text-accent-gray text-sm ml-2">({status.key})</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => handleEditStatus(status)}
+                        size="sm"
+                        className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteStatus(status.id)}
+                        size="sm"
+                        className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Gestão de Tipos */}
+          {showTypeManagement && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-dark-card border border-dark-border rounded-xl p-6 mb-6"
+            >
+              <h2 className="text-2xl font-bold mb-4 text-white">Gerenciar Tipos</h2>
+              <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-white">
+                    Key (ex: Web)
+                  </label>
+                  <input
+                    type="text"
+                    value={typeForm.key}
+                    onChange={(e) => setTypeForm({ ...typeForm, key: e.target.value })}
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="Web"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-white">
+                    Label (ex: WEB)
+                  </label>
+                  <input
+                    type="text"
+                    value={typeForm.label}
+                    onChange={(e) => setTypeForm({ ...typeForm, label: e.target.value })}
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    placeholder="WEB"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2 mb-4">
+                <Button
+                  onClick={handleSaveType}
+                  className="bg-primary-500 hover:bg-primary-600 text-white"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  {editingTypeId ? "Atualizar" : "Adicionar"} Tipo
+                </Button>
+                {editingTypeId && (
+                  <Button
+                    onClick={() => {
+                      setEditingTypeId(null);
+                      setTypeForm({ key: "", label: "" });
+                    }}
+                    variant="outline"
+                    className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    Cancelar
+                  </Button>
+                )}
+              </div>
+              <div className="grid gap-2">
+                {types.map((type) => (
+                  <div
+                    key={type.id}
+                    className="flex items-center justify-between p-3 bg-dark-surface border border-dark-border rounded-lg"
+                  >
+                    <div>
+                      <span className="text-white font-medium">{type.label}</span>
+                      <span className="text-accent-gray text-sm ml-2">({type.key})</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => handleEditType(type)}
+                        size="sm"
+                        className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        onClick={() => handleDeleteType(type.id)}
+                        size="sm"
+                        className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
           {/* Modal de criação/edição */}
           <Modal
@@ -284,16 +715,67 @@ export default function DashboardPage() {
                   />
                 </div>
 
-                <div>
+                <div className="md:col-span-2">
                   <label className="block text-sm font-medium mb-2 text-white">
-                    URL da Imagem
+                    Imagem do Projeto
                   </label>
-                  <input
-                    type="text"
-                    value={formData.imageUrl ?? ""}
-                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  />
+                  
+                  {/* Preview da imagem atual ou selecionada */}
+                  {(imagePreview || formData.imageUrl) && (
+                    <div className="relative mb-4 w-full h-48 rounded-lg overflow-hidden bg-dark-surface border border-dark-border">
+                      <Image
+                        src={imagePreview || formData.imageUrl || ""}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                      />
+                      <button
+                        onClick={handleRemoveImage}
+                        className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-500 text-white p-2 rounded-full"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Input de arquivo */}
+                  <div className="flex gap-2">
+                    <label className="flex-1 cursor-pointer">
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/jpg,image/png,image/webp"
+                        onChange={handleImageSelect}
+                        className="hidden"
+                      />
+                      <div className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white hover:border-primary-500/50 transition-colors flex items-center justify-center gap-2">
+                        <ImageIcon className="h-4 w-4" />
+                        <span>{selectedImageFile ? selectedImageFile.name : "Selecionar Imagem"}</span>
+                      </div>
+                    </label>
+                    {selectedImageFile && (
+                      <Button
+                        type="button"
+                        onClick={handleImageUpload}
+                        disabled={uploadingImage}
+                        className="bg-primary-500 hover:bg-primary-600 text-white"
+                      >
+                        {uploadingImage ? (
+                          <>
+                            <span className="animate-spin mr-2">⏳</span>
+                            Enviando...
+                          </>
+                        ) : (
+                          <>
+                            <Upload className="h-4 w-4 mr-2" />
+                            Enviar
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                  <p className="text-xs text-accent-gray mt-2">
+                    Formatos aceitos: JPEG, PNG, WebP. Tamanho máximo: 5MB
+                  </p>
                 </div>
 
                 <div>
@@ -322,30 +804,39 @@ export default function DashboardPage() {
 
                 <div>
                   <label className="block text-sm font-medium mb-2 text-white">
-                    Tipo
+                    Tipo *
                   </label>
                   <select
-                    value={formData.type ?? "Web"}
+                    value={formData.type ?? ""}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    required
                   >
-                    <option value="Web">Web</option>
-                    <option value="Saas">Saas</option>
+                    <option value="">Selecione um tipo</option>
+                    {types.map((type) => (
+                      <option key={type.id} value={type.key}>
+                        {type.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium mb-2 text-white">
-                    Status
+                    Status *
                   </label>
                   <select
-                    value={formData.status ?? "in-progress"}
+                    value={formData.status ?? ""}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                     className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    required
                   >
-                    <option value="in-progress">Em Desenvolvimento</option>
-                    <option value="shipped">Finalizado</option>
-                    <option value="archived">Arquivado</option>
+                    <option value="">Selecione um status</option>
+                    {statuses.map((status) => (
+                      <option key={status.id} value={status.key}>
+                        {status.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
