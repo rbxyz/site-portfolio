@@ -115,10 +115,18 @@ export default function ProjectsPage() {
   const featuredProjects = filteredProjects.filter((project) => project.featured);
   const otherProjects = filteredProjects.filter((project) => !project.featured);
 
-  // Ordenando os projetos: primeiro os em destaque, depois os outros
-  const sortedProjects = [...featuredProjects, ...otherProjects].sort((a, b) => {
+  // Ordenando os projetos em destaque por ano (mais recente primeiro)
+  const sortedFeaturedProjects = [...featuredProjects].sort((a, b) => {
     return parseInt(b.year) - parseInt(a.year);
   });
+
+  // Ordenando os outros projetos por ano (mais recente primeiro)
+  const sortedOtherProjects = [...otherProjects].sort((a, b) => {
+    return parseInt(b.year) - parseInt(a.year);
+  });
+
+  // Juntando: primeiro os em destaque, depois os outros
+  const sortedProjects = [...sortedFeaturedProjects, ...sortedOtherProjects];
 
   const statusFilterButtons = [
     { key: "All", label: "ALL" },
