@@ -11,7 +11,6 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     AUTH_SECRET: z.string().min(1),
-    BLOB_READ_WRITE_TOKEN: z.string().optional(),
   },
 
   /**
@@ -30,7 +29,6 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     AUTH_SECRET: process.env.AUTH_SECRET,
-    BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

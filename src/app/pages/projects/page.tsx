@@ -300,13 +300,25 @@ function ProjectCard({
       {/* Project Image */}
       <div className={`relative overflow-hidden ${featured ? "h-48 sm:h-56 md:h-64" : "h-40 sm:h-44 md:h-48"} bg-dark-surface`}>
         {imageUrl && imageUrl !== "/placeholder.png" ? (
-          <Image
-            src={imageUrl}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            loading="lazy"
-          />
+          // Verificar se é base64 (data URI) ou URL normal
+          imageUrl.startsWith("data:image/") ? (
+            // Usar img normal para base64
+            <img
+              src={imageUrl}
+              alt={project.title}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+            />
+          ) : (
+            // Usar Image do Next.js para URLs normais
+            <Image
+              src={imageUrl}
+              alt={project.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+            />
+          )
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-dark-surface">
             <div className="text-accent-gray/30">

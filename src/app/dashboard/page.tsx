@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
 import { Modal } from "@/app/_components/modal";
-import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star, Settings, Upload, Image as ImageIcon } from "lucide-react";
+import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star, Settings, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 
 interface Project {
@@ -62,7 +62,6 @@ export default function DashboardPage() {
     forks: 0,
   });
   const [techInput, setTechInput] = useState("");
-  const [uploadingImage, setUploadingImage] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   
@@ -336,7 +335,7 @@ export default function DashboardPage() {
     setTypeForm({ key: type.key, label: type.label });
   };
 
-  // Funções para upload de imagem
+  // Funções para upload de imagem (base64)
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -357,42 +356,14 @@ export default function DashboardPage() {
 
     setSelectedImageFile(file);
 
-    // Criar preview
+    // Converter para base64 e salvar diretamente no formData
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagePreview(reader.result as string);
+      const base64String = reader.result as string;
+      setImagePreview(base64String);
+      setFormData({ ...formData, imageUrl: base64String });
     };
     reader.readAsDataURL(file);
-  };
-
-  const handleImageUpload = async () => {
-    if (!selectedImageFile) return;
-
-    try {
-      setUploadingImage(true);
-      const formData = new FormData();
-      formData.append("file", selectedImageFile);
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        const data = (await response.json()) as { imageUrl: string };
-        setFormData({ ...formData, imageUrl: data.imageUrl });
-        setSelectedImageFile(null);
-        alert("Imagem enviada com sucesso!");
-      } else {
-        const error = (await response.json()) as { error?: string };
-        alert(`Erro ao enviar imagem: ${error.error ?? "Falha no upload"}`);
-      }
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      alert("Erro ao enviar imagem");
-    } finally {
-      setUploadingImage(false);
-    }
   };
 
   const handleRemoveImage = () => {
@@ -788,12 +759,20 @@ export default function DashboardPage() {
                   {/* Preview da imagem atual ou selecionada */}
                   {(imagePreview ?? formData.imageUrl) && (
                     <div className="relative mb-4 w-full h-48 rounded-lg overflow-hidden bg-dark-surface border border-dark-border">
-                      <Image
-                        src={imagePreview ?? formData.imageUrl ?? ""}
-                        alt="Preview"
-                        fill
-                        className="object-cover"
-                      />
+                      {(imagePreview ?? formData.imageUrl)?.startsWith("data:image/") ? (
+                        <img
+                          src={imagePreview ?? formData.imageUrl ?? ""}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          src={imagePreview ?? formData.imageUrl ?? ""}
+                          alt="Preview"
+                          fill
+                          className="object-cover"
+                        />
+                      )}
                       <button
                         onClick={handleRemoveImage}
                         className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-500 text-white p-2 rounded-full"
@@ -804,8 +783,8 @@ export default function DashboardPage() {
                   )}
 
                   {/* Input de arquivo */}
-                  <div className="flex gap-2">
-                    <label className="flex-1 cursor-pointer">
+                  <div>
+                    <label className="cursor-pointer">
                       <input
                         type="file"
                         accept="image/jpeg,image/jpg,image/png,image/webp"
@@ -817,30 +796,10 @@ export default function DashboardPage() {
                         <span>{selectedImageFile ? selectedImageFile.name : "Selecionar Imagem"}</span>
                       </div>
                     </label>
-                    {selectedImageFile && (
-                      <Button
-                        type="button"
-                        onClick={handleImageUpload}
-                        disabled={uploadingImage}
-                        className="bg-primary-500 hover:bg-primary-600 text-white"
-                      >
-                        {uploadingImage ? (
-                          <>
-                            <span className="animate-spin mr-2">⏳</span>
-                            Enviando...
-                          </>
-                        ) : (
-                          <>
-                            <Upload className="h-4 w-4 mr-2" />
-                            Enviar
-                          </>
-                        )}
-                      </Button>
-                    )}
+                    <p className="text-xs text-accent-gray mt-2">
+                      Formatos aceitos: JPEG, PNG, WebP. Tamanho máximo: 5MB. A imagem será convertida para base64 e salva automaticamente.
+                    </p>
                   </div>
-                  <p className="text-xs text-accent-gray mt-2">
-                    Formatos aceitos: JPEG, PNG, WebP. Tamanho máximo: 5MB
-                  </p>
                 </div>
 
                 <div>
@@ -1013,12 +972,20 @@ export default function DashboardPage() {
                   <div className="flex flex-col md:flex-row gap-6">
                     {project.imageUrl && (
                       <div className="relative w-full md:w-48 h-48 rounded-lg overflow-hidden bg-dark-surface flex-shrink-0">
-                        <Image
-                          src={project.imageUrl}
-                          alt={project.title}
-                          fill
-                          className="object-cover"
-                        />
+                        {project.imageUrl.startsWith("data:image/") ? (
+                          <img
+                            src={project.imageUrl}
+                            alt={project.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <Image
+                            src={project.imageUrl}
+                            alt={project.title}
+                            fill
+                            className="object-cover"
+                          />
+                        )}
                       </div>
                     )}
                     <div className="flex-1">
