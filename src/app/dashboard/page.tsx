@@ -7,8 +7,9 @@ import { motion } from "framer-motion";
 import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
 import { Modal } from "@/app/_components/modal";
-import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star, Settings, Image as ImageIcon } from "lucide-react";
+import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star, Settings, Image as ImageIcon, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 interface Project {
   id: number;
@@ -64,6 +65,7 @@ export default function DashboardPage() {
   const [techInput, setTechInput] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [saving, setSaving] = useState(false);
   
   // Estados para gestão de status e tipos
   const [statuses, setStatuses] = useState<ProjectStatus[]>([]);
@@ -172,7 +174,10 @@ export default function DashboardPage() {
   };
 
   const handleSave = async () => {
+    if (saving) return;
+
     try {
+      setSaving(true);
       const url = isCreating ? "/api/projects" : `/api/projects/${editingId}`;
       const method = isCreating ? "POST" : "PUT";
 
@@ -188,13 +193,25 @@ export default function DashboardPage() {
       if (response.ok) {
         await fetchProjects();
         handleCancel();
+        toast.success(
+          isCreating ? "Projeto criado com sucesso!" : "Projeto atualizado com sucesso!",
+          {
+            description: `O projeto "${formData.title}" foi ${isCreating ? "criado" : "atualizado"} com sucesso.`,
+          }
+        );
       } else {
         const error = (await response.json()) as { error?: string };
-        alert(`Erro: ${error.error ?? "Falha ao salvar projeto"}`);
+        toast.error("Erro ao salvar projeto", {
+          description: error.error ?? "Falha ao salvar projeto. Tente novamente.",
+        });
       }
     } catch (error) {
       console.error("Error saving project:", error);
-      alert("Erro ao salvar projeto");
+      toast.error("Erro ao salvar projeto", {
+        description: "Ocorreu um erro inesperado. Tente novamente.",
+      });
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -943,15 +960,26 @@ export default function DashboardPage() {
             <div className="flex gap-4 mt-6">
               <Button
                 onClick={handleSave}
-                className="bg-primary-500 hover:bg-primary-600 text-white"
+                disabled={saving}
+                className="bg-primary-500 hover:bg-primary-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Save className="h-4 w-4 mr-2" />
-                Salvar
+                {saving ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    {isCreating ? "Criando..." : "Atualizando..."}
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Salvar
+                  </>
+                )}
               </Button>
               <Button
                 onClick={handleCancel}
+                disabled={saving}
                 variant="outline"
-                className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+                className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancelar

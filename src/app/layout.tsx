@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/app/_components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/app/providers";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,6 +48,7 @@ export default function RootLayout({
           </ThemeProvider>
         </Providers>
         <Analytics />
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
