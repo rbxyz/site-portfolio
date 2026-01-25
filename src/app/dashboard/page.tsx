@@ -489,83 +489,115 @@ export default function DashboardPage() {
               animate={{ opacity: 1, y: 0 }}
               className="bg-dark-card border border-dark-border rounded-xl p-6 mb-6"
             >
-              <h2 className="text-2xl font-bold mb-4 text-white">Gerenciar Status</h2>
-              <div className="grid md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-white">
-                    Key (ex: in-progress)
-                  </label>
-                  <input
-                    type="text"
-                    value={statusForm.key}
-                    onChange={(e) => setStatusForm({ ...statusForm, key: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="in-progress"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-white">
-                    Label (ex: IN-PROGRESS)
-                  </label>
-                  <input
-                    type="text"
-                    value={statusForm.label}
-                    onChange={(e) => setStatusForm({ ...statusForm, label: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="IN-PROGRESS"
-                  />
-                </div>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-white">Gerenciar Status</h2>
+                <span className="text-accent-gray text-sm">
+                  {statuses.length} {statuses.length === 1 ? "status" : "status"}
+                </span>
               </div>
-              <div className="flex gap-2 mb-4">
-                <Button
-                  onClick={handleSaveStatus}
-                  className="bg-primary-500 hover:bg-primary-600 text-white"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  {editingStatusId ? "Atualizar" : "Adicionar"} Status
-                </Button>
-                {editingStatusId && (
-                  <Button
-                    onClick={() => {
-                      setEditingStatusId(null);
-                      setStatusForm({ key: "", label: "" });
-                    }}
-                    variant="outline"
-                    className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
-                  >
-                    <X className="h-4 w-4 mr-2" />
-                    Cancelar
-                  </Button>
-                )}
-              </div>
-              <div className="grid gap-2">
-                {statuses.map((status) => (
-                  <div
-                    key={status.id}
-                    className="flex items-center justify-between p-3 bg-dark-surface border border-dark-border rounded-lg"
-                  >
-                    <div>
-                      <span className="text-white font-medium">{status.label}</span>
-                      <span className="text-accent-gray text-sm ml-2">({status.key})</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => handleEditStatus(status)}
-                        size="sm"
-                        className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        onClick={() => handleDeleteStatus(status.id)}
-                        size="sm"
-                        className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
+
+              {/* Formulário de criação/edição */}
+              <div className="bg-dark-surface border border-dark-border rounded-lg p-4 mb-6">
+                <h3 className="text-lg font-semibold mb-4 text-white">
+                  {editingStatusId ? "Editar Status" : "Criar Novo Status"}
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-white">
+                      Key (ex: in-progress) *
+                    </label>
+                    <input
+                      type="text"
+                      value={statusForm.key}
+                      onChange={(e) => setStatusForm({ ...statusForm, key: e.target.value })}
+                      className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      placeholder="in-progress"
+                      required
+                    />
                   </div>
-                ))}
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-white">
+                      Label (ex: IN-PROGRESS) *
+                    </label>
+                    <input
+                      type="text"
+                      value={statusForm.label}
+                      onChange={(e) => setStatusForm({ ...statusForm, label: e.target.value })}
+                      className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      placeholder="IN-PROGRESS"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleSaveStatus}
+                    className="bg-primary-500 hover:bg-primary-600 text-white"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    {editingStatusId ? "Atualizar" : "Adicionar"} Status
+                  </Button>
+                  {editingStatusId && (
+                    <Button
+                      onClick={() => {
+                        setEditingStatusId(null);
+                        setStatusForm({ key: "", label: "" });
+                      }}
+                      variant="outline"
+                      className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      Cancelar
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Lista de Status */}
+              <div>
+                <h3 className="text-lg font-semibold mb-4 text-white">Todos os Status</h3>
+                {statuses.length === 0 ? (
+                  <div className="text-center py-8 bg-dark-surface border border-dark-border rounded-lg">
+                    <p className="text-accent-gray">Nenhum status cadastrado ainda.</p>
+                    <p className="text-accent-gray text-sm mt-2">Use o formulário acima para criar o primeiro status.</p>
+                  </div>
+                ) : (
+                  <div className="grid gap-3">
+                    {statuses.map((status) => (
+                      <div
+                        key={status.id}
+                        className="flex items-center justify-between p-4 bg-dark-surface border border-dark-border rounded-lg hover:border-primary-500/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="flex flex-col">
+                            <span className="text-white font-semibold text-lg">{status.label}</span>
+                            <span className="text-accent-gray text-sm font-mono">{status.key}</span>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => handleEditStatus(status)}
+                            size="sm"
+                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
+                            title="Editar status"
+                          >
+                            <Edit className="h-4 w-4 mr-2" />
+                            Editar
+                          </Button>
+                          <Button
+                            onClick={() => handleDeleteStatus(status.id)}
+                            size="sm"
+                            className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
+                            title="Excluir status"
+                          >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Excluir
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
@@ -577,83 +609,115 @@ export default function DashboardPage() {
               animate={{ opacity: 1, y: 0 }}
               className="bg-dark-card border border-dark-border rounded-xl p-6 mb-6"
             >
-              <h2 className="text-2xl font-bold mb-4 text-white">Gerenciar Tipos</h2>
-              <div className="grid md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-white">
-                    Key (ex: Web)
-                  </label>
-                  <input
-                    type="text"
-                    value={typeForm.key}
-                    onChange={(e) => setTypeForm({ ...typeForm, key: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Web"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2 text-white">
-                    Label (ex: WEB)
-                  </label>
-                  <input
-                    type="text"
-                    value={typeForm.label}
-                    onChange={(e) => setTypeForm({ ...typeForm, label: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="WEB"
-                  />
-                </div>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-white">Gerenciar Tipos</h2>
+                <span className="text-accent-gray text-sm">
+                  {types.length} {types.length === 1 ? "tipo" : "tipos"}
+                </span>
               </div>
-              <div className="flex gap-2 mb-4">
-                <Button
-                  onClick={handleSaveType}
-                  className="bg-primary-500 hover:bg-primary-600 text-white"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  {editingTypeId ? "Atualizar" : "Adicionar"} Tipo
-                </Button>
-                {editingTypeId && (
-                  <Button
-                    onClick={() => {
-                      setEditingTypeId(null);
-                      setTypeForm({ key: "", label: "" });
-                    }}
-                    variant="outline"
-                    className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
-                  >
-                    <X className="h-4 w-4 mr-2" />
-                    Cancelar
-                  </Button>
-                )}
-              </div>
-              <div className="grid gap-2">
-                {types.map((type) => (
-                  <div
-                    key={type.id}
-                    className="flex items-center justify-between p-3 bg-dark-surface border border-dark-border rounded-lg"
-                  >
-                    <div>
-                      <span className="text-white font-medium">{type.label}</span>
-                      <span className="text-accent-gray text-sm ml-2">({type.key})</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        onClick={() => handleEditType(type)}
-                        size="sm"
-                        className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        onClick={() => handleDeleteType(type.id)}
-                        size="sm"
-                        className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
+
+              {/* Formulário de criação/edição */}
+              <div className="bg-dark-surface border border-dark-border rounded-lg p-4 mb-6">
+                <h3 className="text-lg font-semibold mb-4 text-white">
+                  {editingTypeId ? "Editar Tipo" : "Criar Novo Tipo"}
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-white">
+                      Key (ex: Web) *
+                    </label>
+                    <input
+                      type="text"
+                      value={typeForm.key}
+                      onChange={(e) => setTypeForm({ ...typeForm, key: e.target.value })}
+                      className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      placeholder="Web"
+                      required
+                    />
                   </div>
-                ))}
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-white">
+                      Label (ex: WEB) *
+                    </label>
+                    <input
+                      type="text"
+                      value={typeForm.label}
+                      onChange={(e) => setTypeForm({ ...typeForm, label: e.target.value })}
+                      className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      placeholder="WEB"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleSaveType}
+                    className="bg-primary-500 hover:bg-primary-600 text-white"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    {editingTypeId ? "Atualizar" : "Adicionar"} Tipo
+                  </Button>
+                  {editingTypeId && (
+                    <Button
+                      onClick={() => {
+                        setEditingTypeId(null);
+                        setTypeForm({ key: "", label: "" });
+                      }}
+                      variant="outline"
+                      className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      Cancelar
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Lista de Tipos */}
+              <div>
+                <h3 className="text-lg font-semibold mb-4 text-white">Todos os Tipos</h3>
+                {types.length === 0 ? (
+                  <div className="text-center py-8 bg-dark-surface border border-dark-border rounded-lg">
+                    <p className="text-accent-gray">Nenhum tipo cadastrado ainda.</p>
+                    <p className="text-accent-gray text-sm mt-2">Use o formulário acima para criar o primeiro tipo.</p>
+                  </div>
+                ) : (
+                  <div className="grid gap-3">
+                    {types.map((type) => (
+                      <div
+                        key={type.id}
+                        className="flex items-center justify-between p-4 bg-dark-surface border border-dark-border rounded-lg hover:border-primary-500/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="flex flex-col">
+                            <span className="text-white font-semibold text-lg">{type.label}</span>
+                            <span className="text-accent-gray text-sm font-mono">{type.key}</span>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => handleEditType(type)}
+                            size="sm"
+                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
+                            title="Editar tipo"
+                          >
+                            <Edit className="h-4 w-4 mr-2" />
+                            Editar
+                          </Button>
+                          <Button
+                            onClick={() => handleDeleteType(type.id)}
+                            size="sm"
+                            className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
+                            title="Excluir tipo"
+                          >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Excluir
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           )}

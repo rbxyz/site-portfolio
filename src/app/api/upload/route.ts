@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
+import { put } from "@vercel/blob";
 import { auth } from "@/server/auth";
 
 export async function POST(request: Request) {
@@ -38,31 +37,18 @@ export async function POST(request: Request) {
       );
     }
 
-    // Criar diretório se não existir
-    const uploadsDir = join(process.cwd(), "public", "uploads", "projects");
-    try {
-      await mkdir(uploadsDir, { recursive: true });
-    } catch (error) {
-      // Diretório já existe ou erro ao criar
-      console.error("Error creating uploads directory:", error);
-    }
-
     // Gerar nome único para o arquivo
     const timestamp = Date.now();
     const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
-    const fileName = `${timestamp}-${sanitizedName}`;
-    const filePath = join(uploadsDir, fileName);
+    const fileName = `projects/${timestamp}-${sanitizedName}`;
 
-    // Converter File para Buffer e salvar
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    // Upload para Vercel Blob Storage
+    const blob = await put(fileName, file, {
+      access: "public",
+      contentType: file.type,
+    });
 
-    await writeFile(filePath, buffer);
-
-    // Retornar URL relativa para acessar a imagem
-    const imageUrl = `/uploads/projects/${fileName}`;
-
-    return NextResponse.json({ imageUrl });
+    return NextResponse.json({ imageUrl: blob.url });
   } catch (error) {
     console.error("Error uploading file:", error);
     return NextResponse.json(
