@@ -88,6 +88,7 @@ export default function DashboardPage() {
       void fetchStatuses();
       void fetchTypes();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const fetchProjects = async () => {
@@ -721,10 +722,10 @@ export default function DashboardPage() {
                   </label>
                   
                   {/* Preview da imagem atual ou selecionada */}
-                  {(imagePreview || formData.imageUrl) && (
+                  {(imagePreview ?? formData.imageUrl) && (
                     <div className="relative mb-4 w-full h-48 rounded-lg overflow-hidden bg-dark-surface border border-dark-border">
                       <Image
-                        src={imagePreview || formData.imageUrl || ""}
+                        src={imagePreview ?? formData.imageUrl ?? ""}
                         alt="Preview"
                         fill
                         className="object-cover"
