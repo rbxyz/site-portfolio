@@ -17,7 +17,7 @@ export function ConsoleMessage() {
         );
 
         // Detectar quando o console é aberto (tentativa)
-        let devtools = { open: false, orientation: null };
+        const devtools = { open: false, orientation: null };
         const threshold = 160;
 
         setInterval(() => {
