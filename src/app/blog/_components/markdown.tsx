@@ -10,7 +10,7 @@ export function Markdown({ children }: { children: string }) {
   return (
     <div className="kp-md" style={{ color: C.textMuted, fontFamily: FONT.grotesk }}>
       <style>{`
-        .kp-md { font-size: 17px; line-height: 1.75; }
+        .kp-md { font-size: clamp(15px, 1.6vw, 17px); line-height: 1.75; overflow-wrap: anywhere; }
         .kp-md h1, .kp-md h2, .kp-md h3, .kp-md h4 {
           font-family: ${FONT.grotesk}; color: ${C.text};
           line-height: 1.2; margin: 1.8em 0 .6em; font-weight: 700;
@@ -37,7 +37,10 @@ export function Markdown({ children }: { children: string }) {
         .kp-md pre code { background: transparent; padding: 0; font-size: .85em; }
         .kp-md img { max-width: 100%; border-radius: 10px; margin: 1.3em 0; }
         .kp-md hr { border: none; border-top: 1px solid ${C.border2}; margin: 2em 0; }
-        .kp-md table { width: 100%; border-collapse: collapse; margin: 1.3em 0; }
+        .kp-md table {
+          display: block; width: 100%; max-width: 100%; overflow-x: auto;
+          border-collapse: collapse; margin: 1.3em 0; -webkit-overflow-scrolling: touch;
+        }
         .kp-md th, .kp-md td { border: 1px solid ${C.border2}; padding: 8px 12px; text-align: left; }
       `}</style>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{children}</ReactMarkdown>
