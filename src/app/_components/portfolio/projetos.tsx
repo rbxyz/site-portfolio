@@ -11,6 +11,8 @@ type Project = {
   href: string;
   cta: string;
   imageLeft: boolean;
+  /** Real screenshot from /public; falls back to the gradient placeholder when omitted. */
+  image?: string;
   lastRow?: boolean;
 };
 
@@ -25,6 +27,7 @@ const projects: Project[] = [
     href: "https://marcaaii.vercel.app/",
     cta: "Visitar projeto →",
     imageLeft: false,
+    image: "/marcaaii.png",
   },
   {
     n: "02",
@@ -232,7 +235,21 @@ function ProjectRow({ project: p }: { project: Project }) {
         className="kp-proj-img"
         style={{ transition: "transform .7s cubic-bezier(.2,.7,.2,1)" }}
       >
-        <PreviewPlaceholder title={p.title} />
+        {p.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={p.image}
+            alt={p.title}
+            style={{
+              width: "100%",
+              height: 400,
+              objectFit: "cover",
+              display: "block",
+            }}
+          />
+        ) : (
+          <PreviewPlaceholder title={p.title} />
+        )}
       </div>
     </div>
   );

@@ -172,39 +172,6 @@ export default async function BlogIndex({
         <span style={{ color: C.accent, fontSize: 14 }}>✦</span>
       </div>
 
-      {/* marquee */}
-      <div
-        style={{
-          overflow: "hidden",
-          borderBottom: `1px solid ${C.border2}`,
-          background: "#1a0a32",
-          padding: "11px 0",
-        }}
-      >
-        <div
-          className="b-marq"
-          style={{
-            display: "flex",
-            width: "max-content",
-            font: `700 12px/1 ${FONT.mono}`,
-            letterSpacing: ".26em",
-            textTransform: "uppercase",
-            color: C.textMuted2,
-          }}
-        >
-          {[0, 1].map((i) => (
-            <span key={i} style={{ whiteSpace: "nowrap" }}>
-              Desenvolvimento&nbsp;&nbsp;
-              <span style={{ color: C.accent }}>✦</span>&nbsp;&nbsp;Automação&nbsp;&nbsp;
-              <span style={{ color: C.accent }}>✦</span>&nbsp;&nbsp;Inteligência
-              Artificial&nbsp;&nbsp;
-              <span style={{ color: C.accent }}>✦</span>&nbsp;&nbsp;Café&nbsp;&nbsp;
-              <span style={{ color: C.accent }}>✦</span>&nbsp;&nbsp;
-            </span>
-          ))}
-        </div>
-      </div>
-
       <div style={{ maxWidth: 1180, margin: "0 auto", padding: "64px 5vw 120px" }}>
         {/* hero */}
         <div

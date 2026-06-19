@@ -187,16 +187,6 @@
 }
 
 /* ===== Blog redesign (editorial) animations & interactions ===== */
-@keyframes b-marq {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(-50%);
-    }
-}
-
 @keyframes b-up {
     from {
         opacity: 0;
@@ -207,10 +197,6 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.b-marq {
-    animation: b-marq 26s linear infinite;
 }
 
 .b-up {
@@ -313,7 +299,6 @@
     .kp-spin,
     .kp-glow,
     .kp-caret,
-    .b-marq,
     .b-up,
     .b-up-delay {
         animation: none !important;
