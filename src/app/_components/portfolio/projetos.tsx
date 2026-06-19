@@ -58,6 +58,7 @@ export function Projetos() {
   return (
     <section
       id="projetos"
+      className="kp-section"
       style={{
         position: "relative",
         background: C.bg,

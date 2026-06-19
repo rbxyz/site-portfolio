@@ -33,6 +33,7 @@ export function Sobre() {
   return (
     <section
       id="sobre"
+      className="kp-section"
       style={{
         position: "relative",
         background: C.bg,
@@ -96,6 +97,7 @@ export function Sobre() {
         </h2>
 
         <div
+          className="kp-grid-2"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -133,7 +135,7 @@ export function Sobre() {
             >
               Do MVP ao deploy, passando por automação, dados e integração.
             </p>
-            <div style={{ display: "flex", gap: 48, marginTop: 48 }}>
+            <div className="kp-stats" style={{ display: "flex", gap: 48, marginTop: 48 }}>
               <Stat
                 value="20+"
                 valueColor={C.accent}

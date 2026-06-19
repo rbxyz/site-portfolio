@@ -294,6 +294,7 @@ export function Hero() {
   return (
     <div
       id="kp-root"
+      className="kp-hero"
       style={{
         position: "relative",
         minHeight: "100vh",
@@ -317,6 +318,7 @@ export function Hero() {
 
       {/* PHOTO (right) — circular frame, reduced scale */}
       <div
+        className="kp-hero-photo"
         style={{
           position: "absolute",
           right: 0,
@@ -330,6 +332,7 @@ export function Hero() {
         }}
       >
         <div
+          className="kp-hero-photo-circle"
           style={{
             position: "relative",
             width: "clamp(280px, 30vw, 480px)",
@@ -355,6 +358,7 @@ export function Hero() {
           />
         </div>
         <div
+          className="kp-hero-vlabel"
           style={{
             position: "absolute",
             bottom: 80,
@@ -391,6 +395,7 @@ export function Hero() {
 
       {/* NAV */}
       <div
+        className="kp-hero-nav"
         style={{
           position: "absolute",
           top: 0,
@@ -407,6 +412,7 @@ export function Hero() {
           RUAN BUENO<span style={{ color: C.accent }}>.</span>
         </span>
         <span
+          className="kp-hero-navlinks"
           style={{
             display: "flex",
             gap: 34,
@@ -424,7 +430,7 @@ export function Hero() {
           <Link href="/blog" className="kp-hover" style={{ color: "inherit", textDecoration: "none" }}>
             Blog
           </Link>
-          <span className="kp-hover" style={{ color: C.accent }}>
+          <span className="kp-hover kp-hero-avail" style={{ color: C.accent }}>
             ● Disponível
           </span>
         </span>
@@ -432,6 +438,7 @@ export function Hero() {
 
       {/* GIANT TYPE (left) */}
       <div
+        className="kp-hero-type"
         style={{
           position: "absolute",
           left: "4vw",
@@ -520,6 +527,7 @@ export function Hero() {
 
       {/* spinning badge */}
       <div
+        className="kp-hero-badge"
         style={{
           position: "absolute",
           top: "14vh",
@@ -570,6 +578,7 @@ export function Hero() {
 
       {/* vertical edge label */}
       <div
+        className="kp-hero-vlabel"
         style={{
           position: "absolute",
           left: 18,
@@ -588,6 +597,7 @@ export function Hero() {
 
       {/* bottom marquee */}
       <div
+        className="kp-hero-marq"
         style={{
           position: "absolute",
           bottom: 0,

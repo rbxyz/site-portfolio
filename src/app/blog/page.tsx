@@ -175,7 +175,7 @@ export default async function BlogIndex({
       <div style={{ maxWidth: 1180, margin: "0 auto", padding: "64px 5vw 120px" }}>
         {/* hero */}
         <div
-          className="b-up"
+          className="b-up b-hero-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "1.4fr 1fr",
@@ -423,6 +423,7 @@ export default async function BlogIndex({
           </p>
         ) : (
           <div
+            className="b-cards"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fill, minmax(330px, 1fr))",

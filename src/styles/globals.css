@@ -279,6 +279,7 @@
 }
 
 @media (max-width: 760px) {
+    /* ----- Blog ----- */
     .b-feat {
         grid-template-columns: 1fr !important;
     }
@@ -290,6 +291,97 @@
 
     .b-hero-h1 {
         font-size: clamp(46px, 15vw, 84px) !important;
+    }
+
+    .b-hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+        margin-bottom: 48px !important;
+    }
+
+    .b-cards {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ----- Home hero: absolute layout collapses into a vertical stack ----- */
+    .kp-hero {
+        min-height: auto !important;
+    }
+
+    .kp-hero-photo {
+        position: relative !important;
+        width: 100% !important;
+        top: auto !important;
+        bottom: auto !important;
+        right: auto !important;
+        padding-top: 92px;
+        padding-bottom: 4px;
+    }
+
+    .kp-hero-photo-circle {
+        margin-right: 0 !important;
+        width: clamp(190px, 56vw, 270px) !important;
+    }
+
+    .kp-hero-type {
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        top: auto !important;
+        padding: 22px 6vw 42px !important;
+    }
+
+    .kp-hero-nav {
+        padding: 18px 6vw !important;
+    }
+
+    .kp-hero-navlinks {
+        gap: 16px !important;
+        font-size: 11px !important;
+    }
+
+    /* decorative overlays that would collide with the stacked content */
+    .kp-hero-avail,
+    .kp-hero-badge,
+    .kp-hero-vlabel {
+        display: none !important;
+    }
+
+    .kp-hero-marq {
+        position: relative !important;
+    }
+
+    /* ----- Shared section paddings (Sobre / Projetos) ----- */
+    .kp-section {
+        padding-top: 80px !important;
+        padding-bottom: 80px !important;
+    }
+
+    .kp-footer {
+        padding-top: 80px !important;
+    }
+
+    /* ----- Two-column blocks collapse to one ----- */
+    .kp-grid-2 {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+        margin-top: 48px !important;
+    }
+
+    .kp-stats {
+        flex-wrap: wrap;
+        gap: 28px !important;
+    }
+
+    /* Projetos rows (text + preview) stack vertically */
+    .kp-proj {
+        grid-template-columns: 1fr !important;
+        gap: 26px !important;
+        padding: 32px 0 !important;
+    }
+
+    .kp-footer-name {
+        font-size: clamp(40px, 15vw, 260px) !important;
     }
 }
 

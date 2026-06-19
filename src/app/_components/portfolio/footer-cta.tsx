@@ -8,6 +8,7 @@ export function FooterCta() {
   return (
     <section
       id="contato"
+      className="kp-footer"
       style={{
         position: "relative",
         background: C.bg,
@@ -151,6 +152,7 @@ export function FooterCta() {
         }}
       >
         <div
+          className="kp-footer-name"
           style={{
             fontFamily: FONT.anton,
             fontSize: "clamp(80px,17vw,260px)",
