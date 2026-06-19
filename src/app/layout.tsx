@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Anton, Space_Grotesk, Space_Mono } from "next/font/google";
 import { ThemeProvider } from "@/app/_components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "@/app/providers";
@@ -7,6 +7,25 @@ import { Toaster } from "sonner";
 import { ConsoleMessage } from "@/app/_components/console-message";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const anton = Anton({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-anton",
+  display: "swap",
+});
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-grotesk",
+  display: "swap",
+});
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-mono-sp",
+  display: "swap",
+});
 
 export const metadata = {
   title: "< Portfolio | Ruan Bueno />",
@@ -22,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* DNS prefetch e preconnect para melhor performance */}
         <link rel="dns-prefetch" href="//api.screenshotone.com" />
@@ -37,7 +56,9 @@ export default function RootLayout({
         <link rel="preload" href="/logo.png" as="image" type="image/png" />
         <link rel="preload" href="/Foto_Perfil.jpg" as="image" type="image/jpeg" />
       </head>
-      <body className={inter.className}>
+      <body
+        className={`${inter.className} ${anton.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
+      >
         <Providers>
           <ThemeProvider
             attribute="class"

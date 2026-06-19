@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#0E0720;}
+  @keyframes marq{to{transform:translateX(-50%);}}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes glowp{0%,100%{opacity:.6;}50%{opacity:.95;}}
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important;} }
+</style>
+</helmet>
+
+<div id="kp-root" style="position:relative; min-height:100vh; background:#0E0720; color:#F4F2EC; overflow:hidden; font-family:'Space Grotesk',sans-serif;">
+
+  <!-- grid bg -->
+  <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(181,123,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(181,123,255,.04) 1px,transparent 1px); background-size:70px 70px; z-index:1;"></div>
+
+  <!-- PHOTO RIGHT -->
+  <div id="kp-photo" style="position:absolute; right:0; top:0; bottom:0; width:40%; z-index:3; overflow:hidden;">
+    <img id="kp-photoimg" src="assets/foto2.jpeg" alt="Ruan Bueno" style="position:absolute; inset:-30px; width:calc(100% + 60px); height:calc(100% + 60px); object-fit:cover; object-position:50% 8%; filter:grayscale(1) contrast(1.12) brightness(1.0); transform:scale(1.18);">
+    <div style="position:absolute; inset:0; background:#7A35C9; mix-blend-mode:multiply; opacity:.8;"></div>
+    <div style="position:absolute; inset:0; background:#0E0720; mix-blend-mode:color; opacity:.25;"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(90deg,#0E0720 0%, rgba(10,10,12,.25) 24%, transparent 52%);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,10,12,.45), transparent 22%, transparent 72%, rgba(10,10,12,.7));"></div>
+    <div style="position:absolute; bottom:80px; right:28px; writing-mode:vertical-rl; transform:rotate(180deg); font:700 11px/1 'Space Mono',monospace; letter-spacing:.26em; text-transform:uppercase; color:#F4F2EC; mix-blend-mode:difference;">Ruan Bueno · Porto Alegre BR</div>
+  </div>
+
+  <!-- glow -->
+  <div id="kp-glow" style="position:absolute; right:18%; top:30%; width:38vw; max-width:560px; height:60vh; z-index:2; background:radial-gradient(ellipse 56% 50% at 50% 40%, rgba(181,123,255,.32), transparent 66%); filter:blur(14px); animation:glowp 5s ease-in-out infinite; pointer-events:none;"></div>
+
+  <!-- NAV -->
+  <div style="position:absolute; top:0; left:0; right:0; z-index:7; display:flex; align-items:center; justify-content:space-between; padding:30px 4vw;">
+    <span style="font:700 16px/1 'Space Mono',monospace; letter-spacing:.1em;">RUAN BUENO<span style="color:#B57BFF;">.</span></span>
+    <span style="display:flex; gap:34px; font:700 12px/1 'Space Mono',monospace; letter-spacing:.16em; text-transform:uppercase;"><span data-hover>Sobre</span><span data-hover>Projetos</span><span data-hover style="color:#B57BFF;">● Disponível</span></span>
+  </div>
+
+  <!-- GIANT TYPE (left) -->
+  <div id="kp-type" style="position:absolute; left:4vw; top:50%; transform:translateY(-50%); z-index:6; will-change:transform;">
+    <div style="font:700 13px/1 'Space Mono',monospace; letter-spacing:.24em; text-transform:uppercase; color:#B57BFF; margin-bottom:26px;">Dev · Café · Automação &amp; IA</div>
+    <div style="font-family:'Anton',sans-serif; font-size:clamp(64px,10vw,148px); line-height:.82; letter-spacing:-.01em; text-transform:uppercase;">Traduzo</div>
+    <div style="font-family:'Anton',sans-serif; font-size:clamp(64px,10vw,148px); line-height:.82; letter-spacing:-.01em; text-transform:uppercase; color:#B57BFF;">Negócios</div>
+    <div style="font-family:'Anton',sans-serif; font-size:clamp(40px,6vw,90px); line-height:.9; letter-spacing:-.01em; text-transform:uppercase; margin-top:6px;">em <span style="color:transparent; -webkit-text-stroke:1.5px #6a6a6e;">software</span><span style="color:#B57BFF;">.</span></div>
+    <p style="font:400 17px/1.5 'Space Grotesk'; color:#b8b6ad; max-width:440px; margin-top:30px;">Traduzo negócios e problemas em soluções escaláveis e robustas. Você traz o problema — eu devolvo o software.</p>
+    <div style="display:flex; gap:14px; margin-top:28px;">
+      <a href="#projetos" data-hover style="background:#31105C; color:#F4F2EC; padding:15px 26px; border-radius:4px; font:700 13px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; text-decoration:none;">Ver projetos →</a>
+      <a href="#" data-hover style="border:1px solid #3a2a54; color:#e6e6e0; padding:15px 26px; border-radius:4px; font:700 13px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; text-decoration:none;">Baixar CV</a>
+    </div>
+  </div>
+
+  <!-- spinning badge -->
+  <div style="position:absolute; top:14vh; right:6vw; z-index:7; width:120px; height:120px;">
+    <svg viewBox="0 0 200 200" style="width:100%; height:100%; animation:spin 18s linear infinite;"><defs><path id="kpcirc" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"></path></defs><text style="font:700 15px 'Space Mono',monospace; letter-spacing:6px; fill:#F4F2EC; text-transform:uppercase;"><textPath href="#kpcirc">FULL-STACK · IA · GROWTH · CAFÉ · </textPath></text></svg>
+    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#B57BFF; font-size:22px;">✦</div>
+  </div>
+
+  <!-- vertical edge label -->
+  <div style="position:absolute; left:18px; bottom:120px; z-index:7; writing-mode:vertical-rl; transform:rotate(180deg); font:700 11px/1 'Space Mono',monospace; letter-spacing:.26em; text-transform:uppercase; color:#56564f;">v.2026 · RS · ● all systems nominal</div>
+
+  <!-- bottom marquee -->
+  <div style="position:absolute; bottom:0; left:0; right:0; height:50px; z-index:8; background:#31105C; color:#F4F2EC; overflow:hidden; display:flex; align-items:center;">
+    <div style="display:flex; white-space:nowrap; animation:marq 22s linear infinite; font-family:'Anton',sans-serif; font-size:24px; letter-spacing:.03em; text-transform:uppercase;">
+      <span style="padding:0 22px;">Traduzo negócios em software</span><span>✦</span><span style="padding:0 22px;">20+ projetos</span><span>✦</span><span style="padding:0 22px;">MarcaAI · AllProtect · Ethos</span><span>✦</span><span style="padding:0 22px;">TypeScript · PostgreSQL · n8n · Power BI</span><span>✦</span>
+      <span style="padding:0 22px;">Traduzo negócios em software</span><span>✦</span><span style="padding:0 22px;">20+ projetos</span><span>✦</span><span style="padding:0 22px;">MarcaAI · AllProtect · Ethos</span><span>✦</span><span style="padding:0 22px;">TypeScript · PostgreSQL · n8n · Power BI</span><span>✦</span>
+    </div>
+  </div>
+
+  <!-- PRELOADER -->
+  <div id="kp-pre" style="position:fixed; inset:0; z-index:100; background:#0E0720; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px; transition:opacity .6s ease, transform .7s cubic-bezier(.7,0,.2,1);">
+    <div style="font:700 12px/1 'Space Mono',monospace; letter-spacing:.3em; text-transform:uppercase; color:#B57BFF;">Ruan Bueno · Portfólio</div>
+    <div id="kp-pre-phrase" style="font-family:'Anton',sans-serif; font-size:clamp(40px,7vw,104px); line-height:.9; text-transform:uppercase; color:#F4F2EC; text-align:center; opacity:.0; transition:opacity .5s;">Negócios → Software</div>
+    <div style="position:absolute; bottom:46px; left:0; right:0; display:flex; align-items:flex-end; justify-content:space-between; padding:0 4vw;">
+      <span id="kp-pre-num" style="font-family:'Anton',sans-serif; font-size:clamp(48px,9vw,120px); line-height:.8; color:#B57BFF;">000</span>
+      <span style="font:700 12px/1 'Space Mono',monospace; letter-spacing:.2em; text-transform:uppercase; color:#56564f;">Carregando experiência</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= SOBRE ================= -->
+<section id="sobre" style="position:relative; background:#0E0720; color:#F4F2EC; padding:140px 4vw 120px; overflow:hidden; border-top:1px solid #1b1233;">
+  <div style="position:absolute; left:-10%; top:20%; width:50vw; height:50vh; background:radial-gradient(circle, rgba(181,123,255,.1), transparent 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div style="max-width:1240px; margin:0 auto; position:relative;">
+    <div data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1); font:700 13px/1 'Space Mono',monospace; letter-spacing:.24em; text-transform:uppercase; color:#B57BFF; margin-bottom:40px;">01 / Sobre</div>
+    <h2 style="font:700 clamp(30px,4.4vw,62px)/1.06 'Space Grotesk'; letter-spacing:-.03em; max-width:1080px;">
+      <span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">Entendo&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">do&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">seu&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s; color:#B57BFF;">negócio.&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">Pego&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">qualquer&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">problema&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">e&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">faço&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s;">virar&nbsp;</span><span data-word style="display:inline-block; opacity:0; transform:translateY(20px); transition:opacity .6s,transform .6s; color:#B57BFF;">software.</span>
+    </h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; margin-top:72px; align-items:start;">
+      <div data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1) .1s,transform .8s cubic-bezier(.2,.7,.2,1) .1s;">
+        <p style="font:400 19px/1.65 'Space Grotesk'; color:#cfcdc4;">Sou desenvolvedor full-stack com cabeça de produto. Mais do que escrever código, eu desenho a solução: entro no problema do negócio, mapeio o processo e devolvo um sistema que escala — performático, robusto e bonito de usar.</p>
+        <p style="font:400 19px/1.65 'Space Grotesk'; color:#8A877F; margin-top:22px;">Do MVP ao deploy, passando por automação, dados e integração. Sem jargão de marketing: a entrega é o argumento.</p>
+        <div style="display:flex; gap:48px; margin-top:48px;">
+          <div><div style="font-family:'Anton',sans-serif; font-size:54px; color:#B57BFF; line-height:.9;">20+</div><div style="font:700 11px/1.4 'Space Mono',monospace; letter-spacing:.14em; text-transform:uppercase; color:#8A877F; margin-top:10px;">Projetos<br>entregues</div></div>
+          <div><div style="font-family:'Anton',sans-serif; font-size:54px; color:#F4F2EC; line-height:.9;">04</div><div style="font:700 11px/1.4 'Space Mono',monospace; letter-spacing:.14em; text-transform:uppercase; color:#8A877F; margin-top:10px;">Anos de<br>experiência</div></div>
+          <div><div style="font-family:'Anton',sans-serif; font-size:54px; color:#F4F2EC; line-height:.9;">∞</div><div style="font:700 11px/1.4 'Space Mono',monospace; letter-spacing:.14em; text-transform:uppercase; color:#8A877F; margin-top:10px;">Xícaras<br>de café</div></div>
+        </div>
+      </div>
+      <div data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1) .2s,transform .8s cubic-bezier(.2,.7,.2,1) .2s;">
+        <div style="font:700 12px/1 'Space Mono',monospace; letter-spacing:.2em; text-transform:uppercase; color:#8A877F; margin-bottom:8px;">Stack &amp; competências</div>
+        <div data-stack style="display:flex; align-items:baseline; gap:18px; padding:20px 8px; border-top:1px solid #251737; border-bottom:1px solid #251737; transition:padding .3s,background .3s;"><span style="font:700 12px/1 'Space Mono',monospace; color:#B57BFF;">01</span><span style="font:600 22px/1 'Space Grotesk';">TypeScript</span><span style="font:400 13px/1 'Space Mono',monospace; color:#8A877F; margin-left:auto;">linguagem base</span></div>
+        <div data-stack style="display:flex; align-items:baseline; gap:18px; padding:20px 8px; border-bottom:1px solid #251737; transition:padding .3s,background .3s;"><span style="font:700 12px/1 'Space Mono',monospace; color:#B57BFF;">02</span><span style="font:600 22px/1 'Space Grotesk';">PostgreSQL</span><span style="font:400 13px/1 'Space Mono',monospace; color:#8A877F; margin-left:auto;">dados</span></div>
+        <div data-stack style="display:flex; align-items:baseline; gap:18px; padding:20px 8px; border-bottom:1px solid #251737; transition:padding .3s,background .3s;"><span style="font:700 12px/1 'Space Mono',monospace; color:#B57BFF;">03</span><span style="font:600 22px/1 'Space Grotesk';">Integrações e-commerce &amp; marketplaces</span></div>
+        <div data-stack style="display:flex; align-items:baseline; gap:18px; padding:20px 8px; border-bottom:1px solid #251737; transition:padding .3s,background .3s;"><span style="font:700 12px/1 'Space Mono',monospace; color:#B57BFF;">04</span><span style="font:600 22px/1 'Space Grotesk';">Automação</span><span style="font:400 13px/1 'Space Mono',monospace; color:#8A877F; margin-left:auto;">n8n</span></div>
+        <div data-stack style="display:flex; align-items:baseline; gap:18px; padding:20px 8px; border-bottom:1px solid #251737; transition:padding .3s,background .3s;"><span style="font:700 12px/1 'Space Mono',monospace; color:#B57BFF;">05</span><span style="font:600 22px/1 'Space Grotesk';">BI &amp; Dados</span><span style="font:400 13px/1 'Space Mono',monospace; color:#8A877F; margin-left:auto;">Power BI · SQL</span></div>
+        <div data-stack style="display:flex; align-items:baseline; gap:18px; padding:20px 8px; border-bottom:1px solid #251737; transition:padding .3s,background .3s;"><span style="font:700 12px/1 'Space Mono',monospace; color:#B57BFF;">06</span><span style="font:600 22px/1 'Space Grotesk';">Arquitetura de sistemas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJETOS ================= -->
+<section id="projetos" style="position:relative; background:#0E0720; color:#F4F2EC; padding:120px 4vw 130px; overflow:hidden; border-top:1px solid #1b1233;">
+  <div style="max-width:1240px; margin:0 auto;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:20px; margin-bottom:64px;">
+      <div>
+        <div data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1); font:700 13px/1 'Space Mono',monospace; letter-spacing:.24em; text-transform:uppercase; color:#B57BFF; margin-bottom:24px;">02 / Projetos em destaque</div>
+        <h2 data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1) .08s,transform .8s cubic-bezier(.2,.7,.2,1) .08s; font:700 clamp(34px,5vw,72px)/.98 'Space Grotesk'; letter-spacing:-.035em;">Negócios que viraram <span style="color:#B57BFF;">software.</span></h2>
+      </div>
+      <div data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1) .15s,transform .8s cubic-bezier(.2,.7,.2,1) .15s; font:400 14px/1.5 'Space Mono',monospace; color:#8A877F; max-width:300px; text-align:right;">Selecionados de 20+ entregas.<br>Passe o mouse pra prévia.</div>
+    </div>
+
+    <!-- PROJ 1 · MarcaAI -->
+    <a href="https://marcaaii.vercel.app/" target="_blank" rel="noopener" data-proj data-hover data-reveal style="opacity:0; transform:translateY(36px); transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1); text-decoration:none; color:inherit; display:grid; grid-template-columns:1fr 1.15fr; gap:48px; align-items:center; padding:40px 0; border-top:1px solid #251737;">
+      <div>
+        <div style="display:flex; align-items:center; gap:16px; font:700 12px/1 'Space Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#8A877F;"><span style="color:#B57BFF;">01</span><span style="width:6px; height:6px; border-radius:50%; background:#B57BFF;"></span><span>Em evolução · 2025 · SaaS</span></div>
+        <h3 style="font-family:'Anton',sans-serif; font-size:clamp(40px,4.6vw,76px); line-height:.92; text-transform:uppercase; letter-spacing:-.01em; margin:22px 0 18px;">MarcaAI</h3>
+        <p style="font:400 17px/1.6 'Space Grotesk'; color:#cfcdc4; max-width:440px;">Plataforma SaaS para prestadores de serviço: integra Google Agenda + WhatsApp + IA para atendimento e agendamento 100% automáticos.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;">
+          <span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">Next.js</span><span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">TypeScript</span><span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">Drizzle</span><span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">IA</span>
+        </div>
+        <div data-proj-cta style="opacity:0; transform:translateX(-8px); transition:opacity .4s,transform .4s; margin-top:28px; font:700 13px/1 'Space Mono',monospace; letter-spacing:.1em; text-transform:uppercase; color:#B57BFF;">Visitar projeto →</div>
+      </div>
+      <div style="position:relative; overflow:hidden; border-radius:8px; border:1px solid #251737;">
+        <div data-proj-img style="transition:transform .7s cubic-bezier(.2,.7,.2,1);">
+          <image-slot id="ms-marcaai" style="width:100%; height:400px; display:block;" shape="rect" placeholder="Arraste o screenshot do MarcaAI"></image-slot>
+        </div>
+      </div>
+    </a>
+
+    <!-- PROJ 2 · AllProtect -->
+    <a href="#" data-proj data-hover data-reveal style="opacity:0; transform:translateY(36px); transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1); text-decoration:none; color:inherit; display:grid; grid-template-columns:1.15fr 1fr; gap:48px; align-items:center; padding:40px 0; border-top:1px solid #251737;">
+      <div style="position:relative; overflow:hidden; border-radius:8px; border:1px solid #251737; order:1;">
+        <div data-proj-img style="transition:transform .7s cubic-bezier(.2,.7,.2,1);">
+          <image-slot id="ms-allprotect" style="width:100%; height:400px; display:block;" shape="rect" placeholder="Arraste o screenshot do AllProtect"></image-slot>
+        </div>
+      </div>
+      <div style="order:2;">
+        <div style="display:flex; align-items:center; gap:16px; font:700 12px/1 'Space Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#8A877F;"><span style="color:#B57BFF;">02</span><span style="width:6px; height:6px; border-radius:50%; background:#B57BFF;"></span><span>Shipped · 2023 · SaaS</span></div>
+        <h3 style="font-family:'Anton',sans-serif; font-size:clamp(40px,4.6vw,76px); line-height:.92; text-transform:uppercase; letter-spacing:-.01em; margin:22px 0 18px;">AllProtect</h3>
+        <p style="font:400 17px/1.6 'Space Grotesk'; color:#cfcdc4; max-width:440px;">Segurança digital com proteção em tempo real contra estelionato e fraudes online — alertas inteligentes e dashboard administrativo.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;">
+          <span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">Java</span><span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">Spring Boot</span><span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">Firebase</span>
+        </div>
+        <div data-proj-cta style="opacity:0; transform:translateX(-8px); transition:opacity .4s,transform .4s; margin-top:28px; font:700 13px/1 'Space Mono',monospace; letter-spacing:.1em; text-transform:uppercase; color:#B57BFF;">Ver case →</div>
+      </div>
+    </a>
+
+    <!-- PROJ 3 · Ethos -->
+    <a href="https://ethos-theta.vercel.app/" target="_blank" rel="noopener" data-proj data-hover data-reveal style="opacity:0; transform:translateY(36px); transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1); text-decoration:none; color:inherit; display:grid; grid-template-columns:1fr 1.15fr; gap:48px; align-items:center; padding:40px 0; border-top:1px solid #251737; border-bottom:1px solid #251737;">
+      <div>
+        <div style="display:flex; align-items:center; gap:16px; font:700 12px/1 'Space Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#8A877F;"><span style="color:#B57BFF;">03</span><span style="width:6px; height:6px; border-radius:50%; background:#B57BFF;"></span><span>Shipped · 2025 · SaaS</span></div>
+        <h3 style="font-family:'Anton',sans-serif; font-size:clamp(40px,4.6vw,76px); line-height:.92; text-transform:uppercase; letter-spacing:-.01em; margin:22px 0 18px;">Ethos</h3>
+        <p style="font:400 17px/1.6 'Space Grotesk'; color:#cfcdc4; max-width:440px;">Gestão pessoal de ponta a ponta: projetos, orçamentos, CRM e precificador por valor/projeto reunidos num só sistema.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;">
+          <span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">Next.js</span><span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">Prisma</span><span style="font:700 11px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:#b8b6ad; border:1px solid #3a2a54; padding:8px 12px; border-radius:3px;">TypeScript</span>
+        </div>
+        <div data-proj-cta style="opacity:0; transform:translateX(-8px); transition:opacity .4s,transform .4s; margin-top:28px; font:700 13px/1 'Space Mono',monospace; letter-spacing:.1em; text-transform:uppercase; color:#B57BFF;">Visitar projeto →</div>
+      </div>
+      <div style="position:relative; overflow:hidden; border-radius:8px; border:1px solid #251737;">
+        <div data-proj-img style="transition:transform .7s cubic-bezier(.2,.7,.2,1);">
+          <image-slot id="ms-ethos" style="width:100%; height:400px; display:block;" shape="rect" placeholder="Arraste o screenshot do Ethos"></image-slot>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ================= FOOTER / CTA ================= -->
+<section id="contato" style="position:relative; background:#0E0720; color:#F4F2EC; padding:130px 4vw 0; overflow:hidden; border-top:1px solid #1b1233;">
+  <div style="position:absolute; left:50%; top:30%; transform:translateX(-50%); width:70vw; height:50vh; background:radial-gradient(circle, rgba(181,123,255,.16), transparent 64%); filter:blur(40px); pointer-events:none;"></div>
+  <div style="max-width:1240px; margin:0 auto; position:relative; text-align:center;">
+    <div data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1); font:700 13px/1 'Space Mono',monospace; letter-spacing:.24em; text-transform:uppercase; color:#B57BFF; margin-bottom:34px;">03 / Contato</div>
+    <h2 data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1) .06s,transform .9s cubic-bezier(.2,.7,.2,1) .06s; font:700 clamp(34px,6vw,96px)/.96 'Space Grotesk'; letter-spacing:-.04em;">Tem um problema?<br>Vamos fazer virar <span style="color:#B57BFF;">software.</span></h2>
+    <a id="kp-mail" href="#" data-user="rbcr4z1" data-dom="gmail.com" data-hover style="display:inline-block; margin-top:48px; font-family:'Anton',sans-serif; font-size:clamp(24px,3.4vw,52px); text-transform:uppercase; color:#F4F2EC; text-decoration:none; border-bottom:3px solid #B57BFF; padding-bottom:6px; transition:color .3s;">escrever e-mail</a>
+    <div data-reveal style="opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1) .12s,transform .8s cubic-bezier(.2,.7,.2,1) .12s; display:flex; gap:16px; justify-content:center; margin-top:52px; flex-wrap:wrap;">
+      <a href="#" data-hover style="background:#31105C; color:#F4F2EC; padding:16px 30px; border-radius:4px; font:700 13px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; text-decoration:none;">Baixar CV ↓</a>
+      <a href="#" data-hover style="border:1px solid #3a2a54; color:#e6e6e0; padding:16px 30px; border-radius:4px; font:700 13px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; text-decoration:none;">LinkedIn ↗</a>
+      <a href="#" data-hover style="border:1px solid #3a2a54; color:#e6e6e0; padding:16px 30px; border-radius:4px; font:700 13px/1 'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase; text-decoration:none;">GitHub ↗</a>
+    </div>
+  </div>
+  <!-- giant outline name -->
+  <div style="margin-top:90px; overflow:hidden; line-height:.8; text-align:center;">
+    <div style="font-family:'Anton',sans-serif; font-size:clamp(80px,17vw,260px); text-transform:uppercase; color:transparent; -webkit-text-stroke:1.5px #1f1f23; letter-spacing:-.01em; user-select:none;">Ruan Bueno</div>
+  </div>
+  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:28px 0 34px; border-top:1px solid #1b1233; font:700 11px/1 'Space Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#56564f;">
+    <span>© 2026 Ruan Bueno · Porto Alegre, BR</span>
+    <span style="color:#B57BFF;">● All systems nominal</span>
+    <span>Dev · Café · Automação &amp; IA</span>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount(){
+    const root=document.getElementById('kp-root');
+    const type=document.getElementById('kp-type');
+    const photo=document.getElementById('kp-photoimg');
+    const glow=document.getElementById('kp-glow');
+    const pre=document.getElementById('kp-pre');
+    const num=document.getElementById('kp-pre-num');
+    const phr=document.getElementById('kp-pre-phrase');
+    const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+    // ---- preloader ----
+    const hide=()=>{ if(!pre)return; pre.style.opacity='0'; pre.style.transform='translateY(-100%)'; setTimeout(()=>{pre.style.display='none';},750); };
+    if(reduce){ if(num)num.textContent='100'; hide(); }
+    else if(pre){
+      let n=0; const dur=1500, t0=performance.now();
+      if(phr) setTimeout(()=>{phr.style.opacity='1';},350);
+      const step=(t)=>{ const p=Math.min((t-t0)/dur,1); n=Math.round((p<1?(1-Math.pow(1-p,3)):1)*100); if(num)num.textContent=String(n).padStart(3,'0'); if(p<1)requestAnimationFrame(step); else setTimeout(hide,260); };
+      requestAnimationFrame(step);
+    }
+
+    // ---- scroll reveals ----
+    const reveals=document.querySelectorAll('[data-reveal]');
+    const words=document.querySelectorAll('[data-word]');
+    if(reduce){
+      reveals.forEach(el=>{el.style.opacity='1';el.style.transform='none';});
+      words.forEach(el=>{el.style.opacity='1';el.style.transform='none';});
+    } else {
+      const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='none';io.unobserve(e.target);}});},{threshold:.14, rootMargin:'0px 0px -7% 0px'});
+      reveals.forEach(el=>io.observe(el));
+      document.querySelectorAll('h2').forEach(h=>{
+        const ws=h.querySelectorAll('[data-word]'); if(!ws.length) return;
+        const wio=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){ws.forEach((w,i)=>{setTimeout(()=>{w.style.opacity='1';w.style.transform='none';},i*55);});wio.disconnect();}});},{threshold:.3});
+        wio.observe(h);
+      });
+    }
+
+    // ---- project hover ----
+    document.querySelectorAll('[data-proj]').forEach(card=>{
+      const img=card.querySelector('[data-proj-img]'); const cta=card.querySelector('[data-proj-cta]');
+      card.addEventListener('mouseenter',()=>{ if(img&&!reduce)img.style.transform='scale(1.05)'; if(cta){cta.style.opacity='1';cta.style.transform='none';} });
+      card.addEventListener('mouseleave',()=>{ if(img)img.style.transform='none'; if(cta){cta.style.opacity='0';cta.style.transform='translateX(-8px)';} });
+    });
+    // ---- stack hover ----
+    document.querySelectorAll('[data-stack]').forEach(row=>{
+      row.addEventListener('mouseenter',()=>{row.style.paddingLeft='20px';row.style.background='rgba(181,123,255,.05)';});
+      row.addEventListener('mouseleave',()=>{row.style.paddingLeft='8px';row.style.background='transparent';});
+    });
+
+    // ---- build email (avoid obfuscation) ----
+    const mail=document.getElementById('kp-mail');
+    if(mail){ const addr=mail.dataset.user+'@'+mail.dataset.dom; mail.textContent=addr; mail.setAttribute('href','mailto:'+addr); }
+  }
+}
+</script>
+</body>
+</html>

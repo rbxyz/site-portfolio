@@ -95,6 +95,231 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ===== Portfolio (handoff) animations & interactions ===== */
+@keyframes kp-marq {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes kp-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes kp-glowp {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 0.95;
+    }
+}
+
+@keyframes kp-caret {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.kp-caret {
+    display: inline-block;
+    width: 0.06em;
+    margin-left: 0.04em;
+    align-self: stretch;
+    background: currentColor;
+    animation: kp-caret 0.9s steps(1) infinite;
+}
+
+.kp-marq {
+    animation: kp-marq 22s linear infinite;
+}
+
+.kp-spin {
+    animation: kp-spin 18s linear infinite;
+}
+
+.kp-glow {
+    animation: kp-glowp 5s ease-in-out infinite;
+}
+
+/* project hover: scale preview + reveal CTA */
+.kp-proj:hover .kp-proj-img {
+    transform: scale(1.05) !important;
+}
+
+.kp-proj:hover .kp-proj-cta {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* stack row hover: indent + faint accent bg */
+.kp-stack {
+    transition: padding 0.3s, background 0.3s;
+}
+
+.kp-stack:hover {
+    padding-left: 20px !important;
+    background: rgba(181, 123, 255, 0.05);
+}
+
+.kp-hover {
+    transition: color 0.3s, opacity 0.3s;
+}
+
+.kp-hover:hover {
+    color: #B57BFF;
+}
+
+.kp-maillink:hover {
+    color: #B57BFF;
+}
+
+/* ===== Blog redesign (editorial) animations & interactions ===== */
+@keyframes b-marq {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes b-up {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.b-marq {
+    animation: b-marq 26s linear infinite;
+}
+
+.b-up {
+    animation: b-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.b-up-delay {
+    animation: b-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.08s both;
+}
+
+/* tag chip / pill hover */
+.b-chip {
+    transition: border-color 0.25s, color 0.25s, background 0.25s;
+}
+
+.b-chip:hover {
+    border-color: #8B5CF6 !important;
+    color: #F4F2EC !important;
+}
+
+/* featured banner hover: border, cover zoom, CTA gap */
+.b-feat {
+    transition: border-color 0.45s;
+}
+
+.b-feat:hover {
+    border-color: #4a356a !important;
+}
+
+.b-feat-img {
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.b-feat:hover .b-feat-img {
+    transform: scale(1.05);
+}
+
+.b-feat-cta {
+    transition: gap 0.3s;
+}
+
+.b-feat:hover .b-feat-cta {
+    gap: 16px !important;
+}
+
+/* post card hover: lift, border, bg, cover zoom, CTA color, arrow slide */
+.b-post {
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.45s, background 0.45s;
+}
+
+.b-post:hover {
+    transform: translateY(-7px);
+    border-color: #4a356a !important;
+    background: rgba(139, 92, 246, 0.05) !important;
+}
+
+.b-post-img {
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.b-post:hover .b-post-img {
+    transform: scale(1.07);
+}
+
+.b-post-cta {
+    transition: color 0.3s;
+}
+
+.b-post:hover .b-post-cta {
+    color: #8B5CF6 !important;
+}
+
+.b-post-arrow {
+    display: inline-block;
+    transition: transform 0.35s;
+}
+
+.b-post:hover .b-post-arrow {
+    transform: translateX(6px);
+}
+
+@media (max-width: 760px) {
+    .b-feat {
+        grid-template-columns: 1fr !important;
+    }
+
+    .b-feat-cover {
+        min-height: 240px !important;
+        order: -1;
+    }
+
+    .b-hero-h1 {
+        font-size: clamp(46px, 15vw, 84px) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .kp-marq,
+    .kp-spin,
+    .kp-glow,
+    .kp-caret,
+    .b-marq,
+    .b-up,
+    .b-up-delay {
+        animation: none !important;
+    }
+}
+
 /* Backdrop blur utilities */
 .backdrop-blur-glass {
     backdrop-filter: blur(12px) saturate(200%);

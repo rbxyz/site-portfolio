@@ -13,6 +13,9 @@
 /prisma/db.sqlite-journal
 db.sqlite
 
+# generated prisma clients (blog DB client, etc.)
+/src/generated
+
 # next.js
 /.next/
 /out/
@@ -47,3 +50,4 @@ yarn-error.log*
 
 # uploads
 /public/uploads
+.env*

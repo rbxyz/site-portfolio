@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#1F1F1F}
+  @keyframes bmarq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes bup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  .backlink{transition:color .25s}
+  .backlink:hover{color:#F4F2EC}
+  .chip{transition:border-color .25s,color .25s,background .25s}
+  .chip:hover{border-color:var(--acc,#8B5CF6);color:#F4F2EC}
+  .bfeat{transition:border-color .45s}
+  .bfeat:hover{border-color:#4a356a}
+  .bfeat-img{transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+  .bfeat:hover .bfeat-img{transform:scale(1.05)}
+  .bfeat-cta{transition:gap .3s}
+  .bfeat:hover .bfeat-cta{gap:16px}
+  .bpost{transition:transform .45s cubic-bezier(.2,.7,.2,1),border-color .45s,background .45s}
+  .bpost:hover{transform:translateY(-7px);border-color:#4a356a;background:rgba(139,92,246,.05)}
+  .bpost-img{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+  .bpost:hover .bpost-img{transform:scale(1.07)}
+  .bpost-cta{transition:color .3s}
+  .bpost:hover .bpost-cta{color:var(--acc,#8B5CF6)}
+  .bpost-arrow{display:inline-block;transition:transform .35s}
+  .bpost:hover .bpost-arrow{transform:translateX(6px)}
+  @media(max-width:760px){
+    .bfeat{grid-template-columns:1fr !important}
+    .bfeat-cover{min-height:240px !important;order:-1}
+    .hero-h1{font-size:clamp(46px,15vw,84px) !important}
+  }
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height:100vh;background:#1F1F1F;color:#F4F2EC;font-family:'Space Grotesk',sans-serif;overflow-x:hidden">
+
+  <!-- top bar -->
+  <div style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px 5vw;background:rgba(31,31,31,.82);backdrop-filter:blur(12px);border-bottom:1px solid #251737">
+    <a href="/" class="backlink" style="font:700 12px/1 'Space Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#8A877F;text-decoration:none">← Ruan Bueno</a>
+    <span style="font:700 12px/1 'Space Mono',monospace;letter-spacing:.34em;text-transform:uppercase;color:#F4F2EC">Blog</span>
+    <span style="color:var(--acc,#8B5CF6);font-size:14px">✦</span>
+  </div>
+
+  <!-- marquee -->
+  <sc-if value="{{ showMarquee }}" hint-placeholder-val="{{ true }}">
+    <div style="overflow:hidden;border-bottom:1px solid #251737;background:#1a0a32;padding:11px 0">
+      <div style="display:flex;width:max-content;animation:bmarq 26s linear infinite;font:700 12px/1 'Space Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:#b8b6ad">
+        <span style="padding-right:0">Desenvolvimento&nbsp;&nbsp;<span style="color:var(--acc,#8B5CF6)">✦</span>&nbsp;&nbsp;Automação&nbsp;&nbsp;<span style="color:var(--acc,#8B5CF6)">✦</span>&nbsp;&nbsp;Inteligência Artificial&nbsp;&nbsp;<span style="color:var(--acc,#8B5CF6)">✦</span>&nbsp;&nbsp;Café&nbsp;&nbsp;<span style="color:var(--acc,#8B5CF6)">✦</span>&nbsp;&nbsp;</span>
+        <span style="padding-right:0">Desenvolvimento&nbsp;&nbsp;<span style="color:var(--acc,#8B5CF6)">✦</span>&nbsp;&nbsp;Automação&nbsp;&nbsp;<span style="color:var(--acc,#8B5CF6)">✦</span>&nbsp;&nbsp;Inteligência Artificial&nbsp;&nbsp;<span style="color:var(--acc,#8B5CF6)">✦</span>&nbsp;&nbsp;Café&nbsp;&nbsp;<span style="color:var(--acc,#8B5CF6)">✦</span>&nbsp;&nbsp;</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="max-width:1180px;margin:0 auto;padding:64px 5vw 120px">
+
+    <!-- hero -->
+    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:end;margin-bottom:72px;animation:bup .7s cubic-bezier(.2,.7,.2,1) both">
+      <div>
+        <div style="font:700 13px/1 'Space Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:var(--acc,#8B5CF6);margin-bottom:22px">Notas &amp; ideias</div>
+        <h1 class="hero-h1" style="font-family:'Anton',sans-serif;font-size:clamp(56px,9vw,128px);line-height:.84;letter-spacing:-.01em;text-transform:uppercase;margin:0">
+          Notas,<br>ideias &amp;<br><span style="color:var(--acc,#8B5CF6)">café.</span>
+        </h1>
+      </div>
+      <div style="padding-bottom:10px">
+        <p style="font:400 16px/1.65 'Space Grotesk',sans-serif;color:#cfcdc4;margin:0 0 22px;max-width:340px">Onde eu escrevo sobre desenvolvimento, automação e IA — e o ritual de café que mantém tudo isso de pé.</p>
+        <div style="display:flex;align-items:baseline;gap:10px;font:700 12px/1 'Space Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#56564f">
+          <span style="font-family:'Anton',sans-serif;font-size:34px;letter-spacing:0;color:#F4F2EC;line-height:1">{{ count }}</span>
+          <span>artigos publicados</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- featured -->
+    <sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
+      <a href="{{ featured.href }}" class="bfeat" style="display:grid;grid-template-columns:1.05fr 1fr;gap:0;margin-bottom:60px;border:1px solid #251737;border-radius:20px;overflow:hidden;background:rgba(255,255,255,.015);text-decoration:none;color:inherit;animation:bup .7s cubic-bezier(.2,.7,.2,1) .08s both">
+        <div style="padding:clamp(28px,4vw,52px);display:flex;flex-direction:column;justify-content:center">
+          <div style="display:flex;align-items:center;gap:12px;font:700 11px/1 'Space Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--acc,#8B5CF6);margin-bottom:24px">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--acc,#8B5CF6)"></span>
+            <span>✦ Em destaque</span>
+          </div>
+          <h2 style="font-family:'Anton',sans-serif;font-size:clamp(34px,3.6vw,58px);line-height:.96;letter-spacing:-.005em;text-transform:uppercase;margin:0 0 20px">{{ featured.title }}</h2>
+          <p style="font:400 17px/1.6 'Space Grotesk',sans-serif;color:#cfcdc4;margin:0 0 26px;max-width:480px">{{ featured.excerpt }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:18px;font:700 11px/1 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#56564f;margin-bottom:30px">
+            <span style="color:#b8b6ad">{{ featured.tag }}</span>
+            <span>{{ featured.date }}</span>
+            <span>{{ featured.read }} de leitura</span>
+            <span>{{ featured.views }} views</span>
+          </div>
+          <div class="bfeat-cta" style="display:flex;align-items:center;gap:11px;font:700 13px/1 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--acc,#8B5CF6)">
+            Ler artigo <span>→</span>
+          </div>
+        </div>
+        <div class="bfeat-cover" style="position:relative;overflow:hidden;min-height:380px;background:#31105C;border-left:1px solid #251737">
+          <div class="bfeat-img" style="position:absolute;inset:0;background:#31105C">
+            <div style="position:absolute;inset:0;background:{{ featured.cover }}"></div>
+          </div>
+          <span style="position:absolute;right:26px;bottom:8px;font-family:'Anton',sans-serif;font-size:clamp(90px,11vw,180px);line-height:.8;text-transform:uppercase;color:rgba(244,242,236,.09);letter-spacing:-.02em;pointer-events:none">{{ featured.ghost }}</span>
+        </div>
+      </a>
+    </sc-if>
+
+    <!-- filter row -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;margin-bottom:36px;padding-bottom:22px;border-bottom:1px solid #251737">
+      <div style="display:flex;flex-wrap:wrap;gap:9px">
+        <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="6">
+          <button onClick="{{ chip.onClick }}" class="chip" style="{{ chip.style }}">{{ chip.label }}</button>
+        </sc-for>
+      </div>
+      <span style="font:700 11px/1 'Space Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#56564f">{{ resultLabel }}</span>
+    </div>
+
+    <!-- grid -->
+    <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+      <p style="font:400 16px/1.6 'Space Grotesk',sans-serif;color:#8A877F;padding:40px 0">Nenhum artigo com essa tag por aqui ainda. Volte em breve. ☕</p>
+    </sc-if>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:26px">
+      <sc-for list="{{ posts }}" as="post" hint-placeholder-count="6">
+        <a href="{{ post.href }}" class="bpost" style="display:flex;flex-direction:column;border:1px solid #251737;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.015);text-decoration:none;color:inherit">
+          <div style="position:relative;overflow:hidden;aspect-ratio:16/10;background:#31105C">
+            <div class="bpost-img" style="position:absolute;inset:0;background:#31105C">
+              <div style="position:absolute;inset:0;background:{{ post.cover }}"></div>
+            </div>
+            <span style="position:absolute;right:16px;bottom:-8px;font-family:'Anton',sans-serif;font-size:84px;line-height:.8;text-transform:uppercase;color:rgba(244,242,236,.08);letter-spacing:-.02em;pointer-events:none">{{ post.ghost }}</span>
+            <span style="position:absolute;left:14px;top:14px;font:700 10px/1 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;padding:7px 11px;border-radius:999px;background:rgba(26,10,50,.7);backdrop-filter:blur(6px);border:1px solid #3a2a54;color:#F4F2EC">{{ post.tag }}</span>
+          </div>
+          <div style="padding:22px 22px 24px;display:flex;flex-direction:column;gap:13px;flex:1">
+            <div style="display:flex;align-items:center;gap:12px;font:700 10px/1 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#56564f">
+              <span>{{ post.date }}</span>
+              <span style="width:3px;height:3px;border-radius:50%;background:#56564f"></span>
+              <span>{{ post.views }} views</span>
+            </div>
+            <h3 style="font:700 22px/1.25 'Space Grotesk',sans-serif;color:#F4F2EC;margin:0;letter-spacing:-.01em">{{ post.title }}</h3>
+            <p style="font:400 14.5px/1.55 'Space Grotesk',sans-serif;color:#8A877F;margin:0;flex:1">{{ post.excerpt }}</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding-top:16px;border-top:1px solid #251737">
+              <span style="font:700 10px/1 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#56564f">{{ post.read }}</span>
+              <span class="bpost-cta" style="display:flex;align-items:center;gap:7px;font:700 11px/1 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#8A877F">Ler <span class="bpost-arrow">→</span></span>
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+
+    <!-- closing strip -->
+    <div style="margin-top:80px;padding:44px clamp(28px,4vw,56px);border:1px solid #251737;border-radius:18px;background:linear-gradient(135deg,rgba(49,16,92,.45),rgba(255,255,255,.01));display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px">
+      <div>
+        <div style="font:700 12px/1 'Space Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--acc,#8B5CF6);margin-bottom:14px">Bora trocar ideia?</div>
+        <div style="font-family:'Anton',sans-serif;font-size:clamp(26px,3vw,42px);line-height:.96;text-transform:uppercase">Tem um projeto em mente?</div>
+      </div>
+      <a href="/contato" class="chip" style="font:700 12px/1 'Space Mono',monospace;letter-spacing:.14em;text-transform:uppercase;padding:16px 26px;border-radius:999px;text-decoration:none;border:1px solid var(--acc,#8B5CF6);background:rgba(139,92,246,.14);color:#F4F2EC">Falar comigo →</a>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:2500},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Roxo&quot;,&quot;Ametista&quot;,&quot;Índigo&quot;],&quot;default&quot;:&quot;Roxo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showFeatured&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showMarquee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { activeTag: null };
+
+  accentHex() {
+    const map = { "Roxo": "#8B5CF6", "Ametista": "#a855f7", "Índigo": "#6366f1" };
+    return map[this.props.accent] || "#8B5CF6";
+  }
+
+  applyAccent() {
+    if (this._root) this._root.style.setProperty("--acc", this.accentHex());
+  }
+  componentDidMount() { this.applyAccent(); }
+  componentDidUpdate() { this.applyAccent(); }
+
+  posts() {
+    const cov = [
+      "radial-gradient(120% 130% at 22% 18%, rgba(181,123,255,.32), rgba(49,16,92,0) 58%), linear-gradient(140deg,#3a1469,#160826)",
+      "radial-gradient(120% 130% at 82% 22%, rgba(122,53,201,.44), rgba(49,16,92,0) 60%), linear-gradient(140deg,#2a0e4f,#120620)",
+      "radial-gradient(130% 130% at 50% 2%, rgba(139,92,246,.30), rgba(49,16,92,0) 62%), linear-gradient(140deg,#311060,#1a0a32)",
+      "radial-gradient(120% 130% at 15% 84%, rgba(181,123,255,.28), rgba(49,16,92,0) 60%), linear-gradient(140deg,#250c48,#100520)",
+      "radial-gradient(120% 130% at 78% 80%, rgba(122,53,201,.38), rgba(49,16,92,0) 60%), linear-gradient(140deg,#341266,#170828)",
+      "radial-gradient(120% 130% at 40% 30%, rgba(181,123,255,.30), rgba(49,16,92,0) 58%), linear-gradient(140deg,#2d0f54,#140724)",
+    ];
+    return [
+      { title: "Como automatizei meu atendimento inteiro com IA + WhatsApp", excerpt: "A arquitetura por trás do MarcaAI: Google Agenda, WhatsApp e um agente de IA que agenda, confirma e cobra sozinho — sem eu tocar no celular.", tag: "Automação", tagSlug: "automacao", date: "12 jun 2025", views: "1.2k", read: "8 min", ghost: "AUTO", href: "/blog/atendimento-ia-whatsapp", cover: "radial-gradient(90% 120% at 75% 25%, rgba(181,123,255,.42), rgba(49,16,92,0) 58%), radial-gradient(80% 100% at 8% 92%, rgba(122,53,201,.32), rgba(49,16,92,0) 60%), linear-gradient(135deg,#3a1469,#15082c)" },
+      { title: "Drizzle ou Prisma? O que eu realmente uso em produção", excerpt: "Migrei um SaaS inteiro de Prisma pra Drizzle e voltei atrás em metade dele. O guia honesto de quando cada um vale a pena.", tag: "Dev", tagSlug: "dev", date: "03 jun 2025", views: "940", read: "6 min", ghost: "SQL", href: "/blog/drizzle-ou-prisma", cover: cov[1] },
+      { title: "Lancei um SaaS sozinho em 30 dias — e o que quebrou", excerpt: "Da landing ao primeiro cliente pagante em um mês. O cronograma real, os atalhos que valeram e os que cobraram caro depois.", tag: "SaaS", tagSlug: "saas", date: "21 mai 2025", views: "2.4k", read: "10 min", ghost: "SHIP", href: "/blog/saas-em-30-dias", cover: cov[2] },
+      { title: "Café, foco e código: o ritual que organiza meu dia", excerpt: "Por que os primeiros 90 minutos definem o resto. Meu método de filtro, a playlist e o bloco de deep work antes de qualquer notificação.", tag: "Café", tagSlug: "cafe", date: "09 mai 2025", views: "780", read: "4 min", ghost: "FOCO", href: "/blog/cafe-foco-codigo", cover: cov[3] },
+      { title: "TypeScript: 7 padrões que eu repito em todo projeto", excerpt: "Discriminated unions, branded types e o satisfies que substituiu metade dos meus casts. Padrões pequenos, ganho enorme.", tag: "Dev", tagSlug: "dev", date: "28 abr 2025", views: "1.6k", read: "7 min", ghost: "TS", href: "/blog/typescript-padroes", cover: cov[4] },
+      { title: "Prompt engineering na prática, sem o hype", excerpt: "O que sobra depois de tirar o marketing: estrutura, exemplos e avaliação. Como escrevo prompts que aguentam produção.", tag: "IA", tagSlug: "ia", date: "15 abr 2025", views: "1.1k", read: "9 min", ghost: "LLM", href: "/blog/prompt-engineering-na-pratica", cover: cov[5] },
+      { title: "Por que parei de jogar tudo dentro de useEffect", excerpt: "Derivar estado, eventos e a regra que uso pra decidir se algo é mesmo um efeito. Menos re-render, menos bug fantasma.", tag: "Dev", tagSlug: "dev", date: "02 abr 2025", views: "1.9k", read: "5 min", ghost: "FX", href: "/blog/parei-de-usar-useeffect", cover: cov[0] },
+    ];
+  }
+
+  tagDefs() {
+    return [
+      { name: "Dev", slug: "dev" },
+      { name: "Automação", slug: "automacao" },
+      { name: "IA", slug: "ia" },
+      { name: "SaaS", slug: "saas" },
+      { name: "Café", slug: "cafe" },
+    ];
+  }
+
+  chipStyle(on) {
+    return {
+      font: "700 11px/1 'Space Mono',monospace",
+      letterSpacing: ".1em",
+      textTransform: "uppercase",
+      padding: "9px 15px",
+      borderRadius: "999px",
+      cursor: "pointer",
+      border: on ? "1px solid var(--acc,#8B5CF6)" : "1px solid #3a2a54",
+      background: on ? "rgba(139,92,246,.16)" : "transparent",
+      color: on ? "#F4F2EC" : "#8A877F",
+    };
+  }
+
+  renderVals() {
+    const all = this.posts();
+    const active = this.state.activeTag;
+    const showFeat = (this.props.showFeatured ?? true) && !active;
+    const list = active ? all.filter((p) => p.tagSlug === active) : all.slice(1);
+
+    const chips = [{ name: "Todos", slug: null }, ...this.tagDefs()].map((t) => {
+      const on = (t.slug ?? null) === (active ?? null);
+      return {
+        label: t.name,
+        slug: t.slug,
+        active: on,
+        style: this.chipStyle(on),
+        onClick: () => this.setState({ activeTag: t.slug ?? null }),
+      };
+    });
+
+    return {
+      rootRef: (el) => { this._root = el; this.applyAccent(); },
+      featured: all[0],
+      showFeatured: showFeat,
+      showMarquee: this.props.showMarquee ?? true,
+      posts: list,
+      empty: list.length === 0,
+      chips,
+      count: String(all.length).padStart(2, "0"),
+      resultLabel: active ? (list.length + " artigo" + (list.length === 1 ? "" : "s")) : "Todos os artigos",
+    };
+  }
+}
+</script>
+</body>
+</html>

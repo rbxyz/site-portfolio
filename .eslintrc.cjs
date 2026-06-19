@@ -1,5 +1,8 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
+  // Generated Prisma clients (e.g. the blog DB client) are not part of the
+  // tsconfig project and must not be linted.
+  "ignorePatterns": ["src/generated/**"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": true

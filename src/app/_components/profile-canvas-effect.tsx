@@ -17,7 +17,7 @@ const ORBIT_RADIUS = 180;
 export function ProfileCanvasEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<OrbitingParticle[]>([]);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | undefined>(undefined);
   const centerRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {

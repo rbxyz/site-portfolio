@@ -6,6 +6,12 @@ import "./src/env.js";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    // Pin the workspace root so Turbopack doesn't infer it from a parent
+    // lockfile (there's a package-lock.json one level up in /home/rbxyz/dev).
+    turbopack: {
+        root: import.meta.dirname,
+    },
+
     // Configurações de imagem
     images: {
         remotePatterns: [
@@ -42,24 +48,10 @@ const nextConfig = {
         ];
     },
 
-    // Webpack otimizações
-    webpack: (config, { dev, isServer }) => {
-        // Otimizações de produção
-        if (!dev && !isServer) {
-            config.optimization.splitChunks = {
-                chunks: 'all',
-                cacheGroups: {
-                    vendor: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all',
-                    },
-                },
-            };
-        }
-
-        return config;
-    },
+    // Note: Next.js 16 uses Turbopack by default for `next dev` and `next build`.
+    // The previous custom `webpack` splitChunks config was removed — Turbopack
+    // does its own vendor chunking, and a `webpack` key would otherwise force the
+    // build back to Webpack (or fail the Turbopack build).
 };
 
 export default nextConfig;

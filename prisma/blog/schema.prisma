@@ -1,0 +1,251 @@
+// Second Prisma client — points at the EXISTING blog database ("new-blog"),
+// owned by the separate /dev/blog project. The portfolio only READS from it;
+// never run `migrate` against this schema (the blog project owns the schema).
+//
+// Generated to a dedicated output dir so it does not clash with the portfolio's
+// main Prisma client. Regenerate with:
+//   prisma generate --schema prisma/blog/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../src/generated/blog-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("BLOG_DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String?
+  password   String
+  avatar     String?
+  role       Role     @default(USER)
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  posts    Post[]
+  sessions Session[]
+  comments Comment[]
+  views    PostView[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Post {
+  id                 String    @id @default(uuid())
+  title              String
+  content            String
+  slug               String    @unique
+  imageUrl           String?
+  viewCount          Int       @default(0)
+  published          Boolean   @default(false)
+  authorId           String
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  scheduledAt        DateTime?
+  publishedAt        DateTime?
+  audioUrl           String?
+  audioDuration      Int?
+  spotifyPlaylistUrl String?
+  hasAudio           Boolean   @default(false)
+
+  author           User                 @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments         Comment[]
+  views            PostView[]
+  emailLogs        NewsletterEmailLog[]
+  newsletterQueues NewsletterQueue[]
+  tags             PostTag[]
+
+  @@map("posts")
+}
+
+model Tag {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  color       String?
+  viewCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  posts PostTag[]
+
+  @@map("tags")
+}
+
+model PostTag {
+  id     String @id @default(uuid())
+  postId String
+  tagId  String
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, tagId])
+  @@map("post_tags")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  postId    String
+  authorId  String
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
+}
+
+model PostView {
+  id        String   @id @default(uuid())
+  postId    String
+  userId    String?
+  sessionId String
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  post Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@unique([postId, sessionId])
+  @@map("post_views")
+}
+
+model NewsletterSubscriber {
+  id             String    @id @default(uuid())
+  email          String    @unique
+  name           String?
+  isActive       Boolean   @default(true)
+  subscribedAt   DateTime  @default(now())
+  unsubscribedAt DateTime?
+  source         String?
+  metadata       Json?
+
+  emailLogs NewsletterEmailLog[]
+
+  @@map("newsletter_subscribers")
+}
+
+model NewsletterEmailLog {
+  id            String      @id @default(uuid())
+  subscriberId  String
+  postId        String?
+  emailType     EmailType
+  status        EmailStatus
+  sentAt        DateTime    @default(now())
+  openedAt      DateTime?
+  clickedAt     DateTime?
+  error         String?
+  trackingId    String      @unique @default(uuid())
+  openCount     Int         @default(0)
+  clickCount    Int         @default(0)
+  lastOpenedAt  DateTime?
+  lastClickedAt DateTime?
+
+  subscriber NewsletterSubscriber @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+  post       Post?                @relation(fields: [postId], references: [id], onDelete: SetNull)
+
+  @@map("newsletter_email_logs")
+}
+
+model NewsletterTemplate {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  htmlContent String
+  cssContent  String?
+  variables   Json?
+  isDefault   Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("newsletter_templates")
+}
+
+model NewsletterQueue {
+  id               String      @id @default(uuid())
+  postId           String
+  status           QueueStatus
+  priority         Int         @default(0)
+  scheduledAt      DateTime?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  error            String?
+  progress         Int         @default(0)
+  totalSubscribers Int         @default(0)
+  sentCount        Int         @default(0)
+  failedCount      Int         @default(0)
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("newsletter_queues")
+}
+
+model SmtpConfig {
+  id        String   @id @default(uuid())
+  host      String
+  port      Int
+  secure    Boolean  @default(true)
+  username  String
+  password  String
+  fromEmail String
+  fromName  String
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("smtp_configs")
+}
+
+enum Role {
+  USER
+  ADMIN
+  EDITOR
+}
+
+enum EmailType {
+  NEWSLETTER
+  WELCOME
+  UNSUBSCRIBE
+  CONFIRMATION
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  DELIVERED
+  OPENED
+  CLICKED
+  FAILED
+  BOUNCED
+}
+
+enum QueueStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}

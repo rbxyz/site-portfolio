@@ -11,6 +11,10 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     AUTH_SECRET: z.string().min(1),
+    // Connection string for the SEPARATE blog database (reused from /dev/blog).
+    // Optional so the rest of the site builds/runs even when the blog DB is
+    // unavailable — the /blog pages degrade gracefully in that case.
+    BLOG_DATABASE_URL: z.string().url().optional(),
   },
 
   /**
@@ -29,6 +33,7 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     AUTH_SECRET: process.env.AUTH_SECRET,
+    BLOG_DATABASE_URL: process.env.BLOG_DATABASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
