@@ -68,7 +68,7 @@ export default function RootLayout({
 
         {/* Preload de recursos críticos */}
         <link rel="preload" href="/logo.png" as="image" type="image/png" />
-        <link rel="preload" href="/ruan.png" as="image" type="image/jpeg" />
+        <link rel="preload" href="/ruan.PNG" as="image" type="image/jpeg" />
       </head>
       <body
         className={`${inter.className} ${anton.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}

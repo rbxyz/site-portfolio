@@ -233,7 +233,7 @@ export default function SobrePage() {
                     <ProfileCanvasEffect />
                     <div className="relative z-20 h-full w-full overflow-hidden rounded-xl border-2 border-primary-500/50 sm:border-4">
                       <Image
-                        src="/ruan.png"
+                        src="/ruan.PNG"
                         alt="Ruan Bueno"
                         width={300}
                         height={300}
