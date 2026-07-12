@@ -29,7 +29,8 @@ const spaceMono = Space_Mono({
 
 export const metadata = {
   title: "< Portfolio | Ruan Bueno />",
-  description: "Essa descrição com certeza não deve aparecer na tela do navegador, mas se aparecer, dá um visu aqui",
+  description:
+    "Essa descrição com certeza não deve aparecer na tela do navegador, mas se aparecer, dá um visu aqui",
   icons: {
     icon: "/logo.png",
   },
@@ -50,16 +51,24 @@ export default function RootLayout({
       <head>
         {/* DNS prefetch e preconnect para melhor performance */}
         <link rel="dns-prefetch" href="//api.screenshotone.com" />
-        <link rel="preconnect" href="https://api.screenshotone.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://api.screenshotone.com"
+          crossOrigin=""
+        />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
         <link rel="dns-prefetch" href="//vercel.app" />
         <link rel="dns-prefetch" href="//netlify.app" />
         <link rel="dns-prefetch" href="//allpines.com.br" />
-        
+
         {/* Preload de recursos críticos */}
         <link rel="preload" href="/logo.png" as="image" type="image/png" />
-        <link rel="preload" href="/Foto_Perfil.jpg" as="image" type="image/jpeg" />
+        <link rel="preload" href="/ruan.png" as="image" type="image/jpeg" />
       </head>
       <body
         className={`${inter.className} ${anton.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}

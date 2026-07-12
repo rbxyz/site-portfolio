@@ -36,14 +36,20 @@ const headlineLines: {
   segments: { text: string; style?: React.CSSProperties }[];
 }[] = [
   { lineStyle: bigLine, segments: [{ text: "Traduzo" }] },
-  { lineStyle: bigLine, segments: [{ text: "Negócios", style: { color: C.accent } }] },
+  {
+    lineStyle: bigLine,
+    segments: [{ text: "Negócios", style: { color: C.accent } }],
+  },
   {
     lineStyle: midLine,
     segments: [
       { text: "em " },
       {
         text: "software",
-        style: { color: "transparent", WebkitTextStroke: `1.5px ${C.strokeWord}` },
+        style: {
+          color: "transparent",
+          WebkitTextStroke: `1.5px ${C.strokeWord}`,
+        },
       },
       { text: ".", style: { color: C.accent } },
     ],
@@ -116,7 +122,11 @@ function TypingHeadline() {
           {line.segments.map((seg, si) => {
             const take = Math.min(seg.text.length, Math.max(0, remaining));
             remaining -= seg.text.length;
-            return <span key={si} style={seg.style}>{seg.text.slice(0, take)}</span>;
+            return (
+              <span key={si} style={seg.style}>
+                {seg.text.slice(0, take)}
+              </span>
+            );
           })}
           {li === caretLine && <span className="kp-caret" aria-hidden="true" />}
         </div>
@@ -136,7 +146,10 @@ function MarqueeGroup({ gi }: { gi: number }) {
   return (
     <>
       {marqueeItems.map((item, i) => (
-        <span key={`${gi}-${i}`} style={{ display: "flex", alignItems: "center" }}>
+        <span
+          key={`${gi}-${i}`}
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <span style={{ padding: "0 22px" }}>{item}</span>
           <span>✦</span>
         </span>
@@ -145,7 +158,13 @@ function MarqueeGroup({ gi }: { gi: number }) {
   );
 }
 
-function ContactModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+function ContactModal({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -345,7 +364,7 @@ export function Hero() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/Foto_Perfil.jpeg"
+            src="/ruan.PNG"
             alt="Ruan Bueno"
             style={{
               width: "100%",
@@ -408,7 +427,9 @@ export function Hero() {
           padding: "30px 4vw",
         }}
       >
-        <span style={{ font: `700 16px/1 ${FONT.mono}`, letterSpacing: ".1em" }}>
+        <span
+          style={{ font: `700 16px/1 ${FONT.mono}`, letterSpacing: ".1em" }}
+        >
           RUAN BUENO<span style={{ color: C.accent }}>.</span>
         </span>
         <span
@@ -421,13 +442,25 @@ export function Hero() {
             textTransform: "uppercase",
           }}
         >
-          <a href="#sobre" className="kp-hover" style={{ color: "inherit", textDecoration: "none" }}>
+          <a
+            href="#sobre"
+            className="kp-hover"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
             Sobre
           </a>
-          <a href="#projetos" className="kp-hover" style={{ color: "inherit", textDecoration: "none" }}>
+          <a
+            href="#projetos"
+            className="kp-hover"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
             Projetos
           </a>
-          <Link href="/blog" className="kp-hover" style={{ color: "inherit", textDecoration: "none" }}>
+          <Link
+            href="/blog"
+            className="kp-hover"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
             Blog
           </Link>
           <span className="kp-hover kp-hero-avail" style={{ color: C.accent }}>
@@ -470,7 +503,9 @@ export function Hero() {
           Traduzo negócios e problemas em soluções escaláveis e robustas. Você
           traz o problema — eu devolvo o software.
         </p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 14, marginTop: 28 }}>
+        <div
+          style={{ display: "flex", flexWrap: "wrap", gap: 14, marginTop: 28 }}
+        >
           <a
             href="#projetos"
             className="kp-hover"

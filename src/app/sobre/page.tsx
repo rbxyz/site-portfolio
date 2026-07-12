@@ -4,39 +4,46 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
-import { Code, Laptop, TrendingUp, Award, Coffee, Sparkles } from "lucide-react";
+import {
+  Code,
+  Laptop,
+  TrendingUp,
+  Award,
+  Coffee,
+  Sparkles,
+} from "lucide-react";
 import { GlassCardEffect } from "@/app/_components/glass-card-effect";
 import { ProfileCanvasEffect } from "@/app/_components/profile-canvas-effect";
 import { useState, useEffect } from "react";
 
 const skills = [
-  { 
-    name: "Frontend", 
-    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"], 
+  {
+    name: "Frontend",
+    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
     icon: Code,
     color: "from-blue-500/20 to-cyan-500/20",
-    iconColor: "text-blue-400"
+    iconColor: "text-blue-400",
   },
-  { 
-    name: "Backend", 
-    technologies: ["Node.js", "Python", "Java", "Firebase"], 
+  {
+    name: "Backend",
+    technologies: ["Node.js", "Python", "Java", "Firebase"],
     icon: Laptop,
     color: "from-purple-500/20 to-pink-500/20",
-    iconColor: "text-purple-400"
+    iconColor: "text-purple-400",
   },
-  { 
-    name: "Marketing Digital", 
-    technologies: ["Google Ads", "Facebook Ads", "Analytics", "SEO"], 
+  {
+    name: "Marketing Digital",
+    technologies: ["Google Ads", "Facebook Ads", "Analytics", "SEO"],
     icon: TrendingUp,
     color: "from-green-500/20 to-emerald-500/20",
-    iconColor: "text-green-400"
+    iconColor: "text-green-400",
   },
-  { 
-    name: "Ferramentas", 
-    technologies: ["Git", "Figma", "Photoshop", "Prisma"], 
+  {
+    name: "Ferramentas",
+    technologies: ["Git", "Figma", "Photoshop", "Prisma"],
     icon: Award,
     color: "from-orange-500/20 to-red-500/20",
-    iconColor: "text-orange-400"
+    iconColor: "text-orange-400",
   },
 ];
 
@@ -47,12 +54,14 @@ const experiences = [
       {
         company: "Projetos diversos",
         period: "2021 - 2024",
-        description: "Gestão de campanhas de tráfego pago com foco em ROI e conversões para diferentes nichos de mercado.",
+        description:
+          "Gestão de campanhas de tráfego pago com foco em ROI e conversões para diferentes nichos de mercado.",
       },
       {
         company: "CantuStange | Zada",
         period: "2024 - Presente",
-        description: "Gestão estratégica de campanhas de tráfego pago e otimização de conversões.",
+        description:
+          "Gestão estratégica de campanhas de tráfego pago e otimização de conversões.",
       },
     ],
   },
@@ -62,7 +71,8 @@ const experiences = [
       {
         company: "Projetos diversos",
         period: `2023 - ${new Date().getFullYear()}`,
-        description: "Desenvolvimento de soluções web completas e estratégias de crescimento digital para diversos clientes.",
+        description:
+          "Desenvolvimento de soluções web completas e estratégias de crescimento digital para diversos clientes.",
       },
     ],
   },
@@ -72,7 +82,8 @@ const experiences = [
       {
         company: "Box Distribuidor",
         period: `2025 - ${new Date().getFullYear()}`,
-        description: "Desenvolvimento de sistemas e análise de dados para otimização de processos.",
+        description:
+          "Desenvolvimento de sistemas e análise de dados para otimização de processos.",
       },
     ],
   },
@@ -109,11 +120,11 @@ const stats = [
 ];
 
 // Componente de typing diferente - palavras aparecendo uma por vez
-function WordTypingText({ 
-  words, 
-  className 
-}: { 
-  words: string[]; 
+function WordTypingText({
+  words,
+  className,
+}: {
+  words: string[];
   className?: string;
 }) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -161,59 +172,68 @@ export default function SobrePage() {
   return (
     <div className="min-h-screen bg-dark-bg text-white">
       <NavBar />
-      
+
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="relative py-12 sm:py-16 md:py-20 bg-dark-bg">
+        <section className="relative bg-dark-bg py-12 sm:py-16 md:py-20">
           <div className="container mx-auto px-4 sm:px-6 md:px-8">
-            <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="grid items-center gap-8 md:gap-12 lg:grid-cols-2">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 className="text-center lg:text-left"
               >
-                <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-3 sm:mb-4">
+                <div className="mb-3 font-mono text-xs uppercase tracking-wider text-primary-500 sm:mb-4 sm:text-sm md:text-base">
                   BIO
                 </div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+                <h1 className="mb-4 text-3xl font-bold sm:mb-6 sm:text-4xl md:text-5xl">
                   <span className="text-white">Sobre</span>{" "}
                   <span className="text-primary-500">
-                    <WordTypingText 
-                      words={["Mim", "Desenvolvimento", "Tecnologia", "Inovação"]} 
+                    <WordTypingText
+                      words={[
+                        "Mim",
+                        "Desenvolvimento",
+                        "Tecnologia",
+                        "Inovação",
+                      ]}
                     />
                   </span>
                 </h1>
-                <div className="space-y-3 sm:space-y-4 text-base sm:text-lg text-accent-gray">
+                <div className="space-y-3 text-base text-accent-gray sm:space-y-4 sm:text-lg">
                   <p>
-                    Olá! Sou <strong className="text-primary-500">Ruan Bueno</strong>, 
-                    um desenvolvedor apaixonado por tecnologia e por criar soluções que fazem a diferença.
+                    Olá! Sou{" "}
+                    <strong className="text-primary-500">Ruan Bueno</strong>, um
+                    desenvolvedor apaixonado por tecnologia e por criar soluções
+                    que fazem a diferença.
                   </p>
                   <p>
-                    Combino habilidades técnicas de desenvolvimento web com expertise em marketing digital, 
-                    oferecendo uma perspectiva única que conecta tecnologia e negócios.
+                    Combino habilidades técnicas de desenvolvimento web com
+                    expertise em marketing digital, oferecendo uma perspectiva
+                    única que conecta tecnologia e negócios.
                   </p>
                   <p>
-                    Minha missão é transformar ideias em produtos digitais que não apenas funcionam perfeitamente, 
-                    mas também geram resultados reais para meus clientes.
+                    Minha missão é transformar ideias em produtos digitais que
+                    não apenas funcionam perfeitamente, mas também geram
+                    resultados reais para meus clientes.
                   </p>
                 </div>
               </motion.div>
-              
+
               {/* Glass Card com efeito de scroll e Canvas */}
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="flex justify-center order-first lg:order-last mb-8 lg:mb-0"
+                className="order-first mb-8 flex justify-center lg:order-last lg:mb-0"
               >
                 <GlassCardEffect>
-                  <div className="relative h-48 w-48 sm:h-56 sm:w-56 md:h-64 md:w-64 mx-auto">
+                  <div className="relative mx-auto h-48 w-48 sm:h-56 sm:w-56 md:h-64 md:w-64">
                     {/* Canvas Effect */}
                     <ProfileCanvasEffect />
-                    <div className="relative h-full w-full overflow-hidden rounded-xl border-2 sm:border-4 border-primary-500/50 z-20">
+                    <div className="relative z-20 h-full w-full overflow-hidden rounded-xl border-2 border-primary-500/50 sm:border-4">
                       <Image
-                        src="/Foto_Perfil.jpg"
+                        src="/ruan.png"
                         alt="Ruan Bueno"
                         width={300}
                         height={300}
@@ -236,14 +256,14 @@ export default function SobrePage() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-12 sm:py-16 bg-dark-bg">
+        <section className="bg-dark-bg py-12 sm:py-16">
           <div className="container mx-auto px-4 sm:px-6 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
+              className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4 md:gap-8"
             >
               {stats.map((stat, index) => (
                 <motion.div
@@ -254,10 +274,10 @@ export default function SobrePage() {
                   viewport={{ once: true }}
                   className="text-center"
                 >
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-500 mb-1 sm:mb-2">
+                  <div className="mb-1 text-2xl font-bold text-primary-500 sm:mb-2 sm:text-3xl md:text-4xl">
                     {stat.number}
                   </div>
-                  <div className="text-accent-gray text-xs sm:text-sm md:text-base px-1">
+                  <div className="px-1 text-xs text-accent-gray sm:text-sm md:text-base">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -267,28 +287,29 @@ export default function SobrePage() {
         </section>
 
         {/* Skills Section - Redesenhado */}
-        <section className="py-12 sm:py-16 md:py-20 bg-dark-bg">
+        <section className="bg-dark-bg py-12 sm:py-16 md:py-20">
           <div className="container mx-auto px-4 sm:px-6 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-8 sm:mb-12"
+              className="mb-8 text-center sm:mb-12"
             >
-              <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-3 sm:mb-4">
+              <div className="mb-3 font-mono text-xs uppercase tracking-wider text-primary-500 sm:mb-4 sm:text-sm md:text-base">
                 SKILLS
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+              <h2 className="mb-3 text-2xl font-bold sm:mb-4 sm:text-3xl md:text-4xl">
                 <span className="text-white">Minhas</span>{" "}
                 <span className="text-primary-500">Especialidades</span>
               </h2>
-              <p className="text-sm sm:text-base md:text-lg text-accent-gray max-w-2xl mx-auto px-2">
-                Tecnologias e ferramentas que domino para criar soluções completas e eficazes
+              <p className="mx-auto max-w-2xl px-2 text-sm text-accent-gray sm:text-base md:text-lg">
+                Tecnologias e ferramentas que domino para criar soluções
+                completas e eficazes
               </p>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
               {skills.map((skill, index) => (
                 <motion.div
                   key={index}
@@ -297,22 +318,30 @@ export default function SobrePage() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="group relative bg-dark-card border border-dark-border rounded-xl p-6 hover:border-primary-500/50 transition-all duration-300 overflow-hidden"
+                  className="group relative overflow-hidden rounded-xl border border-dark-border bg-dark-card p-6 transition-all duration-300 hover:border-primary-500/50"
                 >
                   {/* Gradient background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                  
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
+                  />
+
                   {/* Sparkle effect */}
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Sparkles className={`h-4 w-4 ${skill.iconColor} animate-pulse`} />
+                  <div className="absolute right-2 top-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <Sparkles
+                      className={`h-4 w-4 ${skill.iconColor} animate-pulse`}
+                    />
                   </div>
 
                   <div className="relative z-10">
-                    <div className="flex items-center mb-4">
-                      <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${skill.color} border border-primary-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <div className="mb-4 flex items-center">
+                      <div
+                        className={`h-12 w-12 rounded-lg bg-gradient-to-br ${skill.color} flex items-center justify-center border border-primary-500/20 transition-transform duration-300 group-hover:scale-110`}
+                      >
                         <skill.icon className={`h-6 w-6 ${skill.iconColor}`} />
                       </div>
-                      <h3 className="text-lg font-semibold text-white ml-3">{skill.name}</h3>
+                      <h3 className="ml-3 text-lg font-semibold text-white">
+                        {skill.name}
+                      </h3>
                     </div>
                     <div className="space-y-2">
                       {skill.technologies.map((tech, techIndex) => (
@@ -320,9 +349,12 @@ export default function SobrePage() {
                           key={techIndex}
                           initial={{ opacity: 0, x: -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3, delay: techIndex * 0.05 }}
+                          transition={{
+                            duration: 0.3,
+                            delay: techIndex * 0.05,
+                          }}
                           viewport={{ once: true }}
-                          className="text-sm text-accent-gray bg-dark-surface border border-dark-border px-3 py-1 rounded-full inline-block mr-2 mb-2 hover:border-primary-500/50 hover:text-primary-500 transition-colors cursor-pointer group-hover:bg-dark-card"
+                          className="mb-2 mr-2 inline-block cursor-pointer rounded-full border border-dark-border bg-dark-surface px-3 py-1 text-sm text-accent-gray transition-colors hover:border-primary-500/50 hover:text-primary-500 group-hover:bg-dark-card"
                         >
                           {tech}
                         </motion.div>
@@ -336,25 +368,25 @@ export default function SobrePage() {
         </section>
 
         {/* Experience Section - Redesenhado */}
-        <section className="py-12 sm:py-16 md:py-20 bg-dark-bg">
+        <section className="bg-dark-bg py-12 sm:py-16 md:py-20">
           <div className="container mx-auto px-4 sm:px-6 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-8 sm:mb-12"
+              className="mb-8 text-center sm:mb-12"
             >
-              <div className="text-primary-500 font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider mb-3 sm:mb-4">
+              <div className="mb-3 font-mono text-xs uppercase tracking-wider text-primary-500 sm:mb-4 sm:text-sm md:text-base">
                 EXPERIENCE
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+              <h2 className="mb-3 text-2xl font-bold sm:mb-4 sm:text-3xl md:text-4xl">
                 <span className="text-white">Experiência</span>{" "}
                 <span className="text-primary-500">Profissional</span>
               </h2>
             </motion.div>
 
-            <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+            <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
               {[...experiences].reverse().map((experience, expIndex) => (
                 <motion.div
                   key={expIndex}
@@ -364,9 +396,9 @@ export default function SobrePage() {
                   viewport={{ once: true }}
                   className="relative"
                 >
-                  <div className="bg-dark-card border border-dark-border rounded-xl p-4 sm:p-6 hover:border-primary-500/50 transition-all duration-300">
-                    <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white flex items-center gap-2">
-                      <div className="w-2 h-2 bg-primary-500 rounded-full animate-pulse flex-shrink-0" />
+                  <div className="rounded-xl border border-dark-border bg-dark-card p-4 transition-all duration-300 hover:border-primary-500/50 sm:p-6">
+                    <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-white sm:mb-4 sm:text-xl">
+                      <div className="h-2 w-2 flex-shrink-0 animate-pulse rounded-full bg-primary-500" />
                       <span>{experience.title}</span>
                     </h3>
                     <div className="space-y-3 sm:space-y-4">
@@ -377,13 +409,19 @@ export default function SobrePage() {
                           whileInView={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: posIndex * 0.1 }}
                           viewport={{ once: true }}
-                          className="pl-3 sm:pl-4 border-l-2 border-primary-500/30"
+                          className="border-l-2 border-primary-500/30 pl-3 sm:pl-4"
                         >
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-1 sm:mb-2 gap-1">
-                            <span className="text-primary-500 font-semibold text-sm sm:text-base">{position.company}</span>
-                            <span className="text-xs sm:text-sm text-accent-gray font-mono">{position.period}</span>
+                          <div className="mb-1 flex flex-col gap-1 sm:mb-2 sm:flex-row sm:items-center sm:justify-between">
+                            <span className="text-sm font-semibold text-primary-500 sm:text-base">
+                              {position.company}
+                            </span>
+                            <span className="font-mono text-xs text-accent-gray sm:text-sm">
+                              {position.period}
+                            </span>
                           </div>
-                          <p className="text-accent-gray text-xs sm:text-sm">{position.description}</p>
+                          <p className="text-xs text-accent-gray sm:text-sm">
+                            {position.description}
+                          </p>
                         </motion.div>
                       ))}
                     </div>
@@ -399,12 +437,14 @@ export default function SobrePage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="bg-dark-card border border-dark-border rounded-xl p-6 hover:border-primary-500/50 transition-all duration-300">
-                  <h3 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
+                <div className="rounded-xl border border-dark-border bg-dark-card p-6 transition-all duration-300 hover:border-primary-500/50">
+                  <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-white">
                     <Sparkles className="h-5 w-5 text-primary-500" />
                     Startupeiro
                   </h3>
-                  <div className="text-primary-500 font-mono text-sm mb-4">Lançamentos:</div>
+                  <div className="mb-4 font-mono text-sm text-primary-500">
+                    Lançamentos:
+                  </div>
                   <div className="space-y-3">
                     {startups.map((startup, index) => (
                       <motion.div
@@ -413,13 +453,19 @@ export default function SobrePage() {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.4, delay: index * 0.1 }}
                         viewport={{ once: true }}
-                        className="flex items-center justify-between p-3 bg-dark-surface rounded-lg border border-dark-border hover:border-primary-500/50 transition-colors"
+                        className="flex items-center justify-between rounded-lg border border-dark-border bg-dark-surface p-3 transition-colors hover:border-primary-500/50"
                       >
                         <div>
-                          <div className="text-white font-semibold">{startup.name}</div>
-                          <div className="text-accent-gray text-sm">{startup.description}</div>
+                          <div className="font-semibold text-white">
+                            {startup.name}
+                          </div>
+                          <div className="text-sm text-accent-gray">
+                            {startup.description}
+                          </div>
                         </div>
-                        <div className="text-primary-500 font-mono text-sm">{startup.year}</div>
+                        <div className="font-mono text-sm text-primary-500">
+                          {startup.year}
+                        </div>
                       </motion.div>
                     ))}
                   </div>
@@ -430,27 +476,37 @@ export default function SobrePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-12 sm:py-16 md:py-20 bg-dark-card border-t border-dark-border">
-          <div className="container mx-auto px-4 sm:px-6 md:px-8 text-center">
+        <section className="border-t border-dark-border bg-dark-card py-12 sm:py-16 md:py-20">
+          <div className="container mx-auto px-4 text-center sm:px-6 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="max-w-2xl mx-auto"
+              className="mx-auto max-w-2xl"
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">
+              <h2 className="mb-4 text-2xl font-bold text-white sm:mb-6 sm:text-3xl md:text-4xl">
                 Vamos Trabalhar Juntos?
               </h2>
-              <p className="text-base sm:text-lg md:text-xl text-accent-gray mb-6 sm:mb-8 px-2">
-                Estou sempre aberto a novos desafios e oportunidades interessantes
+              <p className="mb-6 px-2 text-base text-accent-gray sm:mb-8 sm:text-lg md:text-xl">
+                Estou sempre aberto a novos desafios e oportunidades
+                interessantes
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Button size="lg" className="bg-transparent border-2 border-primary-500 text-white hover:bg-primary-500 hover:text-dark-bg">
+              <div className="flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+                <Button
+                  size="lg"
+                  className="border-2 border-primary-500 bg-transparent text-white hover:bg-primary-500 hover:text-dark-bg"
+                >
                   <a href="/contato">Entre em Contato</a>
                 </Button>
-                <Button size="lg" variant="outline" className="bg-transparent border border-dark-border text-accent-gray hover:border-primary-500/50 hover:text-primary-500">
-                  <a href="/cv.pdf" download>Download CV</a>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border border-dark-border bg-transparent text-accent-gray hover:border-primary-500/50 hover:text-primary-500"
+                >
+                  <a href="/cv.pdf" download>
+                    Download CV
+                  </a>
                 </Button>
               </div>
             </motion.div>
