@@ -370,7 +370,7 @@ export function Hero() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              objectPosition: "0% 65%",
+              objectPosition: "0% 0%",
               transform: "scale(1.55) translateX(2%)",
               transformOrigin: "50% 50%",
             }}
