@@ -364,7 +364,7 @@ export function Hero() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/ruan.PNG"
+            src="/ruan.png"
             alt="Ruan Bueno"
             style={{
               width: "100%",

@@ -139,7 +139,7 @@ export function HeroSection() {
               <div className="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 lg:h-96 lg:w-96">
                 <div className="h-full w-full overflow-hidden rounded-full border-2 border-primary-500/50 shadow-2xl backdrop-blur-sm sm:border-4">
                   <Image
-                    src="/ruan.PNG"
+                    src="/ruan.png"
                     alt="Ruan Bueno - Developer"
                     width={500}
                     height={500}
