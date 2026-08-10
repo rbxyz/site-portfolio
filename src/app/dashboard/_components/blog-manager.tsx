@@ -9,6 +9,7 @@ import {
   EyeOff,
   ExternalLink,
   FileText,
+  Image as ImageIcon,
   Loader2,
   Plus,
   Save,
@@ -53,8 +54,11 @@ const EMPTY_FORM: PostForm = {
   tags: [],
 };
 
+const MAX_COVER_MB = 5;
+const ALLOWED_COVER_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
 const INPUT_CLASS =
-  "w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors";
+  "w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors";
 
 function fmtDate(value: string | null) {
   if (!value) return "—";
@@ -81,6 +85,7 @@ export function BlogManager() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<PostForm>(EMPTY_FORM);
   const [tagInput, setTagInput] = useState("");
+  const [coverFileName, setCoverFileName] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "published" | "draft">("all");
@@ -132,6 +137,7 @@ export function BlogManager() {
     setEditingId(null);
     setForm(EMPTY_FORM);
     setTagInput("");
+    setCoverFileName(null);
     setIsOpen(true);
   };
 
@@ -146,6 +152,7 @@ export function BlogManager() {
       tags: [...post.tags],
     });
     setTagInput("");
+    setCoverFileName(null);
     setIsOpen(true);
   };
 
@@ -155,6 +162,38 @@ export function BlogManager() {
     setEditingId(null);
     setForm(EMPTY_FORM);
     setTagInput("");
+    setCoverFileName(null);
+  };
+
+  /** Lê a capa escolhida como base64 e guarda direto em `imageUrl`. */
+  const handleCoverSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!ALLOWED_COVER_TYPES.includes(file.type)) {
+      toast.error("Formato inválido", {
+        description: "Use JPEG, PNG ou WebP.",
+      });
+      return;
+    }
+
+    if (file.size > MAX_COVER_MB * 1024 * 1024) {
+      toast.error("Imagem muito grande", {
+        description: `O limite é ${MAX_COVER_MB}MB.`,
+      });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setForm((prev) => ({ ...prev, imageUrl: reader.result as string }));
+      setCoverFileName(file.name);
+    };
+    reader.onerror = () => toast.error("Não foi possível ler o arquivo");
+    reader.readAsDataURL(file);
+
+    // Permite reescolher o mesmo arquivo depois de remover a capa.
+    e.target.value = "";
   };
 
   const addTag = (value: string) => {
@@ -208,6 +247,7 @@ export function BlogManager() {
       setIsOpen(false);
       setEditingId(null);
       setForm(EMPTY_FORM);
+      setCoverFileName(null);
       toast.success(editingId ? "Post atualizado!" : "Post criado!", {
         description: `"${form.title}" foi salvo com sucesso.`,
       });
@@ -295,7 +335,7 @@ export function BlogManager() {
   if (loading) {
     return (
       <div className="flex items-center gap-3 py-16 justify-center text-ink-muted">
-        <Loader2 className="h-4 w-4 animate-spin text-primary-500" />
+        <Loader2 className="h-4 w-4 animate-spin text-plum-text" />
         <span className="font-mono text-sm">Carregando posts...</span>
       </div>
     );
@@ -307,7 +347,7 @@ export function BlogManager() {
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <Button
           onClick={openCreate}
-          className="bg-primary-500 hover:bg-primary-600 text-ink"
+          className="bg-plum hover:bg-plum-line text-ink"
         >
           <Plus className="h-4 w-4 mr-2" />
           Novo Post
@@ -326,7 +366,7 @@ export function BlogManager() {
               onClick={() => setFilter(key)}
               className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
                 filter === key
-                  ? "bg-primary-500/20 text-primary-300"
+                  ? "bg-plum text-ink"
                   : "text-ink-secondary hover:text-ink"
               }`}
             >
@@ -349,7 +389,7 @@ export function BlogManager() {
             key={post.id}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-xl border border-card-border bg-card p-5 transition-colors hover:border-primary-500/50"
+            className="rounded-xl border border-card-border bg-card p-5 transition-colors hover:border-white/20"
           >
             <div className="flex flex-col gap-4 md:flex-row">
               {post.imageUrl && (
@@ -379,7 +419,7 @@ export function BlogManager() {
                       size="sm"
                       className={
                         post.published
-                          ? "border border-primary-500/50 bg-primary-500/20 text-primary-300 hover:bg-primary-500/30"
+                          ? "bg-plum text-ink hover:bg-plum-line"
                           : "border border-card-border bg-card-inset text-card-muted hover:text-card-ink"
                       }
                       title={post.published ? "Despublicar" : "Publicar"}
@@ -393,7 +433,7 @@ export function BlogManager() {
                     <Button
                       onClick={() => openEdit(post)}
                       size="sm"
-                      className="border border-primary-500/50 bg-primary-500/20 text-primary-300 hover:bg-primary-500/30"
+                      className="border border-white/10 bg-white/5 text-ink-muted hover:bg-white/10 hover:text-ink"
                       title="Editar post"
                     >
                       <Edit className="h-4 w-4" />
@@ -444,7 +484,7 @@ export function BlogManager() {
                     href={`/blog/${post.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 text-sm text-primary-500 transition-colors hover:text-primary-400"
+                    className="mt-3 inline-flex items-center gap-1 text-sm text-plum-text transition-colors hover:text-ink"
                   >
                     <ExternalLink className="h-4 w-4" />
                     Ver no site
@@ -504,17 +544,60 @@ export function BlogManager() {
 
           <div>
             <label className="mb-2 block text-sm font-medium text-ink">
-              Imagem de capa (URL)
+              Imagem de capa
             </label>
+
+            {form.imageUrl && (
+              <div className="relative mb-3 h-40 w-full overflow-hidden rounded-lg border border-dark-border bg-dark-bg">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={form.imageUrl}
+                  alt="Pré-visualização da capa"
+                  className="h-full w-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setForm((prev) => ({ ...prev, imageUrl: "" }));
+                    setCoverFileName(null);
+                  }}
+                  className="absolute right-2 top-2 rounded-full bg-black/70 p-2 text-ink transition-colors hover:bg-red-600"
+                  aria-label="Remover capa"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            )}
+
+            <label className="cursor-pointer">
+              <input
+                type="file"
+                accept="image/jpeg,image/jpg,image/png,image/webp"
+                onChange={handleCoverSelect}
+                className="hidden"
+              />
+              <span className={`${INPUT_CLASS} flex items-center justify-center gap-2`}>
+                <ImageIcon className="h-4 w-4" />
+                {coverFileName ?? "Selecionar imagem"}
+              </span>
+            </label>
+
             <input
               type="text"
-              value={form.imageUrl}
-              onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-              className={INPUT_CLASS}
-              placeholder="https://..."
+              value={form.imageUrl.startsWith("data:image/") ? "" : form.imageUrl}
+              onChange={(e) => {
+                setForm({ ...form, imageUrl: e.target.value });
+                setCoverFileName(null);
+              }}
+              className={`${INPUT_CLASS} mt-2`}
+              placeholder="…ou cole uma URL"
+              disabled={form.imageUrl.startsWith("data:image/")}
             />
+
             <p className="mt-2 text-xs text-ink-faint">
-              Sem capa, o /blog usa o gradiente roxo padrão.
+              JPEG, PNG ou WebP até {MAX_COVER_MB}MB. A imagem é convertida em
+              base64 e salva junto do post. Sem capa, o /blog usa o gradiente
+              padrão.
             </p>
           </div>
 
@@ -555,7 +638,7 @@ export function BlogManager() {
               <Button
                 type="button"
                 onClick={() => addTag(tagInput)}
-                className="bg-primary-500 text-ink hover:bg-primary-600"
+                className="bg-plum text-ink hover:bg-plum-line"
               >
                 Adicionar
               </Button>
@@ -566,7 +649,7 @@ export function BlogManager() {
                 {form.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center gap-1 rounded-full border border-primary-500/40 bg-primary-500/15 px-3 py-1 text-sm text-primary-200"
+                    className="inline-flex items-center gap-1 rounded-full border border-plum-line bg-plum/50 px-3 py-1 text-sm text-ink-muted"
                   >
                     {tag}
                     <button
@@ -590,7 +673,7 @@ export function BlogManager() {
                     key={tag}
                     type="button"
                     onClick={() => addTag(tag)}
-                    className="rounded-full border border-dark-border bg-dark-surface px-2.5 py-1 text-xs text-ink-secondary transition-colors hover:border-primary-500 hover:text-primary-300"
+                    className="rounded-full border border-dark-border bg-dark-surface px-2.5 py-1 text-xs text-ink-secondary transition-colors hover:border-white/25 hover:text-ink"
                   >
                     + {tag}
                   </button>
@@ -605,7 +688,7 @@ export function BlogManager() {
                 type="checkbox"
                 checked={form.published}
                 onChange={(e) => setForm({ ...form, published: e.target.checked })}
-                className="h-4 w-4 rounded border-dark-border bg-dark-surface text-primary-500 focus:ring-primary-500"
+                className="h-4 w-4 rounded border-dark-border bg-dark-surface text-plum-text focus:ring-plum-line"
               />
               <span>Publicado (visível em /blog)</span>
             </label>
@@ -616,7 +699,7 @@ export function BlogManager() {
           <Button
             onClick={() => void handleSave()}
             disabled={saving}
-            className="bg-primary-500 text-ink hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
+            className="bg-plum text-ink hover:bg-plum-line disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving ? (
               <>

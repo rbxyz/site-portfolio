@@ -38,7 +38,7 @@ export function Sidebar({
       <div className="border-b border-card-border px-5 py-5">
         <Link
           href="/"
-          className="font-mono text-lg font-bold text-primary-500 transition-opacity hover:opacity-80"
+          className="font-mono text-lg font-bold text-plum-text transition-opacity hover:opacity-80"
         >
           {"< RBXYZ />"}
         </Link>
@@ -58,7 +58,7 @@ export function Sidebar({
               aria-current={isActive ? "page" : undefined}
               className={`flex flex-shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors md:w-full ${
                 isActive
-                  ? "bg-primary-500/20 text-primary-300"
+                  ? "bg-plum text-ink"
                   : "text-ink-secondary hover:bg-white/5 hover:text-ink"
               }`}
             >

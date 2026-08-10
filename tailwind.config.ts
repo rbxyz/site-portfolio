@@ -41,6 +41,15 @@ const config: Config = {
           border: "#3a2a54", // C.border3
           hover: "#3f3357",
         },
+        // Roxo do admin: versão escura e dessaturada do accent. Reservado para
+        // sinalizar estado (item ativo, foco, ação primária) — o resto da
+        // interface é cinza neutro.
+        plum: {
+          DEFAULT: "#3b2258", // preenchimento da ação primária / item ativo
+          deep: "#2a1740", // hover mais fundo
+          line: "#4a3568", // bordas e anel de foco
+          text: "#a292bd", // texto e ícone roxo, legível sem brilhar
+        },
         // Cards e sidebar do admin: cinza neutro escuro, sem o tingimento roxo
         // das superfícies do site público.
         card: {

@@ -394,7 +394,7 @@ export default function DashboardPage() {
   if (status === "loading" || loading) {
     return (
       <div className="min-h-screen bg-dark-bg text-ink flex items-center justify-center">
-        <div className="text-primary-500 font-mono">Carregando...</div>
+        <div className="text-plum-text font-mono">Carregando...</div>
       </div>
     );
   }
@@ -414,7 +414,7 @@ export default function DashboardPage() {
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">
               <span className="text-ink">Gestão de</span>{" "}
-              <span className="text-primary-500">
+              <span className="text-plum-text">
                 {tab === "projects" ? "Projetos" : "Posts"}
               </span>
             </h1>
@@ -453,7 +453,7 @@ export default function DashboardPage() {
                 setImagePreview(null);
                 setSelectedImageFile(null);
               }}
-              className="bg-primary-500 hover:bg-primary-600 text-ink"
+              className="bg-plum hover:bg-plum-line text-ink"
             >
               <Plus className="h-4 w-4 mr-2" />
               Novo Projeto
@@ -464,7 +464,7 @@ export default function DashboardPage() {
                 setShowTypeManagement(false);
               }}
               variant="outline"
-              className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+              className="border-dark-border text-accent-gray hover:border-white/25 hover:text-ink"
             >
               <Settings className="h-4 w-4 mr-2" />
               Gerenciar Status
@@ -475,7 +475,7 @@ export default function DashboardPage() {
                 setShowStatusManagement(false);
               }}
               variant="outline"
-              className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+              className="border-dark-border text-accent-gray hover:border-white/25 hover:text-ink"
             >
               <Settings className="h-4 w-4 mr-2" />
               Gerenciar Tipos
@@ -510,7 +510,7 @@ export default function DashboardPage() {
                       type="text"
                       value={statusForm.key}
                       onChange={(e) => setStatusForm({ ...statusForm, key: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                       placeholder="in-progress"
                       required
                     />
@@ -523,7 +523,7 @@ export default function DashboardPage() {
                       type="text"
                       value={statusForm.label}
                       onChange={(e) => setStatusForm({ ...statusForm, label: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                       placeholder="IN-PROGRESS"
                       required
                     />
@@ -532,7 +532,7 @@ export default function DashboardPage() {
                 <div className="flex gap-2">
                   <Button
                     onClick={handleSaveStatus}
-                    className="bg-primary-500 hover:bg-primary-600 text-white"
+                    className="bg-plum hover:bg-plum-line text-ink"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     {editingStatusId ? "Atualizar" : "Adicionar"} Status
@@ -544,7 +544,7 @@ export default function DashboardPage() {
                         setStatusForm({ key: "", label: "" });
                       }}
                       variant="outline"
-                      className="border-card-border text-card-muted hover:border-primary-500 hover:text-primary-500"
+                      className="border-card-border text-card-muted hover:border-white/25 hover:text-ink"
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancelar
@@ -566,7 +566,7 @@ export default function DashboardPage() {
                     {statuses.map((status) => (
                       <div
                         key={status.id}
-                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-primary-500/50 transition-colors"
+                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-white/20 transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
@@ -578,7 +578,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleEditStatus(status)}
                             size="sm"
-                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 border border-primary-500/50"
+                            className="border border-white/10 bg-white/5 text-ink-muted hover:bg-white/10 hover:text-ink"
                             title="Editar status"
                           >
                             <Edit className="h-4 w-4 mr-2" />
@@ -630,7 +630,7 @@ export default function DashboardPage() {
                       type="text"
                       value={typeForm.key}
                       onChange={(e) => setTypeForm({ ...typeForm, key: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                       placeholder="Web"
                       required
                     />
@@ -643,7 +643,7 @@ export default function DashboardPage() {
                       type="text"
                       value={typeForm.label}
                       onChange={(e) => setTypeForm({ ...typeForm, label: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                       placeholder="WEB"
                       required
                     />
@@ -652,7 +652,7 @@ export default function DashboardPage() {
                 <div className="flex gap-2">
                   <Button
                     onClick={handleSaveType}
-                    className="bg-primary-500 hover:bg-primary-600 text-white"
+                    className="bg-plum hover:bg-plum-line text-ink"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     {editingTypeId ? "Atualizar" : "Adicionar"} Tipo
@@ -664,7 +664,7 @@ export default function DashboardPage() {
                         setTypeForm({ key: "", label: "" });
                       }}
                       variant="outline"
-                      className="border-card-border text-card-muted hover:border-primary-500 hover:text-primary-500"
+                      className="border-card-border text-card-muted hover:border-white/25 hover:text-ink"
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancelar
@@ -686,7 +686,7 @@ export default function DashboardPage() {
                     {types.map((type) => (
                       <div
                         key={type.id}
-                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-primary-500/50 transition-colors"
+                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-white/20 transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
@@ -698,7 +698,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleEditType(type)}
                             size="sm"
-                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 border border-primary-500/50"
+                            className="border border-white/10 bg-white/5 text-ink-muted hover:bg-white/10 hover:text-ink"
                             title="Editar tipo"
                           >
                             <Edit className="h-4 w-4 mr-2" />
@@ -737,7 +737,7 @@ export default function DashboardPage() {
                     type="text"
                     value={formData.title ?? ""}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                     required
                   />
                 </div>
@@ -750,7 +750,7 @@ export default function DashboardPage() {
                     type="text"
                     value={formData.year ?? ""}
                     onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                     required
                   />
                 </div>
@@ -762,7 +762,7 @@ export default function DashboardPage() {
                   <textarea
                     value={formData.description ?? ""}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                     rows={3}
                     required
                   />
@@ -775,7 +775,7 @@ export default function DashboardPage() {
                   <textarea
                     value={formData.longDescription ?? ""}
                     onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                     rows={3}
                   />
                 </div>
@@ -820,7 +820,7 @@ export default function DashboardPage() {
                         onChange={handleImageSelect}
                         className="hidden"
                       />
-                      <div className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-ink hover:border-primary-500/50 transition-colors flex items-center justify-center gap-2">
+                      <div className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-surface text-ink hover:border-white/20 transition-colors flex items-center justify-center gap-2">
                         <ImageIcon className="h-4 w-4" />
                         <span>{selectedImageFile ? selectedImageFile.name : "Selecionar Imagem"}</span>
                       </div>
@@ -839,7 +839,7 @@ export default function DashboardPage() {
                     type="text"
                     value={formData.link ?? ""}
                     onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                   />
                 </div>
 
@@ -851,7 +851,7 @@ export default function DashboardPage() {
                     type="text"
                     value={formData.github ?? ""}
                     onChange={(e) => setFormData({ ...formData, github: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                   />
                 </div>
 
@@ -862,7 +862,7 @@ export default function DashboardPage() {
                   <select
                     value={formData.type ?? ""}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                     required
                   >
                     <option value="">Selecione um tipo</option>
@@ -881,7 +881,7 @@ export default function DashboardPage() {
                   <select
                     value={formData.status ?? ""}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                     required
                   >
                     <option value="">Selecione um status</option>
@@ -899,7 +899,7 @@ export default function DashboardPage() {
                       type="checkbox"
                       checked={formData.featured ?? false}
                       onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                      className="w-4 h-4 rounded border-dark-border bg-dark-surface text-primary-500 focus:ring-primary-500"
+                      className="w-4 h-4 rounded border-dark-border bg-dark-surface text-plum-text focus:ring-plum-line"
                     />
                     <span>Projeto em Destaque</span>
                   </label>
@@ -913,7 +913,7 @@ export default function DashboardPage() {
                     type="number"
                     value={formData.stars ?? 0}
                     onChange={(e) => setFormData({ ...formData, stars: parseInt(e.target.value) || 0 })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                   />
                 </div>
 
@@ -925,7 +925,7 @@ export default function DashboardPage() {
                     type="number"
                     value={formData.forks ?? 0}
                     onChange={(e) => setFormData({ ...formData, forks: parseInt(e.target.value) || 0 })}
-                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                   />
                 </div>
 
@@ -940,12 +940,12 @@ export default function DashboardPage() {
                       onChange={(e) => setTechInput(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addTechnology())}
                       placeholder="Digite uma tecnologia e pressione Enter"
-                      className="flex-1 px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="flex-1 px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-plum-line focus:border-plum-line transition-colors"
                     />
                     <Button
                       type="button"
                       onClick={addTechnology}
-                      className="bg-primary-500 hover:bg-primary-600 text-ink"
+                      className="bg-plum hover:bg-plum-line text-ink"
                     >
                       Adicionar
                     </Button>
@@ -959,7 +959,7 @@ export default function DashboardPage() {
                         {tech}
                         <button
                           onClick={() => removeTechnology(index)}
-                          className="hover:text-primary-500"
+                          className="hover:text-ink"
                         >
                           <X className="h-3 w-3" />
                         </button>
@@ -973,7 +973,7 @@ export default function DashboardPage() {
               <Button
                 onClick={handleSave}
                 disabled={saving}
-                className="bg-primary-500 hover:bg-primary-600 text-ink disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-plum hover:bg-plum-line text-ink disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {saving ? (
                   <>
@@ -991,7 +991,7 @@ export default function DashboardPage() {
                 onClick={handleCancel}
                 disabled={saving}
                 variant="outline"
-                className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="border-dark-border text-accent-gray hover:border-white/25 hover:text-ink disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancelar
@@ -1036,7 +1036,7 @@ export default function DashboardPage() {
                           </h3>
                           <div className="flex items-center gap-4 text-sm text-card-muted mb-2 flex-wrap">
                             <span>{project.year}</span>
-                            <span className="px-2 py-1 rounded bg-primary-500/15 text-primary-300 border border-primary-500/30">
+                            <span className="px-2 py-1 rounded bg-white/5 text-ink-muted border border-white/10">
                               {project.type}
                             </span>
                             <span className={`px-2 py-1 rounded ${
@@ -1047,7 +1047,7 @@ export default function DashboardPage() {
                               {project.status}
                             </span>
                             {project.featured && (
-                              <span className="px-2 py-1 rounded bg-primary-500/20 text-primary-300">
+                              <span className="px-2 py-1 rounded bg-plum text-ink">
                                 <Star className="h-3 w-3 inline mr-1" />
                                 Featured
                               </span>
@@ -1058,7 +1058,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleEdit(project)}
                             size="sm"
-                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 border border-primary-500/50"
+                            className="border border-white/10 bg-white/5 text-ink-muted hover:bg-white/10 hover:text-ink"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
@@ -1088,7 +1088,7 @@ export default function DashboardPage() {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-primary-500 hover:text-primary-400"
+                            className="flex items-center gap-1 text-plum-text hover:text-ink"
                           >
                             <LinkIcon className="h-4 w-4" />
                             Live
@@ -1099,7 +1099,7 @@ export default function DashboardPage() {
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-card-muted hover:text-primary-500"
+                            className="flex items-center gap-1 text-card-muted hover:text-ink"
                           >
                             <Github className="h-4 w-4" />
                             GitHub
