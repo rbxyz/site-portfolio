@@ -172,7 +172,15 @@ export default async function BlogIndex({
         <span style={{ color: C.accent, fontSize: 14 }}>✦</span>
       </div>
 
-      <div style={{ maxWidth: 1180, margin: "0 auto", padding: "64px 5vw 120px" }}>
+      {/* Container largo: o padding lateral para de crescer em 56px para que a
+          área útil acompanhe monitores grandes em vez de estrangular o grid. */}
+      <div
+        style={{
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "64px clamp(20px, 5vw, 56px) 120px",
+        }}
+      >
         {/* hero */}
         <div
           className="b-up b-hero-grid"
@@ -318,7 +326,7 @@ export default async function BlogIndex({
                   font: `400 17px/1.6 ${FONT.grotesk}`,
                   color: C.textMuted,
                   margin: "0 0 26px",
-                  maxWidth: 480,
+                  maxWidth: 560,
                 }}
               >
                 {featured.excerpt}
@@ -426,8 +434,10 @@ export default async function BlogIndex({
             className="b-cards"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(330px, 1fr))",
-              gap: 26,
+              // Piso mais alto (360px) para os cards crescerem na lateral em vez
+              // de virarem mais colunas estreitas quando sobra espaço.
+              gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))",
+              gap: 28,
             }}
           >
             {grid.map((p, i) => (
@@ -479,7 +489,7 @@ export default async function BlogIndex({
                 </div>
                 <div
                   style={{
-                    padding: "22px 22px 24px",
+                    padding: "clamp(22px, 1.9vw, 30px) clamp(22px, 1.9vw, 30px) clamp(24px, 2vw, 32px)",
                     display: "flex",
                     flexDirection: "column",
                     gap: 13,
@@ -510,7 +520,7 @@ export default async function BlogIndex({
                   </div>
                   <h3
                     style={{
-                      font: `700 22px/1.25 ${FONT.grotesk}`,
+                      font: `700 clamp(22px, 1.55vw, 26px)/1.25 ${FONT.grotesk}`,
                       color: C.text,
                       margin: 0,
                       letterSpacing: "-.01em",
@@ -520,7 +530,7 @@ export default async function BlogIndex({
                   </h3>
                   <p
                     style={{
-                      font: `400 14.5px/1.55 ${FONT.grotesk}`,
+                      font: `400 clamp(14.5px, 1.05vw, 16px)/1.6 ${FONT.grotesk}`,
                       color: C.textSecondary,
                       margin: 0,
                       flex: 1,
@@ -609,7 +619,7 @@ export default async function BlogIndex({
             </div>
           </div>
           <Link
-            href="/contato"
+            href="/#contato"
             className="b-chip"
             style={{
               font: `700 12px/1 ${FONT.mono}`,

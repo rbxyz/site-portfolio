@@ -16,32 +16,43 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       colors: {
-        // Design system baseado nas imagens
+        // Paleta do handoff do portfólio — mesma fonte de
+        // `src/app/_components/portfolio/tokens.ts` (C), exposta aqui como
+        // utilitários do Tailwind para as telas de admin (login/dashboard).
         primary: {
-          DEFAULT: "#00C896", // Teal/Green principal
-          50: "#E6F9F5",
-          100: "#CCF3EB",
-          200: "#99E7D7",
-          300: "#66DBC3",
-          400: "#33CFAF",
-          500: "#00C896",
-          600: "#00A078",
-          700: "#00785A",
-          800: "#00503C",
-          900: "#00281E",
+          DEFAULT: "#8B5CF6", // C.accent — roxo de destaque
+          50: "#F3EEFE",
+          100: "#E7DEFD",
+          200: "#CFBDFB",
+          300: "#B79CF9",
+          400: "#B57BFF", // hover dos links no site público
+          500: "#8B5CF6", // C.accent
+          600: "#7A35C9", // C.duotone
+          700: "#5F2AA0",
+          800: "#31105C", // C.brandDeep
+          900: "#1b1233", // C.border1
         },
         dark: {
-          DEFAULT: "#000000",
-          bg: "#000000",
-          surface: "#0A0A0A",
-          card: "#111111",
-          border: "#1A1A1A",
-          hover: "#1F1F1F",
+          DEFAULT: "#1F1F1F",
+          bg: "#1F1F1F", // C.bg
+          surface: "#262231", // superfície elevada (levemente roxeada)
+          card: "#2b2536",
+          border: "#3a2a54", // C.border3
+          hover: "#3f3357",
+        },
+        // Texto: escala derivada dos tokens de tipografia do handoff.
+        ink: {
+          DEFAULT: "#F4F2EC", // C.text — branco quente
+          muted: "#cfcdc4", // C.textMuted
+          subtle: "#b8b6ad", // C.textMuted2
+          secondary: "#8A877F", // C.textSecondary
+          faint: "#56564f", // C.textFaint
         },
         accent: {
+          purple: "#8B5CF6",
           green: "#00C896",
           yellow: "#FFD700",
-          gray: "#CCCCCC",
+          gray: "#cfcdc4", // C.textMuted
         },
       },
       backgroundImage: {

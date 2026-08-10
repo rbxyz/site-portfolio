@@ -30,19 +30,19 @@ export function NavBar() {
             Home
           </Link>
           <Link
-            href="/sobre"
+            href="/#sobre"
             className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
             Bio
           </Link>
           <Link
-            href="/pages/projects"
+            href="/#projetos"
             className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
             Portfolio
           </Link>
           <Link
-            href="/contato"
+            href="/#contato"
             className="relative text-accent-gray transition hover:text-primary-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
           >
             Contact
@@ -87,7 +87,7 @@ export function NavBar() {
           ) : (
             <Link
               href="/login"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-500 text-white hover:bg-primary-600 transition-all duration-300"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-500 text-ink hover:bg-primary-600 transition-all duration-300"
             >
               <LogIn className="h-4 w-4" />
               <span className="text-sm font-medium">Login</span>
@@ -107,7 +107,7 @@ export function NavBar() {
           ) : (
             <Link
               href="/login"
-              className="p-2 rounded-lg bg-primary-500 text-white"
+              className="p-2 rounded-lg bg-primary-500 text-ink"
             >
               <LogIn className="h-5 w-5" />
             </Link>
@@ -138,21 +138,21 @@ export function NavBar() {
               Home
             </Link>
             <Link
-              href="/sobre"
+              href="/#sobre"
               onClick={() => setIsMenuOpen(false)}
               className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >
               Bio
             </Link>
             <Link
-              href="/pages/projects"
+              href="/#projetos"
               onClick={() => setIsMenuOpen(false)}
               className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >
               Portfolio
             </Link>
             <Link
-              href="/contato"
+              href="/#contato"
               onClick={() => setIsMenuOpen(false)}
               className="block py-2 text-lg text-accent-gray transition hover:text-primary-500"
             >

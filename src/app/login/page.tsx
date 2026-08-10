@@ -48,10 +48,10 @@ export default function LoginPage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-surface to-dark-bg">
+      <div className="min-h-screen bg-dark-bg">
         <NavBar />
         <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">
-          <div className="text-white">Carregando...</div>
+          <div className="font-mono text-ink-muted">Carregando...</div>
         </div>
       </div>
     );
@@ -61,30 +61,44 @@ export default function LoginPage() {
     return null; // Redirecionamento em andamento
   }
 
+  const inputClass =
+    "w-full pl-10 pr-4 py-3 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all";
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-surface to-dark-bg">
+    <div className="relative min-h-screen overflow-hidden bg-dark-bg">
+      {/* Halo roxo do handoff, atrás do card */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-3xl"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(139,92,246,.22), rgba(49,16,92,0) 68%)",
+        }}
+      />
+
       <NavBar />
-      <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
+
+      <div className="relative flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <div className="bg-dark-surface/50 backdrop-blur-lg border border-dark-border rounded-2xl p-8 shadow-2xl">
+          <div className="bg-dark-card/70 backdrop-blur-lg border border-dark-border rounded-2xl p-8 shadow-2xl">
             <div className="text-center mb-8">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring" }}
-                className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-500/20 mb-4"
+                className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-500/15 border border-primary-500/40 mb-4"
               >
                 <LogIn className="w-8 h-8 text-primary-500" />
               </motion.div>
-              <h1 className="text-3xl font-bold text-white mb-2">
+              <h1 className="text-3xl font-bold text-ink mb-2">
                 Acesso ao Dashboard
               </h1>
-              <p className="text-gray-400">
+              <p className="text-ink-secondary">
                 Faça login para gerenciar seus projetos
               </p>
             </div>
@@ -100,7 +114,7 @@ export default function LoginPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
+                  className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm"
                 >
                   <AlertCircle className="w-4 h-4" />
                   <span>{error}</span>
@@ -108,34 +122,34 @@ export default function LoginPage() {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Email
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-ink-secondary" />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-dark-border bg-dark-surface text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
+                    className={inputClass}
                     placeholder="seu@email.com"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Senha
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-ink-secondary" />
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-dark-border bg-dark-surface text-white placeholder-gray-500 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
+                    className={inputClass}
                     placeholder="••••••••"
                   />
                 </div>
@@ -144,7 +158,7 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary-500 hover:bg-primary-600 text-white py-6 text-lg font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-primary-500 hover:bg-primary-600 text-ink py-6 text-lg font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <LogIn className="w-5 h-5" />
                 {loading ? "Entrando..." : "Entrar"}
@@ -152,7 +166,7 @@ export default function LoginPage() {
             </motion.form>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-ink-faint">
                 Ao continuar, você concorda com nossos termos de uso
               </p>
             </div>

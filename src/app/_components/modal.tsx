@@ -63,10 +63,10 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-dark-border">
-                <h2 className="text-2xl font-bold text-white">{title}</h2>
+                <h2 className="text-2xl font-bold text-ink">{title}</h2>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-lg hover:bg-dark-surface transition-colors text-gray-400 hover:text-white"
+                  className="p-2 rounded-lg hover:bg-dark-surface transition-colors text-ink-secondary hover:text-ink"
                 >
                   <X className="h-5 w-5" />
                 </button>
