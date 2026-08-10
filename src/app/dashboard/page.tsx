@@ -4,15 +4,13 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { NavBar } from "@/app/_components/nav-bar";
 import { Button } from "@/app/_components/ui/button";
 import { Modal } from "@/app/_components/modal";
-import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star, Settings, Image as ImageIcon, Loader2, FolderKanban, Newspaper } from "lucide-react";
+import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star, Settings, Image as ImageIcon, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 import { BlogManager } from "@/app/dashboard/_components/blog-manager";
-
-type DashboardTab = "projects" | "blog";
+import { Sidebar, type DashboardTab } from "@/app/dashboard/_components/sidebar";
 
 interface Project {
   id: number;
@@ -407,10 +405,10 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-dark-bg text-ink">
-      <NavBar />
-      
-      <main className="pt-24 pb-20">
-        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+      <Sidebar active={tab} onChange={setTab} />
+
+      <main className="pb-20 md:pl-60">
+        <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 md:px-8 md:pt-12">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">
               <span className="text-ink">Gestão de</span>{" "}
@@ -423,29 +421,6 @@ export default function DashboardPage() {
                 ? "Gerencie seus projetos do portfólio"
                 : "Crie, edite e publique os artigos do blog"}
             </p>
-          </div>
-
-          {/* Abas */}
-          <div className="mb-6 inline-flex items-center gap-1 rounded-xl border border-dark-border bg-dark-surface p-1">
-            {(
-              [
-                ["projects", "Projetos", FolderKanban],
-                ["blog", "Blog", Newspaper],
-              ] as const
-            ).map(([key, label, Icon]) => (
-              <button
-                key={key}
-                onClick={() => setTab(key)}
-                className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                  tab === key
-                    ? "bg-primary-500/20 text-primary-300"
-                    : "text-ink-secondary hover:text-ink"
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                {label}
-              </button>
-            ))}
           </div>
 
           {tab === "blog" && <BlogManager />}
@@ -510,43 +485,43 @@ export default function DashboardPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-dark-card border border-dark-border rounded-xl p-6 mb-6"
+              className="bg-card border border-card-border rounded-xl p-6 mb-6"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-ink">Gerenciar Status</h2>
-                <span className="text-accent-gray text-sm">
+                <h2 className="text-2xl font-bold text-card-ink">Gerenciar Status</h2>
+                <span className="text-card-muted text-sm">
                   {statuses.length} {statuses.length === 1 ? "status" : "status"}
                 </span>
               </div>
 
               {/* Formulário de criação/edição */}
-              <div className="bg-dark-surface border border-dark-border rounded-lg p-4 mb-6">
-                <h3 className="text-lg font-semibold mb-4 text-ink">
+              <div className="bg-card-inset border border-card-border rounded-lg p-4 mb-6">
+                <h3 className="text-lg font-semibold mb-4 text-card-ink">
                   {editingStatusId ? "Editar Status" : "Criar Novo Status"}
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-ink">
+                    <label className="block text-sm font-medium mb-2 text-card-ink">
                       Key (ex: in-progress) *
                     </label>
                     <input
                       type="text"
                       value={statusForm.key}
                       onChange={(e) => setStatusForm({ ...statusForm, key: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-white text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="in-progress"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-ink">
+                    <label className="block text-sm font-medium mb-2 text-card-ink">
                       Label (ex: IN-PROGRESS) *
                     </label>
                     <input
                       type="text"
                       value={statusForm.label}
                       onChange={(e) => setStatusForm({ ...statusForm, label: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-white text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="IN-PROGRESS"
                       required
                     />
@@ -555,7 +530,7 @@ export default function DashboardPage() {
                 <div className="flex gap-2">
                   <Button
                     onClick={handleSaveStatus}
-                    className="bg-primary-500 hover:bg-primary-600 text-ink"
+                    className="bg-primary-500 hover:bg-primary-600 text-white"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     {editingStatusId ? "Atualizar" : "Adicionar"} Status
@@ -567,7 +542,7 @@ export default function DashboardPage() {
                         setStatusForm({ key: "", label: "" });
                       }}
                       variant="outline"
-                      className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+                      className="border-card-border text-card-muted hover:border-primary-600 hover:text-primary-700"
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancelar
@@ -578,30 +553,30 @@ export default function DashboardPage() {
 
               {/* Lista de Status */}
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-ink">Todos os Status</h3>
+                <h3 className="text-lg font-semibold mb-4 text-card-ink">Todos os Status</h3>
                 {statuses.length === 0 ? (
-                  <div className="text-center py-8 bg-dark-surface border border-dark-border rounded-lg">
-                    <p className="text-accent-gray">Nenhum status cadastrado ainda.</p>
-                    <p className="text-accent-gray text-sm mt-2">Use o formulário acima para criar o primeiro status.</p>
+                  <div className="text-center py-8 bg-card-inset border border-card-border rounded-lg">
+                    <p className="text-card-muted">Nenhum status cadastrado ainda.</p>
+                    <p className="text-card-muted text-sm mt-2">Use o formulário acima para criar o primeiro status.</p>
                   </div>
                 ) : (
                   <div className="grid gap-3">
                     {statuses.map((status) => (
                       <div
                         key={status.id}
-                        className="flex items-center justify-between p-4 bg-dark-surface border border-dark-border rounded-lg hover:border-primary-500/50 transition-colors"
+                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-primary-600/60 transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
-                            <span className="text-ink font-semibold text-lg">{status.label}</span>
-                            <span className="text-accent-gray text-sm font-mono">{status.key}</span>
+                            <span className="text-card-ink font-semibold text-lg">{status.label}</span>
+                            <span className="text-card-muted text-sm font-mono">{status.key}</span>
                           </div>
                         </div>
                         <div className="flex gap-2">
                           <Button
                             onClick={() => handleEditStatus(status)}
                             size="sm"
-                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
+                            className="bg-primary-600 hover:bg-primary-700 text-white"
                             title="Editar status"
                           >
                             <Edit className="h-4 w-4 mr-2" />
@@ -610,7 +585,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleDeleteStatus(status.id)}
                             size="sm"
-                            className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
+                            className="bg-red-600 hover:bg-red-700 text-white"
                             title="Excluir status"
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
@@ -630,43 +605,43 @@ export default function DashboardPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-dark-card border border-dark-border rounded-xl p-6 mb-6"
+              className="bg-card border border-card-border rounded-xl p-6 mb-6"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-ink">Gerenciar Tipos</h2>
-                <span className="text-accent-gray text-sm">
+                <h2 className="text-2xl font-bold text-card-ink">Gerenciar Tipos</h2>
+                <span className="text-card-muted text-sm">
                   {types.length} {types.length === 1 ? "tipo" : "tipos"}
                 </span>
               </div>
 
               {/* Formulário de criação/edição */}
-              <div className="bg-dark-surface border border-dark-border rounded-lg p-4 mb-6">
-                <h3 className="text-lg font-semibold mb-4 text-ink">
+              <div className="bg-card-inset border border-card-border rounded-lg p-4 mb-6">
+                <h3 className="text-lg font-semibold mb-4 text-card-ink">
                   {editingTypeId ? "Editar Tipo" : "Criar Novo Tipo"}
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-ink">
+                    <label className="block text-sm font-medium mb-2 text-card-ink">
                       Key (ex: Web) *
                     </label>
                     <input
                       type="text"
                       value={typeForm.key}
                       onChange={(e) => setTypeForm({ ...typeForm, key: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-white text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="Web"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-ink">
+                    <label className="block text-sm font-medium mb-2 text-card-ink">
                       Label (ex: WEB) *
                     </label>
                     <input
                       type="text"
                       value={typeForm.label}
                       onChange={(e) => setTypeForm({ ...typeForm, label: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-dark-border bg-dark-bg text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-white text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="WEB"
                       required
                     />
@@ -675,7 +650,7 @@ export default function DashboardPage() {
                 <div className="flex gap-2">
                   <Button
                     onClick={handleSaveType}
-                    className="bg-primary-500 hover:bg-primary-600 text-ink"
+                    className="bg-primary-500 hover:bg-primary-600 text-white"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     {editingTypeId ? "Atualizar" : "Adicionar"} Tipo
@@ -687,7 +662,7 @@ export default function DashboardPage() {
                         setTypeForm({ key: "", label: "" });
                       }}
                       variant="outline"
-                      className="border-dark-border text-accent-gray hover:border-primary-500 hover:text-primary-500"
+                      className="border-card-border text-card-muted hover:border-primary-600 hover:text-primary-700"
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancelar
@@ -698,30 +673,30 @@ export default function DashboardPage() {
 
               {/* Lista de Tipos */}
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-ink">Todos os Tipos</h3>
+                <h3 className="text-lg font-semibold mb-4 text-card-ink">Todos os Tipos</h3>
                 {types.length === 0 ? (
-                  <div className="text-center py-8 bg-dark-surface border border-dark-border rounded-lg">
-                    <p className="text-accent-gray">Nenhum tipo cadastrado ainda.</p>
-                    <p className="text-accent-gray text-sm mt-2">Use o formulário acima para criar o primeiro tipo.</p>
+                  <div className="text-center py-8 bg-card-inset border border-card-border rounded-lg">
+                    <p className="text-card-muted">Nenhum tipo cadastrado ainda.</p>
+                    <p className="text-card-muted text-sm mt-2">Use o formulário acima para criar o primeiro tipo.</p>
                   </div>
                 ) : (
                   <div className="grid gap-3">
                     {types.map((type) => (
                       <div
                         key={type.id}
-                        className="flex items-center justify-between p-4 bg-dark-surface border border-dark-border rounded-lg hover:border-primary-500/50 transition-colors"
+                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-primary-600/60 transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
-                            <span className="text-ink font-semibold text-lg">{type.label}</span>
-                            <span className="text-accent-gray text-sm font-mono">{type.key}</span>
+                            <span className="text-card-ink font-semibold text-lg">{type.label}</span>
+                            <span className="text-card-muted text-sm font-mono">{type.key}</span>
                           </div>
                         </div>
                         <div className="flex gap-2">
                           <Button
                             onClick={() => handleEditType(type)}
                             size="sm"
-                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
+                            className="bg-primary-600 hover:bg-primary-700 text-white"
                             title="Editar tipo"
                           >
                             <Edit className="h-4 w-4 mr-2" />
@@ -730,7 +705,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleDeleteType(type.id)}
                             size="sm"
-                            className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
+                            className="bg-red-600 hover:bg-red-700 text-white"
                             title="Excluir tipo"
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
@@ -1029,12 +1004,12 @@ export default function DashboardPage() {
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-dark-card border border-dark-border rounded-xl p-6"
+                className="bg-card border border-card-border rounded-xl p-6"
               >
                 {editingId === project.id ? null : (
                   <div className="flex flex-col md:flex-row gap-6">
                     {project.imageUrl && (
-                      <div className="relative w-full md:w-48 h-48 rounded-lg overflow-hidden bg-dark-surface flex-shrink-0">
+                      <div className="relative w-full md:w-48 h-48 rounded-lg overflow-hidden bg-card-inset flex-shrink-0">
                         {project.imageUrl.startsWith("data:image/") ? (
                           <img
                             src={project.imageUrl}
@@ -1054,23 +1029,23 @@ export default function DashboardPage() {
                     <div className="flex-1">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <h3 className="text-2xl font-bold text-ink mb-1">
+                          <h3 className="text-2xl font-bold text-card-ink mb-1">
                             {project.title}
                           </h3>
-                          <div className="flex items-center gap-4 text-sm text-accent-gray mb-2 flex-wrap">
+                          <div className="flex items-center gap-4 text-sm text-card-muted mb-2 flex-wrap">
                             <span>{project.year}</span>
-                            <span className="px-2 py-1 rounded bg-primary-500/15 text-primary-300 border border-primary-500/30">
+                            <span className="px-2 py-1 rounded bg-primary-600/15 text-primary-800 border border-primary-600/30">
                               {project.type}
                             </span>
                             <span className={`px-2 py-1 rounded ${
-                              project.status === "shipped" ? "bg-green-500/20 text-green-500" :
-                              project.status === "in-progress" ? "bg-yellow-500/20 text-yellow-500" :
-                              "bg-gray-500/20 text-gray-500"
+                              project.status === "shipped" ? "bg-green-600/15 text-green-800" :
+                              project.status === "in-progress" ? "bg-yellow-600/20 text-yellow-800" :
+                              "bg-black/10 text-card-muted"
                             }`}>
                               {project.status}
                             </span>
                             {project.featured && (
-                              <span className="px-2 py-1 rounded bg-primary-500/20 text-primary-500">
+                              <span className="px-2 py-1 rounded bg-primary-600/15 text-primary-800">
                                 <Star className="h-3 w-3 inline mr-1" />
                                 Featured
                               </span>
@@ -1081,25 +1056,25 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleEdit(project)}
                             size="sm"
-                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-500 border border-primary-500/50"
+                            className="bg-primary-600 hover:bg-primary-700 text-white"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
                           <Button
                             onClick={() => handleDelete(project.id)}
                             size="sm"
-                            className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50"
+                            className="bg-red-600 hover:bg-red-700 text-white"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
                       </div>
-                      <p className="text-accent-gray mb-4">{project.description}</p>
+                      <p className="text-card-muted mb-4">{project.description}</p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {project.technologies.map((tech, index) => (
                           <span
                             key={index}
-                            className="px-2 py-1 rounded text-xs bg-dark-surface border border-dark-border text-accent-gray"
+                            className="px-2 py-1 rounded text-xs bg-card-inset border border-card-border text-card-muted"
                           >
                             {tech}
                           </span>
@@ -1111,7 +1086,7 @@ export default function DashboardPage() {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-primary-500 hover:text-primary-400"
+                            className="flex items-center gap-1 text-primary-700 hover:text-primary-600"
                           >
                             <LinkIcon className="h-4 w-4" />
                             Live
@@ -1122,7 +1097,7 @@ export default function DashboardPage() {
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-accent-gray hover:text-primary-500"
+                            className="flex items-center gap-1 text-card-muted hover:text-primary-700"
                           >
                             <Github className="h-4 w-4" />
                             GitHub
@@ -1137,8 +1112,8 @@ export default function DashboardPage() {
           </div>
 
           {projects.length === 0 && !loading && (
-            <div className="rounded-xl border border-dark-border bg-dark-card py-16 text-center">
-              <p className="text-ink-muted text-lg">Nenhum projeto encontrado</p>
+            <div className="rounded-xl border border-card-border bg-card py-16 text-center">
+              <p className="text-card-muted text-lg">Nenhum projeto encontrado</p>
             </div>
           )}
           </>

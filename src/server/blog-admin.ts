@@ -193,11 +193,18 @@ const postInclude = {
   tags: { include: { tag: { select: { name: true } } } },
 } as const;
 
-/** Todos os posts (inclusive rascunhos), mais recentes primeiro. */
+/**
+ * Todos os posts (inclusive rascunhos), do publicado mais recente para o mais
+ * antigo. Rascunhos não têm `publishedAt`, então vão para o fim (`nulls: last`)
+ * e se ordenam entre si pela data de criação.
+ */
 export async function listAllPosts(): Promise<BlogAdminPost[]> {
   const db = requireDb();
   const posts = await db.post.findMany({
-    orderBy: [{ updatedAt: "desc" }],
+    orderBy: [
+      { publishedAt: { sort: "desc", nulls: "last" } },
+      { createdAt: "desc" },
+    ],
     include: postInclude,
   });
   return posts.map(toAdminPost);

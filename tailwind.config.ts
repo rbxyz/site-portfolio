@@ -40,6 +40,18 @@ const config: Config = {
           border: "#3a2a54", // C.border3
           hover: "#3f3357",
         },
+        // Cards claros do admin. Como o fundo é #c1c1c1, o conteúdo dentro
+        // deles inverte para texto escuro — daí os tokens `ink`/`muted`/`faint`
+        // próprios, que não têm relação com a escala `ink` (usada no escuro).
+        card: {
+          DEFAULT: "#c1c1c1",
+          hover: "#cbcbcb",
+          border: "#a6a6a6",
+          inset: "#b3b3b3", // chips e campos dentro do card
+          ink: "#1F1F1F",
+          muted: "#43433f",
+          faint: "#5f5f5a",
+        },
         // Texto: escala derivada dos tokens de tipografia do handoff.
         ink: {
           DEFAULT: "#F4F2EC", // C.text — branco quente

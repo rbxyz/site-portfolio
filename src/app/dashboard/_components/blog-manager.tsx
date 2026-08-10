@@ -349,7 +349,7 @@ export function BlogManager() {
             key={post.id}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-xl border border-dark-border bg-dark-card p-5 transition-colors hover:border-primary-500/40"
+            className="rounded-xl border border-card-border bg-card p-5 transition-colors hover:border-primary-600/60"
           >
             <div className="flex flex-col gap-4 md:flex-row">
               {post.imageUrl && (
@@ -364,10 +364,10 @@ export function BlogManager() {
               <div className="min-w-0 flex-1">
                 <div className="mb-3 flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <h3 className="mb-1 truncate text-xl font-bold text-ink">
+                    <h3 className="mb-1 truncate text-xl font-bold text-card-ink">
                       {post.title}
                     </h3>
-                    <p className="truncate font-mono text-xs text-ink-faint">
+                    <p className="truncate font-mono text-xs text-card-faint">
                       /blog/{post.slug}
                     </p>
                   </div>
@@ -379,8 +379,8 @@ export function BlogManager() {
                       size="sm"
                       className={
                         post.published
-                          ? "border border-primary-500/50 bg-primary-500/20 text-primary-300 hover:bg-primary-500/30"
-                          : "border border-dark-border bg-dark-surface text-ink-secondary hover:text-ink"
+                          ? "bg-primary-600 text-white hover:bg-primary-700"
+                          : "border border-card-border bg-card-inset text-card-muted hover:text-card-ink"
                       }
                       title={post.published ? "Despublicar" : "Publicar"}
                     >
@@ -393,7 +393,7 @@ export function BlogManager() {
                     <Button
                       onClick={() => openEdit(post)}
                       size="sm"
-                      className="border border-primary-500/50 bg-primary-500/20 text-primary-300 hover:bg-primary-500/30"
+                      className="bg-primary-600 text-white hover:bg-primary-700"
                       title="Editar post"
                     >
                       <Edit className="h-4 w-4" />
@@ -402,7 +402,7 @@ export function BlogManager() {
                       onClick={() => void handleDelete(post)}
                       disabled={busyId === post.id}
                       size="sm"
-                      className="border border-red-500/50 bg-red-500/20 text-red-400 hover:bg-red-500/30"
+                      className="bg-red-600 text-white hover:bg-red-700"
                       title="Excluir post"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -410,12 +410,12 @@ export function BlogManager() {
                   </div>
                 </div>
 
-                <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-ink-secondary">
+                <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-card-muted">
                   <span
                     className={`rounded px-2 py-1 ${
                       post.published
-                        ? "bg-green-500/15 text-green-400"
-                        : "bg-yellow-500/15 text-yellow-400"
+                        ? "bg-green-600/15 text-green-800"
+                        : "bg-yellow-600/20 text-yellow-800"
                     }`}
                   >
                     {post.published ? "PUBLICADO" : "RASCUNHO"}
@@ -431,7 +431,7 @@ export function BlogManager() {
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full border border-dark-border bg-dark-surface px-2.5 py-1 text-xs text-ink-muted"
+                        className="rounded-full border border-card-border bg-card-inset px-2.5 py-1 text-xs text-card-muted"
                       >
                         {tag}
                       </span>
@@ -444,7 +444,7 @@ export function BlogManager() {
                     href={`/blog/${post.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 text-sm text-primary-500 transition-colors hover:text-primary-400"
+                    className="mt-3 inline-flex items-center gap-1 text-sm text-primary-700 transition-colors hover:text-primary-600"
                   >
                     <ExternalLink className="h-4 w-4" />
                     Ver no site
@@ -457,9 +457,9 @@ export function BlogManager() {
       </div>
 
       {visible.length === 0 && !loadError && (
-        <div className="rounded-xl border border-dark-border bg-dark-card py-16 text-center">
-          <FileText className="mx-auto mb-3 h-8 w-8 text-ink-faint" />
-          <p className="text-ink-muted">
+        <div className="rounded-xl border border-card-border bg-card py-16 text-center">
+          <FileText className="mx-auto mb-3 h-8 w-8 text-card-faint" />
+          <p className="text-card-muted">
             {posts.length === 0
               ? "Nenhum post no blog ainda."
               : "Nenhum post neste filtro."}
