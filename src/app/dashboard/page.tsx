@@ -408,7 +408,9 @@ export default function DashboardPage() {
       <Sidebar active={tab} onChange={setTab} />
 
       <main className="pb-20 md:pl-60">
-        <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 md:px-8 md:pt-12">
+        {/* Sem `mx-auto`: o conteúdo encosta na sidebar em vez de flutuar
+            centralizado no espaço que sobra. */}
+        <div className="max-w-6xl px-4 pt-8 sm:px-6 md:px-8 md:pt-12">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">
               <span className="text-ink">Gestão de</span>{" "}
@@ -508,7 +510,7 @@ export default function DashboardPage() {
                       type="text"
                       value={statusForm.key}
                       onChange={(e) => setStatusForm({ ...statusForm, key: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-white text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="in-progress"
                       required
                     />
@@ -521,7 +523,7 @@ export default function DashboardPage() {
                       type="text"
                       value={statusForm.label}
                       onChange={(e) => setStatusForm({ ...statusForm, label: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-white text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="IN-PROGRESS"
                       required
                     />
@@ -542,7 +544,7 @@ export default function DashboardPage() {
                         setStatusForm({ key: "", label: "" });
                       }}
                       variant="outline"
-                      className="border-card-border text-card-muted hover:border-primary-600 hover:text-primary-700"
+                      className="border-card-border text-card-muted hover:border-primary-500 hover:text-primary-500"
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancelar
@@ -564,7 +566,7 @@ export default function DashboardPage() {
                     {statuses.map((status) => (
                       <div
                         key={status.id}
-                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-primary-600/60 transition-colors"
+                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-primary-500/50 transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
@@ -576,7 +578,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleEditStatus(status)}
                             size="sm"
-                            className="bg-primary-600 hover:bg-primary-700 text-white"
+                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 border border-primary-500/50"
                             title="Editar status"
                           >
                             <Edit className="h-4 w-4 mr-2" />
@@ -585,7 +587,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleDeleteStatus(status.id)}
                             size="sm"
-                            className="bg-red-600 hover:bg-red-700 text-white"
+                            className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/50"
                             title="Excluir status"
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
@@ -628,7 +630,7 @@ export default function DashboardPage() {
                       type="text"
                       value={typeForm.key}
                       onChange={(e) => setTypeForm({ ...typeForm, key: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-white text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="Web"
                       required
                     />
@@ -641,7 +643,7 @@ export default function DashboardPage() {
                       type="text"
                       value={typeForm.label}
                       onChange={(e) => setTypeForm({ ...typeForm, label: e.target.value })}
-                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-white text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-2 rounded-lg border border-card-border bg-card-inset text-card-ink placeholder-card-faint focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                       placeholder="WEB"
                       required
                     />
@@ -662,7 +664,7 @@ export default function DashboardPage() {
                         setTypeForm({ key: "", label: "" });
                       }}
                       variant="outline"
-                      className="border-card-border text-card-muted hover:border-primary-600 hover:text-primary-700"
+                      className="border-card-border text-card-muted hover:border-primary-500 hover:text-primary-500"
                     >
                       <X className="h-4 w-4 mr-2" />
                       Cancelar
@@ -684,7 +686,7 @@ export default function DashboardPage() {
                     {types.map((type) => (
                       <div
                         key={type.id}
-                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-primary-600/60 transition-colors"
+                        className="flex items-center justify-between p-4 bg-card-inset border border-card-border rounded-lg hover:border-primary-500/50 transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
@@ -696,7 +698,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleEditType(type)}
                             size="sm"
-                            className="bg-primary-600 hover:bg-primary-700 text-white"
+                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 border border-primary-500/50"
                             title="Editar tipo"
                           >
                             <Edit className="h-4 w-4 mr-2" />
@@ -705,7 +707,7 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleDeleteType(type.id)}
                             size="sm"
-                            className="bg-red-600 hover:bg-red-700 text-white"
+                            className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/50"
                             title="Excluir tipo"
                           >
                             <Trash2 className="h-4 w-4 mr-2" />
@@ -1034,18 +1036,18 @@ export default function DashboardPage() {
                           </h3>
                           <div className="flex items-center gap-4 text-sm text-card-muted mb-2 flex-wrap">
                             <span>{project.year}</span>
-                            <span className="px-2 py-1 rounded bg-primary-600/15 text-primary-800 border border-primary-600/30">
+                            <span className="px-2 py-1 rounded bg-primary-500/15 text-primary-300 border border-primary-500/30">
                               {project.type}
                             </span>
                             <span className={`px-2 py-1 rounded ${
-                              project.status === "shipped" ? "bg-green-600/15 text-green-800" :
-                              project.status === "in-progress" ? "bg-yellow-600/20 text-yellow-800" :
-                              "bg-black/10 text-card-muted"
+                              project.status === "shipped" ? "bg-green-500/15 text-green-400" :
+                              project.status === "in-progress" ? "bg-yellow-500/15 text-yellow-400" :
+                              "bg-white/10 text-card-muted"
                             }`}>
                               {project.status}
                             </span>
                             {project.featured && (
-                              <span className="px-2 py-1 rounded bg-primary-600/15 text-primary-800">
+                              <span className="px-2 py-1 rounded bg-primary-500/20 text-primary-300">
                                 <Star className="h-3 w-3 inline mr-1" />
                                 Featured
                               </span>
@@ -1056,14 +1058,14 @@ export default function DashboardPage() {
                           <Button
                             onClick={() => handleEdit(project)}
                             size="sm"
-                            className="bg-primary-600 hover:bg-primary-700 text-white"
+                            className="bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 border border-primary-500/50"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
                           <Button
                             onClick={() => handleDelete(project.id)}
                             size="sm"
-                            className="bg-red-600 hover:bg-red-700 text-white"
+                            className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/50"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -1086,7 +1088,7 @@ export default function DashboardPage() {
                             href={project.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-primary-700 hover:text-primary-600"
+                            className="flex items-center gap-1 text-primary-500 hover:text-primary-400"
                           >
                             <LinkIcon className="h-4 w-4" />
                             Live
@@ -1097,7 +1099,7 @@ export default function DashboardPage() {
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-card-muted hover:text-primary-700"
+                            className="flex items-center gap-1 text-card-muted hover:text-primary-500"
                           >
                             <Github className="h-4 w-4" />
                             GitHub

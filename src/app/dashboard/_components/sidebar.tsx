@@ -33,9 +33,9 @@ export function Sidebar({
   onChange: (tab: DashboardTab) => void;
 }) {
   return (
-    <aside className="border-dark-border bg-dark-surface md:fixed md:inset-y-0 md:left-0 md:z-40 md:flex md:w-60 md:flex-col md:border-r">
+    <aside className="border-card-border bg-card md:fixed md:inset-y-0 md:left-0 md:z-40 md:flex md:w-60 md:flex-col md:border-r">
       {/* Marca */}
-      <div className="border-b border-dark-border px-5 py-5">
+      <div className="border-b border-card-border px-5 py-5">
         <Link
           href="/"
           className="font-mono text-lg font-bold text-primary-500 transition-opacity hover:opacity-80"
@@ -59,7 +59,7 @@ export function Sidebar({
               className={`flex flex-shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors md:w-full ${
                 isActive
                   ? "bg-primary-500/20 text-primary-300"
-                  : "text-ink-secondary hover:bg-dark-hover/50 hover:text-ink"
+                  : "text-ink-secondary hover:bg-white/5 hover:text-ink"
               }`}
             >
               <Icon className="h-4 w-4 flex-shrink-0" />
@@ -75,10 +75,10 @@ export function Sidebar({
       </nav>
 
       {/* Rodapé */}
-      <div className="flex gap-2 border-dark-border px-3 pb-3 md:flex-col md:border-t md:px-3 md:py-4">
+      <div className="flex gap-2 border-card-border px-3 pb-3 md:flex-col md:border-t md:px-3 md:py-4">
         <Link
           href="/"
-          className="flex flex-1 items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-dark-hover/50 hover:text-ink"
+          className="flex flex-1 items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-white/5 hover:text-ink"
         >
           <ArrowLeft className="h-4 w-4 flex-shrink-0" />
           Ver o site

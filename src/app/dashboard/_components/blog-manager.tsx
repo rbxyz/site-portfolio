@@ -349,7 +349,7 @@ export function BlogManager() {
             key={post.id}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-xl border border-card-border bg-card p-5 transition-colors hover:border-primary-600/60"
+            className="rounded-xl border border-card-border bg-card p-5 transition-colors hover:border-primary-500/50"
           >
             <div className="flex flex-col gap-4 md:flex-row">
               {post.imageUrl && (
@@ -379,7 +379,7 @@ export function BlogManager() {
                       size="sm"
                       className={
                         post.published
-                          ? "bg-primary-600 text-white hover:bg-primary-700"
+                          ? "border border-primary-500/50 bg-primary-500/20 text-primary-300 hover:bg-primary-500/30"
                           : "border border-card-border bg-card-inset text-card-muted hover:text-card-ink"
                       }
                       title={post.published ? "Despublicar" : "Publicar"}
@@ -393,7 +393,7 @@ export function BlogManager() {
                     <Button
                       onClick={() => openEdit(post)}
                       size="sm"
-                      className="bg-primary-600 text-white hover:bg-primary-700"
+                      className="border border-primary-500/50 bg-primary-500/20 text-primary-300 hover:bg-primary-500/30"
                       title="Editar post"
                     >
                       <Edit className="h-4 w-4" />
@@ -402,7 +402,7 @@ export function BlogManager() {
                       onClick={() => void handleDelete(post)}
                       disabled={busyId === post.id}
                       size="sm"
-                      className="bg-red-600 text-white hover:bg-red-700"
+                      className="border border-red-500/50 bg-red-500/20 text-red-400 hover:bg-red-500/30"
                       title="Excluir post"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -414,8 +414,8 @@ export function BlogManager() {
                   <span
                     className={`rounded px-2 py-1 ${
                       post.published
-                        ? "bg-green-600/15 text-green-800"
-                        : "bg-yellow-600/20 text-yellow-800"
+                        ? "bg-green-500/15 text-green-400"
+                        : "bg-yellow-500/15 text-yellow-400"
                     }`}
                   >
                     {post.published ? "PUBLICADO" : "RASCUNHO"}
@@ -444,7 +444,7 @@ export function BlogManager() {
                     href={`/blog/${post.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 text-sm text-primary-700 transition-colors hover:text-primary-600"
+                    className="mt-3 inline-flex items-center gap-1 text-sm text-primary-500 transition-colors hover:text-primary-400"
                   >
                     <ExternalLink className="h-4 w-4" />
                     Ver no site

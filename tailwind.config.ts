@@ -36,21 +36,21 @@ const config: Config = {
           DEFAULT: "#1F1F1F",
           bg: "#1F1F1F", // C.bg
           surface: "#262231", // superfície elevada (levemente roxeada)
-          card: "#2b2536",
+          card: "#1c1c1c", // igual ao `card` do admin: modal e card do login
+                           // deixam de puxar para o roxo
           border: "#3a2a54", // C.border3
           hover: "#3f3357",
         },
-        // Cards claros do admin. Como o fundo é #c1c1c1, o conteúdo dentro
-        // deles inverte para texto escuro — daí os tokens `ink`/`muted`/`faint`
-        // próprios, que não têm relação com a escala `ink` (usada no escuro).
+        // Cards e sidebar do admin: cinza neutro escuro, sem o tingimento roxo
+        // das superfícies do site público.
         card: {
-          DEFAULT: "#c1c1c1",
-          hover: "#cbcbcb",
-          border: "#a6a6a6",
-          inset: "#b3b3b3", // chips e campos dentro do card
-          ink: "#1F1F1F",
-          muted: "#43433f",
-          faint: "#5f5f5a",
+          DEFAULT: "#1c1c1c",
+          hover: "#242424",
+          border: "#333333",
+          inset: "#151515", // chips e campos dentro do card
+          ink: "#F4F2EC",
+          muted: "#cfcdc4",
+          faint: "#8A877F",
         },
         // Texto: escala derivada dos tokens de tipografia do handoff.
         ink: {

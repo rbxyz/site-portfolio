@@ -59,7 +59,14 @@ export async function listPublishedPosts(
         published: true,
         ...(tagSlug ? { tags: { some: { tag: { slug: tagSlug } } } } : {}),
       },
-      orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
+      // `nulls: "last"` é essencial: no Postgres, ORDER BY ... DESC coloca
+      // NULL PRIMEIRO. Sem isso, um post publicado sem `publishedAt` (o outro
+      // app do blog pode gravar assim) sobe para o topo da lista — e ainda
+      // vira o banner de destaque, que é o all[0].
+      orderBy: [
+        { publishedAt: { sort: "desc", nulls: "last" } },
+        { createdAt: "desc" },
+      ],
       include: {
         author: { select: { name: true } },
         tags: { include: { tag: { select: { name: true, slug: true, color: true } } } },
