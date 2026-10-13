@@ -4,7 +4,8 @@
 // Adapted from React Bits <Lanyard /> (https://reactbits.dev): a single canvas
 // with several badges hanging side by side, one per event. Card faces and the
 // band texture are drawn at runtime on <canvas> using the portfolio palette,
-// so adding an event only requires a new entry in `eventos-data.ts`.
+// so a new event needs no assets. Tapping a badge selects it: the camera
+// moves in on it and the parent shows that event's details next to it.
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer, useGLTF } from "@react-three/drei";
@@ -30,6 +31,17 @@ const CARD_GLB = "/lanyard/card.glb";
 useGLTF.preload(CARD_GLB);
 
 const FOV = 20;
+const TAN_HALF_FOV = Math.tan(((FOV / 2) * Math.PI) / 180);
+
+// Camera distance while a badge is selected, and where the badge sits in the
+// frame so the details panel (right half on desktop, bottom half on mobile)
+// doesn't cover it. Keep in sync with `.kp-evento-panel` in globals.css.
+const FOCUS = {
+  desktop: { z: 12.5, shiftX: 0.5 }, // badge centred in the left half
+  mobile: { z: 19.5, shiftY: 0.62 }, // badge in the top 44%, clear of the panel
+};
+// Pointer travel (px) before a press becomes a drag instead of a tap.
+const DRAG_THRESHOLD = 8;
 
 // The card model's front face is UV-mapped to the LEFT half of the texture
 // atlas and the back face to the RIGHT half (measured from card.glb).
@@ -56,7 +68,16 @@ function readFonts(): Fonts {
   };
 }
 
-export default function Lanyard({ events, active = true }: { events: Evento[]; active?: boolean }) {
+type LanyardProps = {
+  events: Evento[];
+  active?: boolean;
+  /** Id of the badge the camera is zoomed on, if any. */
+  selectedId?: string | null;
+  /** Called with the badge id on tap (or null when the selected one is tapped again). */
+  onSelect?: (id: string | null) => void;
+};
+
+export default function Lanyard({ events, active = true, selectedId = null, onSelect }: LanyardProps) {
   const [fonts, setFonts] = useState<Fonts | null>(null);
 
   // Canvas text needs the web fonts loaded before textures are painted.
@@ -87,7 +108,7 @@ export default function Lanyard({ events, active = true }: { events: Evento[]; a
       style={{ width: "100%", height: "100%" }}
     >
       <ambientLight intensity={Math.PI} />
-      <Scene events={events} fonts={fonts} active={active} />
+      <Scene events={events} fonts={fonts} active={active} selectedId={selectedId} onSelect={onSelect} />
       <Environment blur={0.75}>
         <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
         <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
@@ -103,7 +124,19 @@ export default function Lanyard({ events, active = true }: { events: Evento[]; a
  * On narrow screens badges alternate between a short and a long rope so they
  * can sit closer together without overlapping.
  */
-function Scene({ events, fonts, active }: { events: Evento[]; fonts: Fonts; active: boolean }) {
+function Scene({
+  events,
+  fonts,
+  active,
+  selectedId,
+  onSelect,
+}: {
+  events: Evento[];
+  fonts: Fonts;
+  active: boolean;
+  selectedId: string | null;
+  onSelect?: (id: string | null) => void;
+}) {
   const { size, camera } = useThree();
   const isMobile = size.width < 768;
   const n = events.length;
@@ -111,10 +144,9 @@ function Scene({ events, fonts, active }: { events: Evento[]; fonts: Fonts; acti
   const layout = useMemo(() => {
     const spacing = isMobile ? 1.1 : 3.1;
     const span = (n - 1) * spacing + 2.6;
-    const tanHalf = Math.tan(((FOV / 2) * Math.PI) / 180);
     const aspect = size.width / Math.max(size.height, 1);
-    const z = Math.max(isMobile ? 26 : 21, span / (2 * tanHalf * aspect));
-    const halfH = z * tanHalf;
+    const z = Math.max(isMobile ? 26 : 21, span / (2 * TAN_HALF_FOV * aspect));
+    const halfH = z * TAN_HALF_FOV;
     return {
       // Anchors sit just above the top edge so the bands enter from off-screen.
       camY: -0.3 - halfH,
@@ -127,10 +159,30 @@ function Scene({ events, fonts, active }: { events: Evento[]; fonts: Fonts; acti
     };
   }, [events, n, isMobile, size.width, size.height]);
 
-  useEffect(() => {
-    camera.position.set(0, layout.camY, layout.z);
-    camera.updateProjectionMatrix();
-  }, [camera, layout]);
+  // Ease the camera between the overview and the selected badge. The target
+  // uses the badge's resting position (not its live one) so dragging the
+  // selected badge doesn't drag the camera along with it.
+  const [camTarget] = useState(() => new THREE.Vector3());
+  const camSnapped = useRef(false);
+  useFrame((_, delta) => {
+    const sel = selectedId ? layout.bands.find((b) => b.ev.id === selectedId) : undefined;
+    if (sel) {
+      const restY = -(3 * sel.ropeLen + 1.5);
+      const z = isMobile ? FOCUS.mobile.z : FOCUS.desktop.z;
+      const halfH = z * TAN_HALF_FOV;
+      const halfW = halfH * (size.width / Math.max(size.height, 1));
+      if (isMobile) camTarget.set(sel.x, restY + 0.2 - halfH * FOCUS.mobile.shiftY, z);
+      else camTarget.set(sel.x + halfW * FOCUS.desktop.shiftX, restY + 0.2, z);
+    } else {
+      camTarget.set(0, layout.camY, layout.z);
+    }
+    if (camSnapped.current) {
+      camera.position.lerp(camTarget, 1 - Math.exp(-delta * 5));
+    } else {
+      camera.position.copy(camTarget);
+      camSnapped.current = true;
+    }
+  });
 
   const bandTexture = useMemo(() => makeBandTexture(fonts), [fonts]);
 
@@ -147,6 +199,8 @@ function Scene({ events, fonts, active }: { events: Evento[]; fonts: Fonts; acti
           fonts={fonts}
           bandTexture={bandTexture}
           isMobile={isMobile}
+          selected={b.ev.id === selectedId}
+          onSelect={onSelect}
         />
       ))}
     </Physics>
@@ -161,6 +215,8 @@ function Band({
   fonts,
   bandTexture,
   isMobile,
+  selected,
+  onSelect,
   maxSpeed = 50,
   minSpeed = 0,
 }: {
@@ -171,6 +227,8 @@ function Band({
   fonts: Fonts;
   bandTexture: THREE.Texture;
   isMobile: boolean;
+  selected: boolean;
+  onSelect?: (id: string | null) => void;
   maxSpeed?: number;
   minSpeed?: number;
 }) {
@@ -217,6 +275,9 @@ function Band({
   });
   const [dragged, drag] = useState<THREE.Vector3 | false>(false);
   const [hovered, hover] = useState(false);
+  // A press only becomes a drag after the pointer travels DRAG_THRESHOLD, so
+  // taps select the badge and vertical swipes are left to scroll the page.
+  const press = useRef<{ x: number; y: number; offset: THREE.Vector3 } | null>(null);
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], ropeLen]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], ropeLen]);
@@ -228,7 +289,7 @@ function Band({
 
   useEffect(() => {
     if (hovered) {
-      document.body.style.cursor = dragged ? "grabbing" : "grab";
+      document.body.style.cursor = dragged ? "grabbing" : "pointer";
       return () => void (document.body.style.cursor = "auto");
     }
   }, [hovered, dragged]);
@@ -251,7 +312,11 @@ function Band({
         const body = ref.current;
         body.lerped ??= new THREE.Vector3().copy(body.translation());
         const clampedDistance = Math.max(0.1, Math.min(1, body.lerped.distanceTo(body.translation())));
-        body.lerped.lerp(body.translation(), delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)));
+        // Clamp the blend factor: on a slow frame (or the first one after the
+        // loop resumes) an unclamped factor overshoots further every frame
+        // until the strap flies off to infinity and disappears.
+        const alpha = Math.min(1, delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)));
+        body.lerped.lerp(body.translation(), alpha);
       });
       curve.points[0]!.copy(j3.current.translation());
       curve.points[1]!.copy(j2.current.lerped!);
@@ -288,14 +353,39 @@ function Band({
             scale={2.25}
             position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
-            onPointerOut={() => hover(false)}
-            onPointerUp={(e) => {
-              (e.target as Element).releasePointerCapture(e.pointerId);
-              drag(false);
+            onPointerOut={() => {
+              hover(false);
+              // While a press is captured this only fires when the browser
+              // cancels it (a touch that turned into a page scroll): let go,
+              // or the badge would stay stuck mid-drag.
+              if (press.current) {
+                press.current = null;
+                drag(false);
+              }
             }}
             onPointerDown={(e) => {
+              // Badges overlap on narrow screens: only the front one reacts.
+              e.stopPropagation();
               (e.target as Element).setPointerCapture(e.pointerId);
-              drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())));
+              press.current = {
+                x: e.nativeEvent.clientX,
+                y: e.nativeEvent.clientY,
+                offset: new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())),
+              };
+            }}
+            onPointerMove={(e) => {
+              const p = press.current;
+              if (!p || dragged) return;
+              const dx = e.nativeEvent.clientX - p.x;
+              const dy = e.nativeEvent.clientY - p.y;
+              if (Math.hypot(dx, dy) > DRAG_THRESHOLD) drag(p.offset);
+            }}
+            onPointerUp={(e) => {
+              e.stopPropagation();
+              (e.target as Element).releasePointerCapture(e.pointerId);
+              if (press.current && !dragged) onSelect?.(selected ? null : event.id);
+              press.current = null;
+              drag(false);
             }}
           >
             <mesh geometry={nodes.card.geometry}>

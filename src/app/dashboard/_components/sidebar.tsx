@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { FolderKanban, Newspaper, ArrowLeft, LogOut } from "lucide-react";
+import { FolderKanban, Newspaper, IdCard, ArrowLeft, LogOut } from "lucide-react";
 
-export type DashboardTab = "projects" | "blog";
+export type DashboardTab = "projects" | "blog" | "events";
 
 const ITEMS = [
   {
@@ -18,6 +18,12 @@ const ITEMS = [
     label: "Blog",
     hint: "Gestão dos posts",
     Icon: Newspaper,
+  },
+  {
+    key: "events" as const,
+    label: "Eventos",
+    hint: "Crachás e fotos",
+    Icon: IdCard,
   },
 ];
 

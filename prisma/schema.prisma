@@ -112,3 +112,39 @@ model ProjectType {
 
     @@index([key])
 }
+
+// Eventos exibidos como crachás na home (seção "Eventos").
+model Event {
+    id          Int      @id @default(autoincrement())
+    name        String
+    edition     String?
+    year        String?
+    role        String   @default("Participante")
+    highlight   Boolean  @default(false)
+    location    String?
+    description String?  @db.Text
+    link        String?
+    position    Int      @default(0) // ordem dos crachás, da esquerda p/ direita
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    images EventImage[]
+
+    @@index([position])
+}
+
+// Fotos de um evento. O binário fica no banco e é servido por
+// /api/event-images/[id]; as páginas só carregam os metadados.
+model EventImage {
+    id        String   @id @default(cuid())
+    eventId   Int
+    event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+    data      Bytes
+    mimeType  String
+    width     Int
+    height    Int
+    position  Int      @default(0)
+    createdAt DateTime @default(now())
+
+    @@index([eventId, position])
+}

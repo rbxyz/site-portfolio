@@ -10,6 +10,7 @@ import { Plus, Edit, Trash2, Save, X, Link as LinkIcon, Github, Star, Settings, 
 import Image from "next/image";
 import { toast } from "sonner";
 import { BlogManager } from "@/app/dashboard/_components/blog-manager";
+import { EventosManager } from "@/app/dashboard/_components/eventos-manager";
 import { Sidebar, type DashboardTab } from "@/app/dashboard/_components/sidebar";
 
 interface Project {
@@ -40,6 +41,12 @@ interface ProjectType {
   key: string;
   label: string;
 }
+
+const TAB_HEADINGS: Record<DashboardTab, { title: string; subtitle: string }> = {
+  projects: { title: "Projetos", subtitle: "Gerencie seus projetos do portfólio" },
+  blog: { title: "Posts", subtitle: "Crie, edite e publique os artigos do blog" },
+  events: { title: "Eventos", subtitle: "Edite os crachás da home e as fotos de cada evento" },
+};
 
 export default function DashboardPage() {
   const { status } = useSession();
@@ -415,17 +422,17 @@ export default function DashboardPage() {
             <h1 className="text-4xl font-bold mb-2">
               <span className="text-ink">Gestão de</span>{" "}
               <span className="text-plum-text">
-                {tab === "projects" ? "Projetos" : "Posts"}
+                {TAB_HEADINGS[tab].title}
               </span>
             </h1>
             <p className="text-ink-muted">
-              {tab === "projects"
-                ? "Gerencie seus projetos do portfólio"
-                : "Crie, edite e publique os artigos do blog"}
+              {TAB_HEADINGS[tab].subtitle}
             </p>
           </div>
 
           {tab === "blog" && <BlogManager />}
+
+          {tab === "events" && <EventosManager />}
 
           {tab === "projects" && (
           <>

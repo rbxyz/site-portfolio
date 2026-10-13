@@ -406,3 +406,29 @@
 .dark .backdrop-blur-glass {
     background-color: rgba(17, 24, 39, 0.8);
 }
+/* ----- Eventos: painel de detalhes do crachá selecionado ----- */
+/* The breakpoint matches the lanyard's own mobile layout (canvas < 768px),
+   and the panel area matches FOCUS in lanyard.tsx. */
+.kp-lanyard-stage {
+    container-type: inline-size;
+}
+
+.kp-evento-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 52%;
+    border-left: 1px solid #3a2a54;
+}
+
+@container (max-width: 767.98px) {
+    .kp-evento-panel {
+        top: auto;
+        left: 0;
+        width: auto;
+        height: 56%;
+        border-left: 0;
+        border-top: 1px solid #3a2a54;
+    }
+}
