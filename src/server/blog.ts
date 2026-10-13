@@ -91,6 +91,38 @@ export async function listPublishedPosts(
   }
 }
 
+/** The most recently published post, or null if none/unreachable. */
+export async function getLatestPost(): Promise<BlogListItem | null> {
+  if (!blogDb) return null;
+  try {
+    const p = await blogDb.post.findFirst({
+      where: { published: true },
+      orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
+      include: {
+        author: { select: { name: true } },
+        tags: { include: { tag: { select: { name: true, slug: true, color: true } } } },
+      },
+    });
+    if (!p) return null;
+    return {
+      id: p.id,
+      title: p.title,
+      slug: p.slug,
+      imageUrl: p.imageUrl,
+      viewCount: p.viewCount,
+      publishedAt: p.publishedAt,
+      createdAt: p.createdAt,
+      excerpt: makeExcerpt(p.content, 240),
+      readMinutes: readMinutes(p.content),
+      authorName: p.author?.name ?? null,
+      tags: p.tags.map((t) => t.tag),
+    };
+  } catch (err) {
+    console.error("[blog] getLatestPost failed:", err);
+    return null;
+  }
+}
+
 /** A single published post by slug, or null if missing/unreachable. */
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   if (!blogDb) return null;

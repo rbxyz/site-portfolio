@@ -76,3 +76,9 @@ export function usePortfolioEffects() {
     };
   }, []);
 }
+
+/** Client-only mount point so server pages can enable the effects. */
+export function PortfolioEffects() {
+  usePortfolioEffects();
+  return null;
+}
